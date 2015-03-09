@@ -1,5 +1,10 @@
 <resources>
 
     <string name="app_name">Medical Reminder</string>
-
+	<string name="medicineName">Medicine Name</string>
+	<string name="medicineType">Medicine Type</string>
+	<string name="image">Image</string>
+	<string name="dose">Dose</string>
+	<string name="schedule">Schedule</string>
+	<string name="setSchedule">Set Schedule</string>
 </resources>
