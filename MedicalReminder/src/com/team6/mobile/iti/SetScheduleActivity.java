@@ -1,16 +1,14 @@
 package com.team6.mobile.iti;
-import com.team6.mobile.iti.R;
 
 import android.app.Activity;
 import android.os.Bundle;
 
+public class SetScheduleActivity extends Activity {
 
-public class TestActivity extends Activity{
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_add_medicine);
+		setContentView(R.layout.activity_set_schedule);
 	}
-
+	
 }

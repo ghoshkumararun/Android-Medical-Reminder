@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/abstract_background_gray"
+    android:background="@drawable/img_bg"
     android:orientation="vertical"
     android:paddingBottom="40dp"
     android:paddingLeft="30dp"
@@ -17,10 +17,10 @@
         android:layout_height="0dp"
         android:layout_marginBottom="10dp"
         android:layout_weight="1"
-        android:background="#E6E6D8"
+        android:background="#FFFFFF"
         android:orientation="vertical"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp" >
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp">
 
         <TextView
             android:id="@+id/textView1"
@@ -52,7 +52,7 @@
         android:layout_height="0dp"
         android:layout_marginBottom="10dp"
         android:layout_weight="1"
-        android:background="#E6E6D8"
+        android:background="#FFFFFF"
         android:orientation="vertical"
         android:paddingTop="20dp"
         android:paddingBottom="20dp" >
@@ -85,11 +85,11 @@
         android:layout_height="0dp"
         android:layout_marginBottom="10dp"
         android:layout_weight="1.5"
-        android:background="#E6E6D8"
+        android:background="#FFFFFF"
         android:orientation="vertical" >
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/imgvMedicineImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -101,9 +101,9 @@
         android:id="@+id/btnSetSchedule"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"
+        android:layout_weight="0.35"
         android:textColor="#FFFFFF"
-        android:background="#26C6DA"
+        android:background="#97C0E6"
         android:text="@string/setSchedule" />
 
 </LinearLayout>

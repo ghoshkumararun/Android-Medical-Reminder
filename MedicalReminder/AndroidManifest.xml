@@ -13,7 +13,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         
-        <activity android:name="com.team6.mobile.iti.TestActivity"
+        <activity android:name="com.team6.mobile.iti.AddMedicineActivity"
             android:label="@string/app_name"
             android:theme="@style/addMedicineStyle">
             
@@ -22,6 +22,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            
+        </activity>
+        
+        <activity android:name="com.team6.mobile.iti.SetScheduleActivity"
+            android:theme="@style/addMedicineStyle">
             
         </activity>
         
