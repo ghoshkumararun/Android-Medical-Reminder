@@ -50,8 +50,9 @@ public class AddMedicineActivity extends Activity{
 			public void onClick(View v) {
 				
 				// create intent to SetSchedule Activity
+				//Intent intent = new Intent(AddMedicineActivity.this, SetScheduleActivity.class);
 				Intent intent = new Intent(AddMedicineActivity.this, SetScheduleActivity.class);
-				
+
 				// start SetSchedule Activity
 				startActivity(intent);
 			}
