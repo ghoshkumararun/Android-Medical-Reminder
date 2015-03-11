@@ -104,6 +104,7 @@
         android:layout_weight="0.35"
         android:textColor="#FFFFFF"
         android:background="#97C0E6"
-        android:text="@string/setSchedule" />
+        android:text="@string/setSchedule"
+         />
 
 </LinearLayout>

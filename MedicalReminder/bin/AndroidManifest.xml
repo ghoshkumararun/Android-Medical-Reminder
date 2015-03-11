@@ -8,6 +8,7 @@
         android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -53,6 +54,9 @@
             android:label="@string/app_name"
             android:theme="@style/addMedicineStyle" >
         </activity>
+
+        <receiver android:name="ReminderBroadcastReceiver" >
+        </receiver>
     </application>
 
 </manifest>

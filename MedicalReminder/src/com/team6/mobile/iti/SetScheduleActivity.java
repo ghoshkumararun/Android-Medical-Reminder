@@ -17,8 +17,7 @@ public class SetScheduleActivity extends Activity {
 			
 			@Override
 			public void onClick(View arg0) {
-				Intent i = new Intent(SetScheduleActivity.this,SignInActivity.class);
-				startActivity(i);
+
 				
 			}
 		});
