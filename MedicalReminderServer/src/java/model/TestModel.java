@@ -5,7 +5,8 @@
  */
 package model;
 
-import beans.User;
+import beans.TimeDto;
+import java.util.*;
 
 /**
  *
@@ -14,16 +15,9 @@ import beans.User;
 public class TestModel {
     
     public static void main(String[] args) {
-        UserDao userDao = UserDao.getInstance();
-//        User user = new User();
-//        user.setEmail("m@yahoo.com");
-//        user.setName("Mohamed");
-//        user.setPassword("123456");
-//        
-//        userDao.insertUser(user);
         
-        User user = userDao.findUserByEmail("m@yahoo.com");
-        System.out.println(user.getName()+"\n"+user.getPassword());
+        
+     
         
     }
     

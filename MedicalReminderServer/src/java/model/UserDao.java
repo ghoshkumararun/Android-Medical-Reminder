@@ -49,6 +49,7 @@ public class UserDao {
             statement.setString(2, user.getName());
             statement.setString(3, user.getPassword());
             
+            
             // execute insert
             inserted = statement.execute();
             
@@ -72,7 +73,6 @@ public class UserDao {
             // create prepared statement
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, email);
-            
             // excute query
             ResultSet result = statement.executeQuery();
             
