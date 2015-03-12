@@ -2,6 +2,7 @@ package com.team6.mobile.iti;
 
 
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -50,6 +51,8 @@ public class ReminderListView extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder_list_view);
+        ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
         Resources resources=getResources();
         titles = resources.getStringArray(R.array.medicines);
         medicineList=(ListView) findViewById(R.id.medicineList);
