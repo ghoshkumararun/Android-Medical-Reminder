@@ -3,6 +3,7 @@ package com.team6.mobile.iti;
 import com.team6.mobile.iti.R;
 import com.team6.mobile.iti.broadcastReceiver.ReminderBroadcastReceiver;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -34,6 +35,8 @@ public class AddMedicineActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_medicine);
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
 
 		// find medicine name view
 		//edtMedicineName = (EditText) findViewById(R.id.edtMedicineName);
