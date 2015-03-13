@@ -4,19 +4,19 @@
     android:layout_height="match_parent"
     android:background="@drawable/img_bg"
     android:orientation="vertical"
-    android:paddingBottom="40dp"
+    android:paddingBottom="30dp"
     android:paddingLeft="30dp"
     android:paddingRight="30dp"
-    android:paddingTop="40dp"
+    android:paddingTop="30dp"
     android:showDividers="middle"
-    android:weightSum="4" >
+    android:weightSum="4.5" >
 
     <LinearLayout
         android:id="@+id/LinearLayout1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="10dp"
-        android:layout_weight="1"
+        android:layout_weight="1.25"
         android:background="#FFFFFF"
         android:orientation="vertical"
         android:paddingBottom="20dp"
@@ -51,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="10dp"
-        android:layout_weight="1"
+        android:layout_weight="1.25"
         android:background="#FFFFFF"
         android:orientation="vertical"
         android:paddingTop="20dp"
