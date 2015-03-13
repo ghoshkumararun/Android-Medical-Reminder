@@ -55,7 +55,7 @@ public class TimeDao {
                 statement.setFloat(3, time.getDose());
                 statement.addBatch();
             }
-
+                
             // execute insert batches
             insrtedRows = statement.executeBatch();
 
