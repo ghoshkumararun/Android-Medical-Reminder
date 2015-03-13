@@ -73,7 +73,8 @@ public class HomeActivity extends Activity implements OnItemClickListener , OnIt
         CustomBaseAdapter adapter = new CustomBaseAdapter(this, rowItems);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener((OnItemClickListener) this);
-        listView.setOnItemLongClickListener((OnItemLongClickListener)this);
+      //  listView.setOnItemLongClickListener((OnItemLongClickListener)this);
+        registerForContextMenu(listView);
     }
     
  
@@ -123,7 +124,8 @@ public boolean onOptionsItemSelected(MenuItem item) {
         return true;
     case R.id.action_location_found:
         // location found
-        
+    	Intent i = new Intent(HomeActivity.this, AddMedicineActivity.class);
+		startActivity(i);
         return true;
     case R.id.action_refresh:
         // refresh
@@ -134,14 +136,38 @@ public boolean onOptionsItemSelected(MenuItem item) {
         return true;
     case R.id.action_check_updates:
         // check for updates action
-    	Intent i = new Intent(HomeActivity.this, AddMedicineActivity.class);
-		startActivity(i);
+    	
         return true;
     default:
         return super.onOptionsItemSelected(item);
     }
 }
 
+//create context menu
+@Override
+public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {
+super.onCreateContextMenu(menu, v, menuInfo);
+	menu.setHeaderTitle("Options");
+	menu.add(0, v.getId(), 0, "Edit");
+	menu.add(0, v.getId(), 0, "Delete");
+}
+
+@Override
+public boolean onContextItemSelected(MenuItem item) {
+	AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+  
+ 	if(item.getTitle()=="Edit"){function1(item.getItemId());}
+	else if(item.getTitle()=="Delete"){function2(item.getItemId());}
+	else {return false;}
+return true;
+}
+
+public void function1(int id){
+	Toast.makeText(this, "function 1 called", 1000).show();
+}
+public void function2(int id){
+	Toast.makeText(this, "function 2 called", 1000).show();
+}
 
 
 }
