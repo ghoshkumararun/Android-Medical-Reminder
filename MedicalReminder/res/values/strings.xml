@@ -7,8 +7,8 @@
     <string name="dose">Dose</string>
     <string name="schedule">Schedule</string>
     <string name="setSchedule">Set Schedule</string>
-    <string name="interval">Interval</string>
-    <string name="sheduleAndDose">Schedule And Dose</string>
+    <string name="interval">Repetition</string>
+    <string name="sheduleAndDose">Time And Dose</string>
     <string name="startDay">Start Day</string>
     <string name="duration">Duration</string>
     <string name="instruction">Instruction</string>
@@ -62,5 +62,24 @@
     <string name="action_check_updates">Check for Updates</string>
     <!-- Search -->
     <string name="search_hint">Search color..</string>
+    <string name="title_activity_reminder_dialog_support">ReminderDialogSupport</string>
+    <string name="hello_world">Hello world!</string>
+    
+    <string-array name="medicineTypes">
+        <item>Capsules</item>
+        <item>Tablets</item>
+        <item>Injection</item>
+        <item>Pills</item>
+        <item>Sprays</item>
+        <item>Patches</item>
+        <item>Drops</item>
+        <item>Milligrams</item>
+    </string-array>
+    
+    <string-array name="medicineInterval">
+        <item>Dialy</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+    </string-array>
 
 </resources>

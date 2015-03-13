@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -11,26 +10,18 @@
         android:padding="10dp" >
 
         <TextView
-            android:id="@+id/txtMedicineName"
+            android:id="@+id/tvSingleChoose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Medicine name"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#000000"
-             />
+            android:text="TextView"
+            android:layout_marginRight="190dp" />
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/ivCheck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/sarah"
-            android:layout_marginRight="20dp" />
-
-        <CheckBox
-            android:id="@+id/checkBox1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="26dp" />
+            android:src="@drawable/ic_blue_check" 
+            android:visibility="invisible"/>
 
     </LinearLayout>
 
