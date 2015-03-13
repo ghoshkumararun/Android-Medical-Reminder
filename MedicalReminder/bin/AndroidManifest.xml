@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.team6.mobile.iti"
     android:versionCode="1"
@@ -16,12 +17,12 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.team6.mobile.iti.AddMedicineActivity"
+            android:name=".AddMedicineActivity"
             android:label="@string/app_name"
             android:theme="@style/addMedicineStyle" >
         </activity>
         <activity
-            android:name="com.team6.mobile.iti.SetScheduleActivity"
+            android:name=".SetScheduleActivity"
             android:theme="@style/addMedicineStyle" >
         </activity>
         <activity
@@ -55,8 +56,14 @@
             android:theme="@style/addMedicineStyle" >
         </activity>
 
-        <receiver android:name="ReminderBroadcastReceiver" >
+        <receiver android:name=".ReminderBroadcastReceiver" >
         </receiver>
+
+        <activity
+            android:name=".ReminderDialogSupport"
+            android:label="@string/title_activity_reminder_dialog_support" 
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+        </activity>
     </application>
 
 </manifest>

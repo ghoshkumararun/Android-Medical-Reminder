@@ -53,26 +53,16 @@ public class AddMedicineActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				Intent intent = new Intent(AddMedicineActivity.this,SetScheduleActivity.class);
-				startActivity(intent);
+				//Intent intent = new Intent(AddMedicineActivity.this,SetScheduleActivity.class);
+				//startActivity(intent);
 				//setAlram(v);
+				
+				
 			}
 		});
 
 	}
 
-	public void setAlram(View v) {
 
-		edtMedicineName = (EditText) findViewById(R.id.edtMedicineName);
-		int i = Integer.parseInt(edtMedicineName.getText().toString());
-		Intent intent = new Intent(this, ReminderDialog.class);
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 0, intent, 0);
-		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-		alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+ (i * 1000), pendingIntent);//i seconds *1000 = Xmillisecs
-		
-		Toast.makeText(this, "Alarm set in " + i + " seconds",
-				Toast.LENGTH_SHORT).show();
-
-	}
 
 }

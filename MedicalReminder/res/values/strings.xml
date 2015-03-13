@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="app_name">Medical Reminder</string>
@@ -62,5 +63,7 @@
     <string name="action_check_updates">Check for Updates</string>
     <!-- Search -->
     <string name="search_hint">Search color..</string>
+    <string name="title_activity_reminder_dialog_support">ReminderDialogSupport</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
