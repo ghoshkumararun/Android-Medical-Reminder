@@ -1,4 +1,4 @@
-package com.team6.mobile.iti.beans;
+package com.team6.mobile.iti;
 
 
 
