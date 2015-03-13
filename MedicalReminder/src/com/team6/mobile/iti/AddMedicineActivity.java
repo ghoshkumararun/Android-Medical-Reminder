@@ -1,19 +1,29 @@
 package com.team6.mobile.iti;
 
 import com.team6.mobile.iti.R;
-import com.team6.mobile.iti.broadcastReceiver.ReminderBroadcastReceiver;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class AddMedicineActivity extends Activity {
@@ -34,9 +44,11 @@ public class AddMedicineActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_medicine);
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
 
 		// find medicine name view
-		//edtMedicineName = (EditText) findViewById(R.id.edtMedicineName);
+		edtMedicineName = (EditText) findViewById(R.id.edtMedicineName);
 
 		// find medicine type view
 		sprMedicineType = (Spinner) findViewById(R.id.sprMedicineType);
@@ -53,8 +65,9 @@ public class AddMedicineActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				//Intent intent = new Intent(AddMedicineActivity.this,SetScheduleActivity.class);
-				//startActivity(intent);
+				Intent intent = new Intent(AddMedicineActivity.this,
+						SetScheduleActivity.class);
+				startActivity(intent);
 				//setAlram(v);
 				
 				

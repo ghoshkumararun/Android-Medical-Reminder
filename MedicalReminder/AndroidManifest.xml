@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.team6.mobile.iti"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="16"
         android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -19,6 +18,7 @@
         <activity
             android:name=".AddMedicineActivity"
             android:label="@string/app_name"
+            android:parentActivityName="HomeActivity"
             android:theme="@style/addMedicineStyle" >
         </activity>
         <activity
@@ -43,26 +43,29 @@
         <activity
             android:name=".ViewMedActivity"
             android:label="@string/view_med"
+            android:parentActivityName="HomeActivity"
             android:theme="@style/addMedicineStyle" >
         </activity>
         <activity
             android:name=".ReminderListView"
             android:label="@string/app_name"
+            android:parentActivityName="HomeActivity"
             android:theme="@style/addMedicineStyle" >
         </activity>
         <activity
             android:name=".HomeActivity"
             android:label="@string/app_name"
             android:theme="@style/addMedicineStyle" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-
-        <receiver android:name=".ReminderBroadcastReceiver" >
-        </receiver>
-
         <activity
             android:name=".ReminderDialogSupport"
-            android:label="@string/title_activity_reminder_dialog_support" 
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            android:label="@string/title_activity_reminder_dialog_support"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
     </application>
 
