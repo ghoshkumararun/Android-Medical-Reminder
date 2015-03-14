@@ -1,6 +1,7 @@
 package com.team6.mobile.iti;
 
 import com.team6.mobile.iti.R;
+import com.team6.mobile.iti.beans.Medicine;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -39,6 +40,10 @@ public class AddMedicineActivity extends Activity {
 
 	// Button Set Schedule
 	Button btnSetSchedule;
+	
+	// medicine bean
+	private Medicine medicine;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,9 @@ public class AddMedicineActivity extends Activity {
 		setContentView(R.layout.activity_add_medicine);
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
+		
+		// create medicine object
+		medicine = new Medicine();
 
 		// find medicine name view
 		edtMedicineName = (EditText) findViewById(R.id.edtMedicineName);
@@ -54,7 +62,7 @@ public class AddMedicineActivity extends Activity {
 		sprMedicineType = (Spinner) findViewById(R.id.sprMedicineType);
 		
 		// get medicine types array
-		String [] types = getResources().getStringArray(R.array.medicineTypes);
+		final String [] types = getResources().getStringArray(R.array.medicineTypes);
 		
 		// create adapter for type spinner
 		TypeSpinnerAdapter adapter = new TypeSpinnerAdapter(this, android.R.layout.simple_list_item_1, types);
@@ -76,6 +84,15 @@ public class AddMedicineActivity extends Activity {
 
 				Intent intent = new Intent(AddMedicineActivity.this,
 						SetScheduleActivity.class);
+				
+				// set medicine data
+				medicine.setName(edtMedicineName.getText().toString());
+				String medType = types[sprMedicineType.getSelectedItemPosition()];
+				medicine.setType(medType);
+				
+				// add medicine object on intent
+				intent.putExtra("medicine", medicine);
+				
 				startActivity(intent);
 				// setAlram(v);
 			}

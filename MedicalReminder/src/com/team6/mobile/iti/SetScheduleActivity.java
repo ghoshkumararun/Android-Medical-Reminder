@@ -1,20 +1,34 @@
 package com.team6.mobile.iti;
 
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import com.team6.mobile.iti.beans.Medicine;
+import com.team6.mobile.iti.beans.TimeDto;
+
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.View.*;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -26,52 +40,188 @@ public class SetScheduleActivity extends Activity {
 	// interval linear layput
 	private LinearLayout llInterval;
 
+	// duration linear layput
+	private LinearLayout layoutDuration;
+
+	// instruction linear layput
+	private LinearLayout layoutInstruction;
+
+	// start day linear layput
+	private LinearLayout layoutStartDay;
+
+	// time and dose linear layput
+	private LinearLayout layoutTimeAndDose;
+
 	// MyOnclickListener
 	private MyClickListener listener;
 
-	// Set Schedule button
-	private Button btnSetSchedule;
+	// Done button
+	private Button btnDone;
 
 	// interval array
-	String[] intervalArr;
+	private String[] intervalArr;
+
+	// duration array
+	private String[] durationArray;
+
+	// instruction array
+	private String[] instructionArray;
 
 	// interval choice position
-	Integer intervalChoicePos = 0;
+	private Integer intervalChoicePos = 0;
+
+	// duration choice position
+	private Integer durationChoicePos = 0;
+
+	// instruction choice position
+	private Integer instructionChoicePos = 0;
+
+	// start date
+	private long startDate;
+
+	// medicine bean
+	Medicine medicine;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_set_schedule);
 
+		
+		// get medicine object from intent
+		medicine = getIntent().getParcelableExtra("medicine");
+
 		// create myclick listener
 		listener = new MyClickListener();
 
-		btnSetSchedule = (Button) findViewById(R.id.button1);
-		btnSetSchedule.setOnClickListener(listener);
+		// button of Done
+		btnDone = (Button) findViewById(R.id.btnDone);
+		btnDone.setOnClickListener(listener);
 
+		// interval layout and set its listener
 		llInterval = (LinearLayout) findViewById(R.id.llInterval);
 		llInterval.setOnClickListener(listener);
 
 		// get Interval array
 		intervalArr = getResources().getStringArray(R.array.medicineInterval);
 
+		// duration layout and set its listener
+		layoutDuration = (LinearLayout) findViewById(R.id.layoutDuration);
+		layoutDuration.setOnClickListener(listener);
+
+		// get Interval array
+		durationArray = getResources().getStringArray(
+				R.array.medicineFullDuration);
+
+		// instruction layout and set its listener
+		layoutInstruction = (LinearLayout) findViewById(R.id.layoutInstruction);
+		layoutInstruction.setOnClickListener(listener);
+
+		// get Interval array
+		instructionArray = getResources().getStringArray(
+				R.array.medicineInstrutions);
+
+		// start day layout and set its listener
+		layoutStartDay = (LinearLayout) findViewById(R.id.layoutStartDay);
+		layoutStartDay.setOnClickListener(listener);
+
+		// time and dose layout and set its listener
+		layoutTimeAndDose = (LinearLayout) findViewById(R.id.layoutTimeAndDose);
+		layoutTimeAndDose.setOnClickListener(listener);
+
+		// set start date to date of today
+		startDate = Calendar.getInstance().getTimeInMillis();
+
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (requestCode == 1) {
+
+			ArrayList<TimeDto> times = data
+					.getParcelableArrayListExtra("times");
+
+			// put times in medicine bean
+			if (times != null)
+				medicine.setTimes(times);
+
+		}
+
+	}
+
+	/**
+	 * this class is for handling clicks on layouts (interval, duration, ...etc)
+	 */
 	class MyClickListener implements OnClickListener {
 
 		@Override
 		public void onClick(View v) {
 
+			FragmentManager manager = getFragmentManager();
+			ChooseListDialog dialog;
+
 			switch (v.getId()) {
 
 			case R.id.llInterval:
 
-				FragmentManager manager = getFragmentManager();
-
-				ChooseListDialog dialog = new ChooseListDialog(SetScheduleActivity.this ,intervalArr,
-						intervalChoicePos);
+				dialog = new ChooseListDialog(SetScheduleActivity.this,
+						intervalArr, intervalChoicePos);
 				dialog.show(manager, "dialog");
 
+				break;
+
+			case R.id.layoutDuration:
+
+				manager = getFragmentManager();
+
+				dialog = new ChooseListDialog(SetScheduleActivity.this,
+						durationArray, durationChoicePos);
+				dialog.show(manager, "dialog");
+
+				break;
+
+			case R.id.layoutInstruction:
+
+				manager = getFragmentManager();
+
+				dialog = new ChooseListDialog(SetScheduleActivity.this,
+						instructionArray, instructionChoicePos);
+				dialog.show(manager, "dialog");
+
+				break;
+
+			case R.id.layoutStartDay:
+
+				DialogFragment newFragment = new DatePickerFragment();
+				newFragment.show(manager, "datePicker");
+
+				break;
+
+			case R.id.layoutTimeAndDose:
+
+				Intent intent = new Intent(SetScheduleActivity.this,
+						TimeAndDoseActivity.class);
+				startActivityForResult(intent, 1);
+
+				break;
+
+			case R.id.btnDone:
+
+				// set medicine bean data
+				medicine.setRepetition(intervalArr[intervalChoicePos]);
+				medicine.setStart_date(startDate);
+				medicine.setInstruction(instructionArray[instructionChoicePos]);
+				String duration = durationArray[durationChoicePos];
+				medicine.setEnd_date(convertDurationToLong(duration));
+				
+				// add medicine in db
+				addMedicineInDb(medicine);
+				
+				// finish Activity
+				finish();
+				
 				break;
 
 			default:
@@ -79,7 +229,6 @@ public class SetScheduleActivity extends Activity {
 			}
 
 		}
-
 	}
 
 	class ChooseListDialog extends DialogFragment {
@@ -87,12 +236,22 @@ public class SetScheduleActivity extends Activity {
 		private String[] listOfChoices;
 		private Integer choicePos;
 		private Context context;
-		
-		public ChooseListDialog(Context context ,String[] arr, Integer choicePos) {
+		private MyOnItemClickListener onItemListener;
+		private ChooseListAdapter adapter;
+
+		public ChooseListDialog(Context context, String[] arr, Integer choicePos) {
 
 			this.listOfChoices = arr;
 			this.choicePos = choicePos;
 			this.context = context;
+
+			// create custom adapter
+			adapter = new ChooseListAdapter(context,
+					R.layout.choose_list_single_row, listOfChoices, choicePos);
+
+			// create onItemClick Listener
+			onItemListener = new MyOnItemClickListener(this, adapter, choicePos);
+
 		}
 
 		@Override
@@ -102,16 +261,16 @@ public class SetScheduleActivity extends Activity {
 			// get dialog view
 			View view = inflater.inflate(R.layout.dialog_choose_list, null,
 					false);
-			
+
 			// get List view
 			ListView chooseList = (ListView) view.findViewById(R.id.chooseList);
-			
-			// create custom adapter
-			ChooseListAdapter adapter = new ChooseListAdapter(context, R.layout.choose_list_single_row, listOfChoices, choicePos);
+
+			// set onItemClick listener on listview
+			chooseList.setOnItemClickListener(onItemListener);
 
 			// apply adapter on list view
 			chooseList.setAdapter(adapter);
-			
+
 			getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 			return view;
 		}
@@ -140,22 +299,106 @@ public class SetScheduleActivity extends Activity {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 			// inflate single row layout
-			View singleRowView = inflater.inflate(R.layout.choose_list_single_row,
-					parent, false);
-			
+			View singleRowView = inflater.inflate(
+					R.layout.choose_list_single_row, parent, false);
+
 			// get text view
-			TextView tv = (TextView) singleRowView.findViewById(R.id.tvSingleChoose);
+			TextView tv = (TextView) singleRowView
+					.findViewById(R.id.tvSingleChoose);
 			tv.setText(strings[position]);
-			
+
 			// get check image view
 			ImageView iv = (ImageView) singleRowView.findViewById(R.id.ivCheck);
-			
-			if(position == choicePos)
+
+			if (position == choicePos)
 				iv.setVisibility(ImageView.VISIBLE);
 
 			return singleRowView;
 		}
 
+	}
+
+	class MyOnItemClickListener implements OnItemClickListener {
+
+		private DialogFragment dialog;
+		private ArrayAdapter<String> adapter;
+		private Integer choicePos;
+
+		public MyOnItemClickListener(DialogFragment dialog,
+				ArrayAdapter<String> adapter, Integer choicePos) {
+
+			this.dialog = dialog;
+			this.adapter = adapter;
+			this.choicePos = choicePos;
+		}
+
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View view, int position,
+				long arg3) {
+
+			if (choicePos == intervalChoicePos)
+				intervalChoicePos = position;
+			else if (choicePos == durationChoicePos)
+				durationChoicePos = position;
+			else if (choicePos == instructionChoicePos)
+				instructionChoicePos = position;
+
+			adapter.notifyDataSetChanged();
+			dialog.dismiss();
+		}
+
+	}
+
+	class DatePickerFragment extends DialogFragment implements
+			OnDateSetListener {
+
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			// Use the current date as the default date in the picker
+			final Calendar c = Calendar.getInstance();
+			int year = c.get(Calendar.YEAR);
+			int month = c.get(Calendar.MONTH);
+			int day = c.get(Calendar.DAY_OF_MONTH);
+
+			// Create a new instance of DatePickerDialog and return it
+			return new DatePickerDialog(getActivity(), this, year, month, day);
+		}
+
+		@Override
+		public void onDateSet(DatePicker view, int year, int month, int day) {
+
+			Calendar cal  = Calendar.getInstance();
+			cal.set(year, month, day);
+			startDate = cal.getTimeInMillis();
+
+		}
+	}
+	
+	private Long convertDurationToLong(String duration){
+		
+		String [] arr = duration.split(" ");
+		int numOfDays = Integer.parseInt(arr[0]);
+		
+		if(arr[1].charAt(0) == 'W')
+			numOfDays *= 7;
+		else if(arr[1].charAt(0) == 'M')
+			numOfDays *= 30;
+		else if(arr[1].charAt(0) == 'Y')
+		numOfDays *= 365;
+		
+		Calendar cal = Calendar.getInstance();
+		
+		cal.setTimeInMillis(startDate);
+		cal.add(cal.DATE, numOfDays);
+		
+		
+		return  cal.getTimeInMillis();
+	}
+	
+	private void addMedicineInDb(Medicine med){
+		
+		// cal function in add medicine utility
+		
 	}
 
 }
