@@ -2,6 +2,8 @@ package com.team6.mobile.iti;
 
 import java.util.ArrayList;
 
+import com.team6.mobile.iti.beans.Medicine;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
