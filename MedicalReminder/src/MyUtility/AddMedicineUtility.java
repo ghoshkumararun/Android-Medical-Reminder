@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.team6.mobile.iti.AddMedicineActivity;
-import com.team6.mobile.iti.R;
 import com.team6.mobile.iti.ReminderDialogSupport;
 import com.team6.mobile.iti.beans.Medicine;
 

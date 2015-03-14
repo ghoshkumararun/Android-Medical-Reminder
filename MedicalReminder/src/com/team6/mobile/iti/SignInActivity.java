@@ -76,7 +76,7 @@ public class SignInActivity extends Activity {
 			}
 		});
 	}
-
+//send to server login info
 	class LoginTask extends AsyncTask<String, Void, Integer> {
 
 		@Override

@@ -5,8 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import com.team6.mobile.iti.R;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlarmManager;
