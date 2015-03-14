@@ -63,7 +63,13 @@
     <string name="action_check_updates">Check for Updates</string>
     <!-- Search -->
     <string name="search_hint">Search color..</string>
+<<<<<<< HEAD
 
+=======
+    <string name="title_activity_reminder_dialog_support">ReminderDialogSupport</string>
+    <string name="hello_world">Hello world!</string>
+    
+>>>>>>> branch 'master' of https://mgaberali@github.com/mgaberali/Medical-Reminder.git
     <string-array name="medicineTypes">
         <item>Capsules</item>
         <item>Tablets</item>

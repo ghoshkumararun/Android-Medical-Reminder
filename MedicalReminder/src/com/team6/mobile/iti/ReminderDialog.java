@@ -44,6 +44,7 @@ public class ReminderDialog extends Dialog implements
 			break;
 		case R.id.btnCancel:
 			dismiss();
+			
 			break;
 		default:
 			break;

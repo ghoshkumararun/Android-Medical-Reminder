@@ -9,8 +9,29 @@ import android.os.Parcelable;
  *
  * @author Mohamed
  */
+<<<<<<< HEAD
 public class Medicine implements Parcelable {
+=======
+public class Medicine {
+    
+    private String name;
+    private String start_date;
+    private String end_date;
+    private String repetition;
+    private String instruction;
+    private String type;
+    private String user_email;
+    private List<TimeDto> times;
+    private String desc;
+    private String imageURL;
+		
+	
+    public String getImageURL() {
+		return imageURL;
+	}
+>>>>>>> branch 'master' of https://mgaberali@github.com/mgaberali/Medical-Reminder.git
 
+<<<<<<< HEAD
 	private String name;
 	private long start_date;
 	private long end_date;
@@ -19,6 +40,23 @@ public class Medicine implements Parcelable {
 	private String type;
 	private String user_email;
 	private List<TimeDto> times;
+=======
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public String getName() {
+        return name;
+    }
+>>>>>>> branch 'master' of https://mgaberali@github.com/mgaberali/Medical-Reminder.git
 
 	public Medicine() {
 		// TODO Auto-generated constructor stub
