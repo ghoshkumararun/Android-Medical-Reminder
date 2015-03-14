@@ -17,8 +17,27 @@ public class Medicine {
     private String type;
     private String user_email;
     private List<TimeDto> times;
+    private String desc;
+    private String imageURL;
+		
+	
+    public String getImageURL() {
+		return imageURL;
+	}
 
-    public String getName() {
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public String getName() {
         return name;
     }
 

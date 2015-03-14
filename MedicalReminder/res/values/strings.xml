@@ -62,6 +62,8 @@
     <string name="action_check_updates">Check for Updates</string>
     <!-- Search -->
     <string name="search_hint">Search color..</string>
+    <string name="title_activity_reminder_dialog_support">ReminderDialogSupport</string>
+    <string name="hello_world">Hello world!</string>
     
     <string-array name="medicineTypes">
         <item>Capsules</item>
