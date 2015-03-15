@@ -159,10 +159,5 @@ public void function2(int id){
 
 // override on back pessed
 
-@Override
-public void onBackPressed() {
-	// TODO Auto-generated method stub
-	super.onBackPressed();
-	
-}
+
 }
