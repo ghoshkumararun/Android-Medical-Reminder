@@ -37,7 +37,7 @@ public class SignInActivity extends Activity {
 	private static final int INVALIED_EMAIL_OR_PASSWORD = 2;
 	private static final int LOGIN_FAILED = 3;
 	private int loginStatus;
-	private static final String LOGIN_URL = "http://10.145.238.201:8084/MedicalReminderServer/login";
+	private static final String LOGIN_URL = "http://10.145.239.44:8084/MedicalReminderServer/login";
 
 
 	@Override
@@ -56,6 +56,7 @@ public class SignInActivity extends Activity {
 			public void onClick(View v) {
 				i = new Intent(SignInActivity.this, SignUpActivity.class);
 				startActivity(i);
+				
 
 			}
 		});

@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.app.ActionBar.OnNavigationListener;
 import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -15,14 +16,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class HomeActivity extends Activity implements OnItemClickListener , OnItemLongClickListener,OnNavigationListener{
+public class HomeActivity extends Activity implements OnItemClickListener , OnItemLongClickListener{
 
     
     
@@ -110,12 +110,6 @@ public class HomeActivity extends Activity implements OnItemClickListener , OnIt
 
 
 @Override
-public boolean onNavigationItemSelected(int arg0, long arg1) {
-	// TODO Auto-generated method stub
-	return false;
-}
-
-@Override
 public boolean onOptionsItemSelected(MenuItem item) {
     // Take appropriate action for each action item click
     switch (item.getItemId()) {
@@ -124,20 +118,14 @@ public boolean onOptionsItemSelected(MenuItem item) {
         return true;
     case R.id.action_location_found:
         // location found
+    	
     	Intent i = new Intent(HomeActivity.this, AddMedicineActivity.class);
 		startActivity(i);
         return true;
     case R.id.action_refresh:
         // refresh
         return true;
-    case R.id.action_help:
-        // help action
-    	
-        return true;
-    case R.id.action_check_updates:
-        // check for updates action
-    	
-        return true;
+   
     default:
         return super.onOptionsItemSelected(item);
     }
@@ -169,5 +157,12 @@ public void function2(int id){
 	Toast.makeText(this, "function 2 called", 1000).show();
 }
 
+// override on back pessed
 
+@Override
+public void onBackPressed() {
+	// TODO Auto-generated method stub
+	super.onBackPressed();
+	
+}
 }
