@@ -10,28 +10,34 @@
         android:layout_height="wrap_content"
         android:padding="10dp" >
 
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/sarah" />
+
         <TextView
             android:id="@+id/txtMedicineName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Medicine name"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#000000"
-             />
+            android:textColor="#000000" />
 
-        <ImageView
-            android:id="@+id/imageView1"
+        <TextView
+            android:id="@+id/takenTxtV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/sarah"
-            android:layout_marginRight="20dp" />
+            android:text="taken or not"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000000" />
 
         <CheckBox
             android:id="@+id/checkBox1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="26dp" />
-
     </LinearLayout>
 
 </LinearLayout>

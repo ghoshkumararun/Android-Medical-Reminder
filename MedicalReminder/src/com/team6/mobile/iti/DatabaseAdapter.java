@@ -11,7 +11,6 @@ import android.database.sqlite.SQLiteDatabase;
 public class DatabaseAdapter {
 	DatabaseHelper databaseHelper;
 	SQLiteDatabase database;
-	
 	private static final String TABLE_MEDICINE = "MEDICINE";
 	private static final String MEDICINE_ID_COL = "ID";
 	private static final String MEDICINE_NAME_COL = "NAME";
@@ -71,12 +70,51 @@ public class DatabaseAdapter {
 			
 			while(cursor.moveToNext() == true){
 			//	res = 0;
-				Medicine temp = new Medicine();
-				temp.setName(cursor.getString(cursor.getColumnIndex(MEDICINE_NAME_COL)));
-				temp.setType(cursor.getString(cursor.getColumnIndex(MEDECINE_TYPE_COL)));
-				temp.setDesc(cursor.getString(cursor.getColumnIndex(MEDECINE_REPETATION_COL)));
-				temp.setImageURL(cursor.getString(cursor.getColumnIndex(MEDICINE_IMAGE_URL_COL)));
-				allMedecine.add(temp);
+				Medicine medObj = new Medicine();
+				medObj.setName(cursor.getString(cursor.getColumnIndex(MEDICINE_NAME_COL)));
+				medObj.setType(cursor.getString(cursor.getColumnIndex(MEDECINE_TYPE_COL)));
+				medObj.setDesc(cursor.getString(cursor.getColumnIndex(MEDECINE_REPETATION_COL)));
+				medObj.setImageURL(cursor.getString(cursor.getColumnIndex(MEDICINE_IMAGE_URL_COL)));
+				allMedecine.add(medObj);
+			}
+			
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		//	res = 1;
+		}
+		//return res;
+		return allMedecine;
+	}
+//sarah 
+	public ArrayList<Medicine> selectReminderMedecines(){
+		database = databaseHelper.getReadableDatabase();
+		ArrayList<Medicine> allMedecine = new ArrayList<Medicine>();
+	    
+		Medicine medObj = new Medicine();
+		long startDate=medObj.getStart_date();
+		long endDate=medObj.getEnd_date();
+
+		try{
+			
+			Cursor cursor = database.rawQuery(
+				   // "SELECT * FROM MEDICINE WHERE column1=? OR column2=?",
+				    "SELECT * FROM table_name WHERE column_name BETWEEN ? AND ?",
+				    new String[] {""+startDate, ""+endDate}
+				   
+				);	
+			
+			/*SQLiteStatement stmt = db.compileStatement("SELECT * FROM Country WHERE code = ?");
+				stmt.bindString(1, "US");
+					stmt.execute();*/
+			
+			while(cursor.moveToNext() == true){
+			//	res = 0;
+				medObj.setName(cursor.getString(cursor.getColumnIndex(MEDICINE_NAME_COL)));
+				medObj.setType(cursor.getString(cursor.getColumnIndex(MEDECINE_TYPE_COL)));
+				medObj.setDesc(cursor.getString(cursor.getColumnIndex(MEDECINE_REPETATION_COL)));
+				medObj.setImageURL(cursor.getString(cursor.getColumnIndex(MEDICINE_IMAGE_URL_COL)));
+				allMedecine.add(medObj);
 			}
 			
 		}

@@ -42,7 +42,7 @@ public class AddMedicineActivity extends Activity {
 	public static final int MEDIA_TYPE_VIDEO = 2;
 
 	// directory name to store captured images and videos
-	private static final String IMAGE_DIRECTORY_NAME = "MyImages";
+	private static final String IMAGE_DIRECTORY_NAME = "MedicalReminder";
 
 	public Uri fileUri; // file url to store image/video
 	//end "sarah"
@@ -93,11 +93,9 @@ public class AddMedicineActivity extends Activity {
 			}
 		});
 	imgvMedicineImage.setOnClickListener(new View.OnClickListener() {
-		
 		@Override
 		public void onClick(View v) {
             captureImage();
-
 			
 		}
 	});	
@@ -185,7 +183,6 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 private void previewCapturedImage() {
     try {
 
-        //imgPreview.setVisibility(View.VISIBLE);
 
         // bimatp factory
         BitmapFactory.Options options = new BitmapFactory.Options();
@@ -211,8 +208,7 @@ private static File getOutputMediaFile(int type) {
 
     // External sdcard location
     File mediaStorageDir = new File(
-            Environment
-                    .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
             IMAGE_DIRECTORY_NAME);
 
     // Create the storage directory if it does not exist
