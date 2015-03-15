@@ -63,6 +63,7 @@
     <string name="action_check_updates">Check for Updates</string>
     <!-- Search -->
     <string name="search_hint">Search color..</string>
+
     <string-array name="medicineTypes">
         <item>Capsules</item>
         <item>Tablets</item>
