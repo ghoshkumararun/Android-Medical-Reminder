@@ -52,6 +52,7 @@
             android:text="@string/sheduleAndDose" />
 
     <LinearLayout
+        android:id="@+id/layoutTimeAndDose"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#FFFFFF" 
@@ -87,6 +88,7 @@
             android:text="@string/startDay" />
 
     <LinearLayout
+        android:id="@+id/layoutStartDay"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#FFFFFF" 
@@ -122,6 +124,7 @@
             android:text="@string/duration" />
 
     <LinearLayout
+        android:id="@+id/layoutDuration"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#FFFFFF" 
@@ -157,6 +160,7 @@
             android:text="@string/instruction" />
 
     <LinearLayout
+        android:id="@+id/layoutInstruction"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#FFFFFF" 
@@ -184,7 +188,7 @@
     </LinearLayout>
     
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/btnDone"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"

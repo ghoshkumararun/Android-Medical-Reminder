@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="app_name">Medical Reminder</string>
@@ -8,8 +7,8 @@
     <string name="dose">Dose</string>
     <string name="schedule">Schedule</string>
     <string name="setSchedule">Set Schedule</string>
-    <string name="interval">Repetition</string>
-    <string name="sheduleAndDose">Time And Dose</string>
+    <string name="interval">Interval</string>
+    <string name="sheduleAndDose">Schedule And Dose</string>
     <string name="startDay">Start Day</string>
     <string name="duration">Duration</string>
     <string name="instruction">Instruction</string>
@@ -63,49 +62,5 @@
     <string name="action_check_updates">Check for Updates</string>
     <!-- Search -->
     <string name="search_hint">Search color..</string>
-    <string-array name="medicineTypes">
-        <item>Capsules</item>
-        <item>Tablets</item>
-        <item>Injection</item>
-        <item>Pills</item>
-        <item>Sprays</item>
-        <item>Patches</item>
-        <item>Drops</item>
-        <item>Milligrams</item>
-    </string-array>
-    <string-array name="medicineInterval">
-        <item>Dialy</item>
-        <item>Weekly</item>
-        <item>Monthly</item>
-    </string-array>
-    <string-array name="medicineFullDuration">
-        <item>1 Day</item>
-        <item>2 Days</item>
-        <item>3 Days</item>
-        <item>4 Days</item>
-        <item>5 Days</item>
-        <item>6 Days</item>
-        <item>1 Week</item>
-        <item>2 Weeks</item>
-        <item>3 Weeks</item>
-        <item>1 Month</item>
-        <item>2 Months</item>
-        <item>3 Months</item>
-        <item>4 Months</item>
-        <item>5 Months</item>
-        <item>6 Months</item>
-        <item>1 Year</item>
-    </string-array>
-    <string-array name="medicineInstrutions">
-        <item>Before food</item>
-        <item>With food</item>
-        <item>After food</item>
-        <item>No food instruction</item>
-    </string-array>
-
-    <string name="title_activity_time_and_dose">TimeAndDoseActivity</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="time">Time</string>
-    <string name="addTime">Add Time</string>
 
 </resources>

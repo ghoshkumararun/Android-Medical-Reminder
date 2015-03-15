@@ -137,11 +137,11 @@ public class ReminderListView extends Activity {
 				}
 			});
 
-			Bitmap myImg = decodeFile(medicines.get(position).getImageURL(),
+			Bitmap myImg = decodeFile(medicines.get(position).getImageUrl(),
 					50, 50);
 			holder.imgView.setImageBitmap(myImg);
 			holder.txtView.setText(medicines.get(position).getName());
-			if (medicines.get(position).getIsTaken()== true) {
+			if (medicines.get(position).getIsTaken()== 1) {
 				holder.txtView.setText("is taken");
 			} else
 

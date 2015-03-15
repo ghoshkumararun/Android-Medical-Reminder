@@ -4,8 +4,6 @@ package com.team6.mobile.iti;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.team6.mobile.iti.beans.Medicine;
-
 import android.app.ActionBar.OnNavigationListener;
 import android.app.Activity;
 import android.content.Intent;
@@ -64,13 +62,11 @@ public class HomeActivity extends Activity implements OnItemClickListener , OnIt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        DatabaseHelper helper = new DatabaseHelper(this);
-        DatabaseAdapter databaseAdapter = new DatabaseAdapter(helper);
-        ArrayList<Medicine> medicineList = databaseAdapter.selectAllMedecines();
+        
         rowItems = new ArrayList<RowItem>();
-        for (int i = 0; i < medicineList.size(); i++) {
-        	 RowItem item = new RowItem(R.drawable.antivirus, medicineList.get(i).getName(), medicineList.get(i).getType());
-             rowItems.add(item);
+        for (int i = 0; i < titles.length; i++) {
+            RowItem item = new RowItem(images[i], titles[i], descriptions[i]);
+            rowItems.add(item);
         }
  
         listView = (ListView) findViewById(R.id.listView1);

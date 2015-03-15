@@ -67,16 +67,13 @@ public class SignInActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				/*LoginTask loginTask = new LoginTask();
+				LoginTask loginTask = new LoginTask();
 				loginTask.execute(txtEmail.getText().toString(), txtPass.getText().toString());
-				//"m@yahoo.com", "123456"*/
-				
-				Intent in = new Intent(SignInActivity.this,HomeActivity.class);
-				startActivity(in);
+				//"m@yahoo.com", "123456"
 			}
 		});
 	}
-//send to server login info
+
 	class LoginTask extends AsyncTask<String, Void, Integer> {
 
 		@Override
