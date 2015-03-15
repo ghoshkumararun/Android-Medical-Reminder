@@ -114,11 +114,15 @@ public class TimeAndDoseActivity extends Activity {
 			if (!timeSetted) {
 				TimeDto time = new TimeDto();
 				Calendar cal = Calendar.getInstance();
-				cal.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH,
-						hourOfDay, minute);
+				
+				int year = cal.get(Calendar.YEAR);
+				int month = cal.get(Calendar.MONTH);
+				int day = cal.get(Calendar.DAY_OF_MONTH);
+				
+				cal.set(year, month, day, hourOfDay, minute);
+				
 				time.setTake_time(cal.getTimeInMillis());
 				
-
 				time.setDose(0.25f);
 				medicineTimes.add(time);
 				adapter.notifyDataSetChanged();

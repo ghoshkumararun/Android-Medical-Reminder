@@ -9,6 +9,7 @@ import java.util.List;
 import com.team6.mobile.iti.beans.Medicine;
 import com.team6.mobile.iti.beans.TimeDto;
 
+import MyUtility.AddMedicineUtility;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -220,7 +221,7 @@ public class SetScheduleActivity extends Activity {
 				addMedicineInDb(medicine);
 				
 				// finish Activity
-				finish();
+				//finish();
 				
 				break;
 
@@ -397,7 +398,8 @@ public class SetScheduleActivity extends Activity {
 	
 	private void addMedicineInDb(Medicine med){
 		
-		// cal function in add medicine utility
+		AddMedicineUtility obj = new AddMedicineUtility();
+		obj.setAlarm(med,SetScheduleActivity.this );
 		
 	}
 
