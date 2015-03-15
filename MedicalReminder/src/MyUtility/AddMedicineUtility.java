@@ -2,12 +2,16 @@ package MyUtility;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.team6.mobile.iti.AddMedicineActivity;
+import com.team6.mobile.iti.DatabaseAdapter;
+import com.team6.mobile.iti.DatabaseHelper;
 import com.team6.mobile.iti.ReminderDialogSupport;
 import com.team6.mobile.iti.beans.Medicine;
 
@@ -27,7 +31,10 @@ public class AddMedicineUtility {
 
 	}
 	
-	public void addMedicine(Medicine med){
+	public void addMedicine(Medicine med,Context con){
+		DatabaseHelper dbHelper=new DatabaseHelper(con);
+		DatabaseAdapter dbAdapter=new DatabaseAdapter(dbHelper);
+		dbAdapter.insertMedecine(medName, desc, type, urlImage, startD, endDate, repeation, dose);
 		
 	}
 

@@ -43,7 +43,7 @@ public class AddMedicineActivity extends Activity {
 	private static final int CAMERA_CAPTURE_VIDEO_REQUEST_CODE = 200;
 	public static final int MEDIA_TYPE_IMAGE = 1;
 	public static final int MEDIA_TYPE_VIDEO = 2;
-
+	   String timeStamp;
 	// directory name to store captured images and videos
 	private static final String IMAGE_DIRECTORY_NAME = "MedicalReminder";
 
@@ -230,12 +230,19 @@ public Uri getOutputMediaFileUri(int type) {
     return Uri.fromFile(getOutputMediaFile(type));
 }
 
-private static File getOutputMediaFile(int type) {
+private  File getOutputMediaFile(int type) {
+	String directory;
+	String imageName;
 
     // External sdcard location
     File mediaStorageDir = new File(
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
             IMAGE_DIRECTORY_NAME);
+
+  //  directory=Environment.getExternalStorageDirectory().getName()+""+IMAGE_DIRECTORY_NAME;
+    directory=Environment.getExternalStorageDirectory().getAbsolutePath()+""+IMAGE_DIRECTORY_NAME;
+
+    Log.i("enviroment.external.Name+imgDirect", directory);
 
     // Create the storage directory if it does not exist
     if (!mediaStorageDir.exists()) {
@@ -247,7 +254,7 @@ private static File getOutputMediaFile(int type) {
     }
 
     // Create a media file name
-    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+    timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
             Locale.getDefault()).format(new Date());
     File mediaFile;
     if (type == MEDIA_TYPE_IMAGE) {
@@ -257,9 +264,21 @@ private static File getOutputMediaFile(int type) {
         return null;
     }
 
+    imageName="IMG_" + timeStamp + ".jpg";
+    returnImageFullPath( directory ,  imageName);
+
+    
     return mediaFile;
 }
 
+
+String returnImageFullPath(String directory , String imageName){
+	
+	String imagePath=directory+"/"+imageName;
+	Log.i("IIIIIIIIIIIIIIIIIIIIIIII",imagePath);
+	return imagePath;
+	
+}
 	
 	
 
@@ -323,7 +342,6 @@ private static File getOutputMediaFile(int type) {
 
 			// set image
 			//img.setImageResource(R.drawable.antivirus);
-			
 			return singleRowView;
 		}
 

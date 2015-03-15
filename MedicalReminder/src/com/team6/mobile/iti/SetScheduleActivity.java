@@ -9,6 +9,7 @@ import java.util.List;
 import com.team6.mobile.iti.beans.Medicine;
 import com.team6.mobile.iti.beans.TimeDto;
 
+import MyUtility.AddMedicineUtility;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -87,7 +88,6 @@ public class SetScheduleActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_set_schedule);
 
-		
 		// get medicine object from intent
 		medicine = getIntent().getParcelableExtra("medicine");
 
@@ -215,13 +215,13 @@ public class SetScheduleActivity extends Activity {
 				medicine.setInstruction(instructionArray[instructionChoicePos]);
 				String duration = durationArray[durationChoicePos];
 				medicine.setEnd_date(convertDurationToLong(duration));
-				
+
 				// add medicine in db
 				addMedicineInDb(medicine);
-				
+
 				// finish Activity
 				finish();
-				
+
 				break;
 
 			default:
@@ -367,38 +367,38 @@ public class SetScheduleActivity extends Activity {
 		@Override
 		public void onDateSet(DatePicker view, int year, int month, int day) {
 
-			Calendar cal  = Calendar.getInstance();
+			Calendar cal = Calendar.getInstance();
 			cal.set(year, month, day);
 			startDate = cal.getTimeInMillis();
 
 		}
 	}
-	
-	private Long convertDurationToLong(String duration){
-		
-		String [] arr = duration.split(" ");
+
+	private Long convertDurationToLong(String duration) {
+
+		String[] arr = duration.split(" ");
 		int numOfDays = Integer.parseInt(arr[0]);
-		
-		if(arr[1].charAt(0) == 'W')
+
+		if (arr[1].charAt(0) == 'W')
 			numOfDays *= 7;
-		else if(arr[1].charAt(0) == 'M')
+		else if (arr[1].charAt(0) == 'M')
 			numOfDays *= 30;
-		else if(arr[1].charAt(0) == 'Y')
-		numOfDays *= 365;
-		
+		else if (arr[1].charAt(0) == 'Y')
+			numOfDays *= 365;
+
 		Calendar cal = Calendar.getInstance();
-		
+
 		cal.setTimeInMillis(startDate);
 		cal.add(cal.DATE, numOfDays);
-		
-		
-		return  cal.getTimeInMillis();
+
+		return cal.getTimeInMillis();
 	}
-	
-	private void addMedicineInDb(Medicine med){
-		
-		// cal function in add medicine utility
-		
+
+	private void addMedicineInDb(Medicine med) {
+
+		AddMedicineUtility obj = new AddMedicineUtility();
+		obj.addMedicine(med,this);
+
 	}
 
 }
