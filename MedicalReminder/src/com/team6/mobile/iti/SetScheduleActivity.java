@@ -19,6 +19,8 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,25 +71,59 @@ public class SetScheduleActivity extends Activity {
 	private String[] instructionArray;
 
 	// interval choice position
-	private Integer intervalChoicePos = 0;
+	private Integer intervalChoicePos;
 
 	// duration choice position
-	private Integer durationChoicePos = 0;
+	private Integer durationChoicePos;
 
 	// instruction choice position
-	private Integer instructionChoicePos = 0;
+	private Integer instructionChoicePos;
 
 	// start date
 	private long startDate;
 
 	// medicine bean
-	Medicine medicine;
+	private Medicine medicine;
+
+	// interval text view
+	private TextView tvInterval;
+
+	// Time and dose text view
+	private TextView tvTimeAndDose;
+
+	// start day text view
+	private TextView tvStartDay;
+
+	// Duration text view
+	private TextView tvDuration;
+
+	// Instruction text view
+	private TextView tvInstruction;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_set_schedule);
+		
+		// init positions
+		intervalChoicePos = new Integer(0);
+		durationChoicePos = new Integer(0);
+		instructionChoicePos = new Integer(0);
 
+		// find interval text view
+		tvInterval = (TextView) findViewById(R.id.tvInterval);
+
+		// find time and dose text view
+		tvTimeAndDose = (TextView) findViewById(R.id.tvTimeAndDose);
+
+		// find start day text view
+		tvStartDay = (TextView) findViewById(R.id.tvStartDay);
+		
+		// find duration text view
+		tvDuration = (TextView) findViewById(R.id.tvDuration);
+
+		// find instruction text view
+		tvInstruction = (TextView) findViewById(R.id.tvInstruction);
 		
 		// get medicine object from intent
 		medicine = getIntent().getParcelableExtra("medicine");
@@ -132,7 +168,12 @@ public class SetScheduleActivity extends Activity {
 
 		// set start date to date of today
 		startDate = Calendar.getInstance().getTimeInMillis();
-
+		
+		// set textviews to default values
+		tvInterval.setText(intervalArr[instructionChoicePos]);
+		tvStartDay.setText(DateFormat.format("yyyy-MM-dd", startDate));
+		tvDuration.setText(durationArray[durationChoicePos]);
+		tvInstruction.setText(instructionArray[instructionChoicePos]);
 	}
 
 	@Override
@@ -145,9 +186,15 @@ public class SetScheduleActivity extends Activity {
 					.getParcelableArrayListExtra("times");
 
 			// put times in medicine bean
-			if (times != null)
+			if (times != null){
 				medicine.setTimes(times);
-
+				
+				if(times.size() >0)
+					tvTimeAndDose.setText(times.size()+" times");
+				else
+					tvTimeAndDose.setText("None");
+				
+			}
 		}
 
 	}
@@ -204,6 +251,11 @@ public class SetScheduleActivity extends Activity {
 
 				Intent intent = new Intent(SetScheduleActivity.this,
 						TimeAndDoseActivity.class);
+				
+				// put times on intent if its size > 0
+				if(medicine.getTimes() != null && medicine.getTimes().size() > 0)
+					intent.putParcelableArrayListExtra("timesList", (ArrayList<? extends Parcelable>) medicine.getTimes());
+				
 				startActivityForResult(intent, 1);
 
 				break;
@@ -216,13 +268,13 @@ public class SetScheduleActivity extends Activity {
 				medicine.setInstruction(instructionArray[instructionChoicePos]);
 				String duration = durationArray[durationChoicePos];
 				medicine.setEnd_date(convertDurationToLong(duration));
-				
+
 				// add medicine in db
 				addMedicineInDb(medicine);
-				
+
 				// finish Activity
-				//finish();
-				
+				// finish();
+
 				break;
 
 			default:
@@ -337,12 +389,18 @@ public class SetScheduleActivity extends Activity {
 		public void onItemClick(AdapterView<?> arg0, View view, int position,
 				long arg3) {
 
-			if (choicePos == intervalChoicePos)
+			if (choicePos == intervalChoicePos){
 				intervalChoicePos = position;
-			else if (choicePos == durationChoicePos)
+				tvInterval.setText(intervalArr[position]);
+			}
+			else if (choicePos == durationChoicePos){
 				durationChoicePos = position;
-			else if (choicePos == instructionChoicePos)
+				tvDuration.setText(durationArray[durationChoicePos]);
+			}
+			else if (choicePos == instructionChoicePos){
 				instructionChoicePos = position;
+				tvInstruction.setText(instructionArray[instructionChoicePos]);
+			}
 
 			adapter.notifyDataSetChanged();
 			dialog.dismiss();
@@ -357,6 +415,7 @@ public class SetScheduleActivity extends Activity {
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			// Use the current date as the default date in the picker
 			final Calendar c = Calendar.getInstance();
+			c.setTimeInMillis(startDate);
 			int year = c.get(Calendar.YEAR);
 			int month = c.get(Calendar.MONTH);
 			int day = c.get(Calendar.DAY_OF_MONTH);
@@ -368,39 +427,39 @@ public class SetScheduleActivity extends Activity {
 		@Override
 		public void onDateSet(DatePicker view, int year, int month, int day) {
 
-			Calendar cal  = Calendar.getInstance();
+			Calendar cal = Calendar.getInstance();
 			cal.set(year, month, day);
 			startDate = cal.getTimeInMillis();
-
+			tvStartDay.setText(DateFormat.format("yyyy-MM-dd", cal.getTime()));
+			
 		}
 	}
-	
-	private Long convertDurationToLong(String duration){
-		
-		String [] arr = duration.split(" ");
+
+	private Long convertDurationToLong(String duration) {
+
+		String[] arr = duration.split(" ");
 		int numOfDays = Integer.parseInt(arr[0]);
-		
-		if(arr[1].charAt(0) == 'W')
+
+		if (arr[1].charAt(0) == 'W')
 			numOfDays *= 7;
-		else if(arr[1].charAt(0) == 'M')
+		else if (arr[1].charAt(0) == 'M')
 			numOfDays *= 30;
-		else if(arr[1].charAt(0) == 'Y')
-		numOfDays *= 365;
-		
+		else if (arr[1].charAt(0) == 'Y')
+			numOfDays *= 365;
+
 		Calendar cal = Calendar.getInstance();
-		
+
 		cal.setTimeInMillis(startDate);
 		cal.add(cal.DATE, numOfDays);
-		
-		
-		return  cal.getTimeInMillis();
+
+		return cal.getTimeInMillis();
 	}
-	
-	private void addMedicineInDb(Medicine med){
-		
+
+	private void addMedicineInDb(Medicine med) {
+
 		AddMedicineUtility obj = new AddMedicineUtility();
-		obj.setAlarm(med,SetScheduleActivity.this );
-		
+		obj.setAlarm(med, SetScheduleActivity.this);
+
 	}
 
 }

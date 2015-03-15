@@ -43,6 +43,7 @@ public class DatabaseAdapter {
 		medValues.put(MEDICINE_IMAGE_URL_COL, urlImage);
 		
 		
+		
 			try{
 				
 				database.insert(tableName,null,medValues);
