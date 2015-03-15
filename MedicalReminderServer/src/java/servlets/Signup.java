@@ -35,24 +35,27 @@ public class Signup extends HttpServlet {
         // get response writer
         PrintWriter out = response.getWriter();
 
-        try {
+//        try {
 
             // get user data parameter
-            String userData = request.getParameter("user");
+         //   String userData = request.getParameter("user");
 
             // create Json Parser
-            JSONParser parser = new JSONParser();
+          //  JSONParser parser = new JSONParser();
 
             // create json object from user data
-            JSONObject userJsonObject = (JSONObject) parser.parse(userData);
+        //    JSONObject userJsonObject = (JSONObject) parser.parse(userData);
 
             // create user object
             User user = new User();
 
             // populate user object with data in user json object
-            user.setName((String) userJsonObject.get("name"));
-            user.setEmail((String) userJsonObject.get("email"));
-            user.setPassword((String) userJsonObject.get("password"));
+//            user.setName((String) userJsonObject.get("name"));
+//            user.setEmail((String) userJsonObject.get("email"));
+//            user.setPassword((String) userJsonObject.get("password"));
+            user.setName(request.getParameter("name"));
+            user.setEmail(request.getParameter("email"));
+            user.setPassword(request.getParameter("password"));
 
             // insert user in db
             boolean inserted = userDao.insertUser(user);
@@ -74,9 +77,9 @@ public class Signup extends HttpServlet {
             // make output of json object
             out.print(jsonObj);
 
-        } catch (ParseException ex) {
-            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (ParseException ex) {
+//            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
     }
 
