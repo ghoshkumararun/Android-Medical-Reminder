@@ -132,7 +132,7 @@ public void syncMethod(){
 	SyncWithServer syncServer = new SyncWithServer();
 	ArrayList<Medicine> medecines = databaseAdapter.selectToSync();
 	Medicine [] med = medecines.toArray(new Medicine[medecines.size()]);
-	syncServer.execute( med);
+	syncServer.execute(med);
 }
 
 

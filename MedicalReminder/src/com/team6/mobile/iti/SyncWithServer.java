@@ -2,6 +2,11 @@ package com.team6.mobile.iti;
 
 import java.util.ArrayList;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
+
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.renderscript.Type;
 import android.util.Log;
@@ -18,7 +23,7 @@ public class SyncWithServer extends AsyncTask<Medicine, Void, Integer> {
 	private static final int SYNC_FAILED = 3;
 	private int syncStatus;
 	//write the url of the back end servlet
-	private static final String SYNC_URL = "http://10.145.239.44:8084/MedicalReminderServer/login";
+	private static final String SYNC_URL = "http://10.145.239.44:8084/MedicalReminderServer/newmedecines";
 	
 	JSONParser jsonObj ;
 
@@ -33,7 +38,24 @@ public class SyncWithServer extends AsyncTask<Medicine, Void, Integer> {
 		java.lang.reflect.Type myType = new TypeToken<Medicine[]>(){}.getType();
 		String jsonString = myGson.toJson(params,myType);
 		Log.i("json",jsonString);
+		
+		JSONParser parser = new JSONParser();
+		SharedPreferences sharedPref ;
+		
+		BasicNameValuePair requestParam = new BasicNameValuePair("data", jsonString);
+		ArrayList<NameValuePair> parameters = new ArrayList<NameValuePair>();
+		parameters.add(requestParam);
+		JSONObject jsonResponse = parser.makeHttpRequest(SYNC_URL, "POST",
+				parameters);
 		return null;
 	}
-	
+	@Override
+	protected void onPostExecute(Integer result) {
+		// TODO Auto-generated method stub
+		super.onPostExecute(result);
+		
+		if(result == 0){
+			
+		}
+	}
 }

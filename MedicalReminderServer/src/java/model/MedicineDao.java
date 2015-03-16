@@ -39,7 +39,7 @@ public class MedicineDao {
         return INSTANCE;
     }
 
-    public boolean insertMedicines(List<Medicine> medicines) {
+    public boolean insertMedicines(List<Medicine> medicines,String email) {
 
         // prepare query
         String query = "INSERT INTO medicine(name, start_date, end_date, repetition, instruction, type, user_email) VALUES(?,?,?,?,?,?,?)";
@@ -61,7 +61,7 @@ public class MedicineDao {
                 statement.setString(4, medicine.getRepetition());
                 statement.setString(5, medicine.getInstruction());
                 statement.setString(6, medicine.getType());
-                statement.setString(7, medicine.getUser_email());
+                statement.setString(7, email);
                 statement.addBatch();
 
             }
