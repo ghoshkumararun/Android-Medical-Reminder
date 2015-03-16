@@ -13,12 +13,15 @@ import MyUtility.AddMedicineUtility;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.AlarmManager;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.Touch;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -399,8 +402,8 @@ public class SetScheduleActivity extends Activity {
 	private void addMedicineInDb(Medicine med){
 		
 		AddMedicineUtility obj = new AddMedicineUtility();
-		obj.setAlarm(med,SetScheduleActivity.this );
-		
+		obj.setAlarm(med,SetScheduleActivity.this);
+		Toast.makeText(SetScheduleActivity.this, "Next Alarm is "+new Date(med.getTimes().get(0).getTake_time()), Toast.LENGTH_SHORT).show();
 	}
 
 }

@@ -120,6 +120,7 @@ public class TimeAndDoseActivity extends Activity {
 				int day = cal.get(Calendar.DAY_OF_MONTH);
 				
 				cal.set(year, month, day, hourOfDay, minute);
+				cal.set(Calendar.SECOND, 00);
 				
 				time.setTake_time(cal.getTimeInMillis());
 				
