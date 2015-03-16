@@ -135,7 +135,7 @@ public class TimeAndDoseActivity extends Activity {
 				
 				time.setTake_time(cal.getTimeInMillis());
 				
-				time.setDose(0.25f);
+				time.setDose("0.25f");
 				medicineTimes.add(time);
 				adapter.notifyDataSetChanged();
 				timeSetted = true;
@@ -202,10 +202,10 @@ public class TimeAndDoseActivity extends Activity {
 				public void onClick(View v) {
 
 					TimeDto time = medicineTimes.get(position);
-					if (time.getDose() > 0.25f) {
+				/*	if (time.getDose() > 0.25f) {
 						time.setDose(time.getDose() - 0.25f);
 						adapter.notifyDataSetChanged();
-					}
+					}*/
 				}
 			});
 

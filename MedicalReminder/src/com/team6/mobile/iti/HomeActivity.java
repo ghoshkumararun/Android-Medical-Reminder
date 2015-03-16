@@ -9,6 +9,7 @@ import com.team6.mobile.iti.beans.Medicine;
 
 
 
+
 import android.app.Activity;
 import android.app.Application;
 import android.app.ActionBar.OnNavigationListener;
@@ -69,7 +70,7 @@ public class HomeActivity extends Activity implements  OnItemClickListener{
         setContentView(R.layout.activity_home);
         DatabaseHelper databaseHelper = new  DatabaseHelper(this);
         DatabaseAdapter databaseAdapter = new DatabaseAdapter(databaseHelper);
-       // databaseAdapter.insertMedecine("katafklam", "good medecine", "medecine", "med");
+        databaseAdapter.insertMedecine("katafklam", "good medecine", "medecine", "med");
         ArrayList<Medicine> allMedecines = databaseAdapter.selectAllMedecines();
         rowItems = new ArrayList<RowItem>();
         for (int i = 0; i < allMedecines.size(); i++) {
@@ -117,12 +118,23 @@ public boolean onOptionsItemSelected(MenuItem item) {
         return true;
     case R.id.action_refresh:
         // refresh
+    	syncMethod();
         return true;
    
     default:
         return super.onOptionsItemSelected(item);
     }
 }
+public void syncMethod(){
+	Toast.makeText(getApplicationContext(), "Synch button", Toast.LENGTH_SHORT).show();
+	DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
+	DatabaseAdapter databaseAdapter = new DatabaseAdapter(databaseHelper);
+	SyncWithServer syncServer = new SyncWithServer();
+	ArrayList<Medicine> medecines = databaseAdapter.selectToSync();
+	Medicine [] med = medecines.toArray(new Medicine[medecines.size()]);
+	syncServer.execute( med);
+}
+
 
 //create context menu
 @Override

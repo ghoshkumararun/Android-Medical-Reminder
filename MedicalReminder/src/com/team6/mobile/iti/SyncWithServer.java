@@ -1,8 +1,13 @@
 package com.team6.mobile.iti;
 
+import java.util.ArrayList;
+
 import android.os.AsyncTask;
+import android.renderscript.Type;
+import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.team6.mobile.iti.beans.Medicine;
 import com.team6.mobile.iti.connection.JSONParser;
 
@@ -22,8 +27,12 @@ public class SyncWithServer extends AsyncTask<Medicine, Void, Integer> {
 	@Override
 	protected Integer doInBackground(Medicine... params) {
 		// TODO Auto-generated method stub
-		Gson mGson = new Gson();
-		mGson.toJson(src)
+		
+		
+		Gson myGson = new Gson();
+		java.lang.reflect.Type myType = new TypeToken<Medicine[]>(){}.getType();
+		String jsonString = myGson.toJson(params,myType);
+		Log.i("json",jsonString);
 		return null;
 	}
 	

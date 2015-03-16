@@ -8,6 +8,7 @@ import com.team6.mobile.iti.beans.TimeDto;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class DatabaseAdapter {
 	DatabaseHelper databaseHelper;
@@ -127,7 +128,8 @@ try{
 		catch (Exception e) {
 			// TODO: handle exception
 		//	res = 1;
+			Log.i("error","error happened");
 		}
-		
+		return selectedList;
 	}
 }
