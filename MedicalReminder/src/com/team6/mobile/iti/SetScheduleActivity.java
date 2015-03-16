@@ -396,6 +396,10 @@ public class SetScheduleActivity extends Activity {
 
 	private void addMedicineInDb(Medicine med) {
 
+		med.setImageUrl("sssss");
+		
+		Log.i("xxxx", med.getName()+"\n"+med.getType()+"\n"+med.getImageUrl());
+		
 		AddMedicineUtility obj = new AddMedicineUtility();
 		obj.addMedicine(med,this);
 

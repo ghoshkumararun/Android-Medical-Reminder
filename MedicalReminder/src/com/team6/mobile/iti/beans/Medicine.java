@@ -19,6 +19,15 @@ public class Medicine implements Parcelable {
 	private String desc;
 	private String imageUrl;
 	private int isTaken;
+	private String doseQuantity;
+
+	public String getDoseQuantity() {
+		return doseQuantity;
+	}
+
+	public void setDoseQuantity(String doseQuantity) {
+		this.doseQuantity = doseQuantity;
+	}
 
 	public Medicine() {
 		// TODO Auto-generated constructor stub
@@ -83,8 +92,8 @@ public class Medicine implements Parcelable {
 		return repetition;
 	}
 
-	public void setRepetition(String repetition) {
-		this.repetition = repetition;
+	public void setRepetition(String  intervalArr) {
+		this.repetition = intervalArr;
 	}
 
 	public String getInstruction() {
@@ -127,7 +136,6 @@ public class Medicine implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-
 		dest.writeString(name);
 		dest.writeLong(start_date);
 		dest.writeLong(end_date);

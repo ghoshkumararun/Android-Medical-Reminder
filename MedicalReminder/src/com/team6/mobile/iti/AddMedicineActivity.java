@@ -114,6 +114,7 @@ public class AddMedicineActivity extends Activity {
 				// add medicine object on intent
 				intent.putExtra("medicine", medicine);
 				
+				
 				startActivity(intent);
 				// setAlram(v);
 			}
@@ -265,8 +266,8 @@ private  File getOutputMediaFile(int type) {
     }
 
     imageName="IMG_" + timeStamp + ".jpg";
-    returnImageFullPath( directory ,  imageName);
-
+    String imageUrl = returnImageFullPath( directory ,  imageName);
+    medicine.setImageURL(imageUrl);
     
     return mediaFile;
 }

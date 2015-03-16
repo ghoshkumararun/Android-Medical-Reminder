@@ -44,15 +44,14 @@ public class ReminderListView extends Activity {
 
 		DatabaseHelper helper = new DatabaseHelper(this);
 		DatabaseAdapter databaseAdapter = new DatabaseAdapter(helper);
+		//medicines = databaseAdapter.selectReminderMedecines();
 		medicines = databaseAdapter.selectAllMedecines();
-		customAdapter adapter = new customAdapter(this, R.layout.single_row,
-				medicines);
+		customAdapter adapter = new customAdapter(this, R.layout.single_row,medicines);
 		medicineList.setAdapter(adapter);
 
 	}
 
-	// --------------------------------------------------class
-	// Adapter............................................//
+	// --------------------------------------------------classAdapter............................................//
 	class customAdapter extends ArrayAdapter<Medicine> implements
 			OnClickListener {
 		Context context;
@@ -141,11 +140,13 @@ public class ReminderListView extends Activity {
 					50, 50);
 			holder.imgView.setImageBitmap(myImg);
 			holder.txtView.setText(medicines.get(position).getName());
-			if (medicines.get(position).getIsTaken()== 1) {
+		
+			/*if (medicines.get(position).getIsTaken()== 1) 
+			{
 				holder.txtView.setText("is taken");
 			} else
 
-				holder.txtView.setText("is not taken !");
+				holder.txtView.setText("is not taken !");*/
 
 			return row;
 		}

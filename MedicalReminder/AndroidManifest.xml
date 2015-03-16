@@ -13,6 +13,7 @@
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -23,17 +24,17 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.team6.mobile.iti.AddMedicineActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:parentActivityName=".HomeActivity"
             android:theme="@style/addMedicineStyle" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+           
+             
+            
         </activity>
         <activity
             android:name=".SetScheduleActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:theme="@style/addMedicineStyle" >
         </activity>
         <activity
@@ -57,16 +58,18 @@
             android:label="@string/app_name"
             android:parentActivityName=".HomeActivity"
             android:theme="@style/addMedicineStyle" >
-        </activity>
-        <activity
-            android:name=".HomeActivity"
-            android:label="@string/app_name"
-            android:theme="@style/addMedicineStyle" >
+            
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            
+        </activity>
+        <activity
+            android:name=".HomeActivity"
+            android:label="@string/app_name"
+            android:theme="@style/addMedicineStyle" >
         </activity>
         <activity
             android:name=".TimeAndDoseActivity"

@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
-	private static final String DATABASE_NAME = "mydb";
+	private static final String DATABASE_NAME = "mydbSS";
 	private static final int DATABASE_VERSION = 1;
 	
 	private static final String TABLE_MEDICINE = "MEDICINE";
@@ -46,7 +46,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				MEDICINE_IMAGE_URL_COL+" VARCHAR(50), "
 				+MEDICINE_START_DATE_COL+" INTEGER, "+MEDICINE_END_DATE_COL+" INTEGER, "
 				+MEDECINE_DESC_COL+" VARCHAR(100), "+MEDECINE_TYPE_COL+" VARCHAR(50), "+
-				MEDECINE_REPETATION_COL+" INTEGER"+MEDECINE_INSTRUCTION_COL+" VARCHAR(50));";
+				MEDECINE_REPETATION_COL+" VARCHAR(100),"+MEDECINE_INSTRUCTION_COL+" VARCHAR(50));";
 		Log.i("print",s);
 		db.execSQL(s);
 		

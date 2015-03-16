@@ -11,13 +11,11 @@ import android.widget.ImageView;
 
 public class ReminderDialog extends Dialog implements
 		android.view.View.OnClickListener {
-
      Activity activity;
 	 Dialog dialog;
 	 Button btnOk, btnCancel;
 	 ImageView imgView;
 	
-
 	public ReminderDialog(Activity a) {
 		super(a);
 		this.activity = a;
