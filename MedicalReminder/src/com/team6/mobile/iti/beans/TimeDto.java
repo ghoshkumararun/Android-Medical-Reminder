@@ -22,17 +22,17 @@ public class TimeDto implements Parcelable {
 			return new TimeDto[size];
 		}
 	};
-	
+
 	public TimeDto() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	private TimeDto(Parcel in) {
-        medicine_id = in.readInt();
-        take_time = in.readLong();
-        dose = in.readFloat();
-    }
 
+	private TimeDto(Parcel in) {
+		medicine_id = in.readInt();
+		take_time = in.readLong();
+		dose = in.readInt();
+
+	}
 
 	public long getTake_time() {
 		return take_time;

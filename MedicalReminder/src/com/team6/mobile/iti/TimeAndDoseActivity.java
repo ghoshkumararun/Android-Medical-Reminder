@@ -131,6 +131,7 @@ public class TimeAndDoseActivity extends Activity {
 				int day = cal.get(Calendar.DAY_OF_MONTH);
 				
 				cal.set(year, month, day, hourOfDay, minute);
+				cal.set(Calendar.SECOND, 00);
 				
 				time.setTake_time(cal.getTimeInMillis());
 				
@@ -201,10 +202,10 @@ public class TimeAndDoseActivity extends Activity {
 				public void onClick(View v) {
 
 					TimeDto time = medicineTimes.get(position);
-					if (time.getDose() > 0.25f) {
+				/*	if (time.getDose() > 0.25f) {
 						time.setDose(time.getDose() - 0.25f);
 						adapter.notifyDataSetChanged();
-					}
+					}*/
 				}
 			});
 

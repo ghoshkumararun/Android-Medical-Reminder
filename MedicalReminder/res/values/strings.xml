@@ -75,7 +75,7 @@
         <item>Milligrams</item>
     </string-array>
     <string-array name="medicineInterval">
-        <item>Dialy</item>
+        <item>Daily</item>
         <item>Weekly</item>
         <item>Monthly</item>
     </string-array>

@@ -11,6 +11,15 @@ import android.os.Parcelable;
  * @author Mohamed
  */
 public class Medicine implements Parcelable {
+	
+	private int id;
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	private String name;
 	private long start_date;
@@ -22,6 +31,20 @@ public class Medicine implements Parcelable {
 	private List<TimeDto> times;
 	private String desc;
 	private String imageUrl;
+	private int medState;
+	private int isTaken;
+	
+	public int getMedState() {
+		return medState;
+	}
+
+	public void setMedState(int medState) {
+		this.medState = medState;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
 
 	public Medicine() {
 		// TODO Auto-generated constructor stub
@@ -48,11 +71,15 @@ public class Medicine implements Parcelable {
 	    //in.readTypedList(times, TimeDto.CREATOR);
 		desc = in.readString();
 		imageUrl = in.readString();
-		
+		medState = in.readInt();
+		id = in.readInt();
+		 isTaken = in.readInt();
+
 	}
 
 	public String getName() {
 		return name;
+
 	}
 
 	public void setName(String name) {
@@ -134,7 +161,9 @@ public class Medicine implements Parcelable {
 		dest.writeTypedList(times);
 		dest.writeString(desc);
 		dest.writeString(imageUrl);
-		
+		dest.writeInt(medState);
+		dest.writeInt(id);
+		dest.writeInt( isTaken);
 
 	}
 
@@ -148,4 +177,22 @@ public class Medicine implements Parcelable {
 		imageUrl = string;
 	}
 
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	public int getIsTaken() {
+		return isTaken;
+	}
+
+	public void setIsTaken(int isTaken) {
+		this.isTaken = isTaken;
+	}
+	
+	
+	
 }
