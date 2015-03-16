@@ -31,11 +31,6 @@
             android:name=".SignInActivity"
             android:label="@string/signin"
             android:theme="@style/addMedicineStyle" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".SignUpActivity"
@@ -64,6 +59,20 @@
         <activity
             android:name=".TimeAndDoseActivity"
             android:label="@string/title_activity_time_and_dose" >
+        </activity>
+        <activity
+            android:name=".EditMedicineActivity"
+            android:label="@string/editMedicine" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+         <activity
+            android:name=".EditScheduleActivity"
+            android:label="@string/editSchedule" >
         </activity>
     </application>
 

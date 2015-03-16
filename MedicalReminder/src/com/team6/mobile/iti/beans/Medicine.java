@@ -2,6 +2,7 @@ package com.team6.mobile.iti.beans;
 
 import java.util.*;
 
+import android.content.ClipData.Item;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -44,9 +45,10 @@ public class Medicine implements Parcelable {
 		instruction = in.readString();
 		type = in.readString();
 		user_email = in.readString();
-		times  = in.readArrayList(null);
+	    //in.readTypedList(times, TimeDto.CREATOR);
 		desc = in.readString();
 		imageUrl = in.readString();
+		
 	}
 
 	public String getName() {
@@ -129,9 +131,10 @@ public class Medicine implements Parcelable {
 		dest.writeString(instruction);
 		dest.writeString(type);
 		dest.writeString(user_email);
-		dest.writeList(times);
+		dest.writeTypedList(times);
 		dest.writeString(desc);
 		dest.writeString(imageUrl);
+		
 
 	}
 
