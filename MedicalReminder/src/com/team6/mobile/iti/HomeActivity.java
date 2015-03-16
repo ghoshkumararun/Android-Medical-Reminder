@@ -4,9 +4,14 @@ package com.team6.mobile.iti;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.ActionBar.OnNavigationListener;
+import com.team6.mobile.iti.beans.Medicine;
+
+
+
+
 import android.app.Activity;
 import android.app.Application;
+import android.app.ActionBar.OnNavigationListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -22,7 +27,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class HomeActivity extends Activity implements OnItemClickListener , OnItemLongClickListener{
+public class HomeActivity extends Activity implements  OnItemClickListener{
 
     
     
@@ -62,11 +67,14 @@ public class HomeActivity extends Activity implements OnItemClickListener , OnIt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        
+        DatabaseHelper databaseHelper = new  DatabaseHelper(this);
+        DatabaseAdapter databaseAdapter = new DatabaseAdapter(databaseHelper);
+        databaseAdapter.insertMedecine("katafklam", "good medecine", "medecine", "med");
+        ArrayList<Medicine> allMedecines = databaseAdapter.selectAllMedecines();
         rowItems = new ArrayList<RowItem>();
-        for (int i = 0; i < titles.length; i++) {
-            RowItem item = new RowItem(images[i], titles[i], descriptions[i]);
-            rowItems.add(item);
+        for (int i = 0; i < allMedecines.size(); i++) {
+        	 RowItem item = new RowItem(R.drawable.antivirus, allMedecines.get(i).getName(), allMedecines.get(i).getType());
+             rowItems.add(item);
         }
  
         listView = (ListView) findViewById(R.id.listView1);
@@ -88,21 +96,6 @@ public class HomeActivity extends Activity implements OnItemClickListener , OnIt
     //used in actions of buttons in action bar
    
     // long press on list item
-	@Override
-	public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2,
-			long arg3) {
-
-
-    	Intent i = new Intent(HomeActivity.this, AddMedicineActivity.class);
-		startActivity(i);
-		
-		/*Toast toast = Toast.makeText(getApplicationContext(),
-                "Item " + (arg2 + 1) + ": long press" + rowItems.get(arg2),
-                Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast.show();*/
-		return true;
-	}
 	
 	
    
@@ -152,12 +145,21 @@ return true;
 
 public void function1(int id){
 	Toast.makeText(this, "function 1 called", 1000).show();
+	Intent i = new Intent(HomeActivity.this, AddMedicineActivity.class);
+	i.putExtra("postition", id);
+	startActivity(i);
 }
 public void function2(int id){
 	Toast.makeText(this, "function 2 called", 1000).show();
+	//delete code and reload the list
 }
 
 // override on back pessed
-
+@Override
+public void onBackPressed() {
+	// TODO Auto-generated method stub
+	super.onBackPressed();
+	
+}
 
 }
