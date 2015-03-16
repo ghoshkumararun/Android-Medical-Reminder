@@ -69,6 +69,8 @@ public class Medicine implements Parcelable {
 		times  = in.readArrayList(null);
 		desc = in.readString();
 		imageUrl = in.readString();
+		medState = in.readInt();
+		id = in.readInt();
 	}
 
 	public String getName() {
@@ -154,6 +156,8 @@ public class Medicine implements Parcelable {
 		dest.writeList(times);
 		dest.writeString(desc);
 		dest.writeString(imageUrl);
+		dest.writeInt(medState);
+		dest.writeInt(id);
 
 	}
 

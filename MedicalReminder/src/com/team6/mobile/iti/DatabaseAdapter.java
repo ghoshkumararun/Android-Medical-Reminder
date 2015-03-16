@@ -91,7 +91,7 @@ public class DatabaseAdapter {
 		return allMedecine;
 	}
 	public ArrayList<Medicine> selectToSync(){
-		ArrayList<Medicine> selectedList ;
+		ArrayList<Medicine> selectedList = new ArrayList<Medicine>();
 		database = databaseHelper.getReadableDatabase();
 try{
 			
@@ -112,12 +112,16 @@ try{
 				ArrayList<TimeDto> times = new ArrayList<TimeDto>();
 				while(timeCursor.moveToNext()== true){
 					TimeDto timeDose = new TimeDto();
-					timeDose.setDose(timeCursor.getFloat(timeCursor.getColumnIndex(columnName)));
+					timeDose.setDose(timeCursor.getString(timeCursor.getColumnIndex(DOSE_QUANTITY_COL)));
+					timeDose.setTake_time(timeCursor.getColumnIndex(DOSE_TIME_COL));
+					timeDose.setMedicine_id(temp.getId());
+					times.add(timeDose);
 				}
 				
-				//temp.setTimes();
-				allMedecine.add(temp);
+				temp.setTimes(times);
+				selectedList.add(temp);
 			}
+			
 			
 		}
 		catch (Exception e) {
