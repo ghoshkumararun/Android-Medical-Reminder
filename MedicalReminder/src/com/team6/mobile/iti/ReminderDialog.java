@@ -53,7 +53,6 @@ public class ReminderDialog extends Dialog implements
 			case R.id.btnCancel:
 				activity.finish();
 				
-				
 				// This pending intent will open after notification click
 				PendingIntent i = PendingIntent.getActivity(activity, 0, new Intent(activity, 
 
@@ -77,7 +76,6 @@ public class ReminderDialog extends Dialog implements
 		        notification.tickerText = "Reminder" + "\n" + "remember medecine";
 				
 				notificationManager.notify(0, notification);
-
 				
 				break;
 			default:

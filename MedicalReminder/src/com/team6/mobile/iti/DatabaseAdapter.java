@@ -3,6 +3,7 @@ package com.team6.mobile.iti;
 import java.util.ArrayList;
 
 import com.team6.mobile.iti.beans.Medicine;
+import com.team6.mobile.iti.beans.TimeDto;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -21,6 +22,7 @@ public class DatabaseAdapter {
 	private static final String MEDECINE_DESC_COL = "DESC";
 	private static final String MEDECINE_TYPE_COL = "TYPE";
 	private static final String MEDECINE_REPETATION_COL = "REPETATION";
+	private static final String MEDECINE_New_COL = "NewMedecine";
 	
 	private static final String TABLE_DOSE_TIME = "DOSE_TIME";
 	private static final String DOSE_MEDICINE_ID_COL = "MEDECINE_ID";
@@ -41,6 +43,7 @@ public class DatabaseAdapter {
 		medValues.put(MEDECINE_DESC_COL,desc);
 		medValues.put(MEDECINE_TYPE_COL, type);
 		medValues.put(MEDICINE_IMAGE_URL_COL, urlImage);
+		
 		
 		
 			try{
@@ -86,5 +89,41 @@ public class DatabaseAdapter {
 		}
 		//return res;
 		return allMedecine;
+	}
+	public ArrayList<Medicine> selectToSync(){
+		ArrayList<Medicine> selectedList ;
+		database = databaseHelper.getReadableDatabase();
+try{
+			
+			Cursor cursor = database.rawQuery("SELECT * FROM "+TABLE_MEDICINE+" WHERE "+MEDICINE_NAME_COL
+					+" <> 3 ;", null);
+			
+			while(cursor.moveToNext() == true){
+			//	res = 0;
+				Medicine temp = new Medicine();
+				temp.setId(cursor.getInt(cursor.getColumnIndex(MEDICINE_ID_COL)));
+				temp.setName(cursor.getString(cursor.getColumnIndex(MEDICINE_NAME_COL)));
+				temp.setType(cursor.getString(cursor.getColumnIndex(MEDECINE_TYPE_COL)));
+				temp.setDesc(cursor.getString(cursor.getColumnIndex(MEDECINE_REPETATION_COL)));
+				temp.setImageURL(cursor.getString(cursor.getColumnIndex(MEDICINE_IMAGE_URL_COL)));
+				
+				Cursor timeCursor = database.rawQuery("SELECT * FROM "+TABLE_DOSE_TIME+" WHERE "+DOSE_MEDICINE_ID_COL
+						+" = "+temp.getId()+";", null);
+				ArrayList<TimeDto> times = new ArrayList<TimeDto>();
+				while(timeCursor.moveToNext()== true){
+					TimeDto timeDose = new TimeDto();
+					timeDose.setDose(timeCursor.getFloat(timeCursor.getColumnIndex(columnName)));
+				}
+				
+				//temp.setTimes();
+				allMedecine.add(temp);
+			}
+			
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		//	res = 1;
+		}
+		
 	}
 }

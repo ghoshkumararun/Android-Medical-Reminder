@@ -114,7 +114,8 @@ public class SignInActivity extends Activity {
 
 			String message = null;
 
-			if (result == 1){//login successfull
+			if (result == 1){
+				//login successfull
 				Intent intent1 = new Intent(SignInActivity.this, HomeActivity.class);
 				startActivity(intent1);
 			}

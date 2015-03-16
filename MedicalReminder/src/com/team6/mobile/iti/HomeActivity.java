@@ -69,7 +69,7 @@ public class HomeActivity extends Activity implements  OnItemClickListener{
         setContentView(R.layout.activity_home);
         DatabaseHelper databaseHelper = new  DatabaseHelper(this);
         DatabaseAdapter databaseAdapter = new DatabaseAdapter(databaseHelper);
-        databaseAdapter.insertMedecine("katafklam", "good medecine", "medecine", "med");
+       // databaseAdapter.insertMedecine("katafklam", "good medecine", "medecine", "med");
         ArrayList<Medicine> allMedecines = databaseAdapter.selectAllMedecines();
         rowItems = new ArrayList<RowItem>();
         for (int i = 0; i < allMedecines.size(); i++) {

@@ -10,6 +10,7 @@ import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -44,6 +45,9 @@ public class AddMedicineActivity extends Activity {
 	// medicine bean
 	private Medicine medicine;
 
+	// types images
+	private int [] typesIcons;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,11 @@ public class AddMedicineActivity extends Activity {
 		setContentView(R.layout.activity_add_medicine);
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
+		
+		// set array of images for types
+		int [] arr = {R.drawable.ic_capsules, R.drawable.ic_tablets, R.drawable.ic_injection, R.drawable.ic_pills
+				, R.drawable.ic_sprays, R.drawable.ic_patches, R.drawable.ic_drops,  R.drawable.ic_milligrams};
+		typesIcons = arr;
 		
 		// create medicine object
 		medicine = new Medicine();
@@ -155,11 +164,10 @@ public class AddMedicineActivity extends Activity {
 			tvType.setText(names[position]);
 
 			// set medicine type image
-			ImageView img = (ImageView) singleRowView
-					.findViewById(R.id.imgvMedicineImage);
+			ImageView img = (ImageView) singleRowView.findViewById(R.id.imgvMedicineImg);
 
-			// set image
-			//img.setImageResource(R.drawable.antivirus);
+			//set image
+			img.setImageResource(typesIcons[position]);
 			
 			return singleRowView;
 		}

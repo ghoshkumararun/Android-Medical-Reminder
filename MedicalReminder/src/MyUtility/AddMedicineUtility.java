@@ -27,29 +27,18 @@ public class AddMedicineUtility {
 	//method to set time of Reminder Dialog
 	public void setAlarm(Medicine med, Context context) {
 		
-		/*String repeat = med.getRepetition();
-		Log.i("repeat", repeat);
-		long startDay = med.getStart_date();
-		Log.i("start day", Long.toString(startDay));
+		//extract info from bean
+		String repeat = med.getRepetition();
+		long startDay = med.getStart_date();		
 		long endDay = med.getEnd_date();
-		Log.i("end day", Long.toString(endDay));
 		ArrayList<TimeDto> list = (ArrayList<TimeDto>) med.getTimes();
 		
 		//looping on all pairs of time and dose
-		for(int index=0 ; index<list.size();index++){	
+		for(int index=0 ; index<list.size();index++){
+			
 		long time = list.get(index).getTake_time();
-		long current = System.currentTimeMillis();
-	    Date cur = new Date(current);
-	    Date tkm = new Date(time);
-		Log.i("take time", Long.toString(time));
-		Log.i("take time date", tkm.toString());
-		Log.i("current time", Long.toString(System.currentTimeMillis()));
-		 Log.i("today", cur.toString());
-		long increase = time - System.currentTimeMillis();
-		Log.i("increase", Long.toString(increase));
-		//checking if time in between start and end day
-		//if ((time > startDay) && (time < endDay)) {
 
+		//setting repetition interval
 			if (repeat.equals("daily")) {
 
 				repeatInterval = 24 * 60 * 60 * 1000;
@@ -62,18 +51,19 @@ public class AddMedicineUtility {
 
 				repeatInterval = 30 * 7 * 24 * 60 * 60 * 1000;
 			}
-		/*}else{
-			Log.i("time not between startday and end", "yes");
-		}*/
 
+		//setting intent
 		Intent intent = new Intent(context, ReminderDialogSupport.class);
-		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,intent, 0);
+		intent.putExtra("start", System.currentTimeMillis());
+		intent.putExtra("end", System.currentTimeMillis()+30*1000);
+		intent.putExtra("index", index);
+		PendingIntent pendingIntent = PendingIntent.getActivity(context, index,intent, 0);
+		
+		//setting alarm manager
 		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		//alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis() + increase,repeatInterval,pendingIntent);
-		alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+5*1000, pendingIntent);
-		//alarmManager.cancel(pendingIntent);
-		Log.i("here", "here");
-		//}
+		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,time,repeatInterval,pendingIntent);
+
+		}
 	}
 
 	//method to insert medicine in SQLite database

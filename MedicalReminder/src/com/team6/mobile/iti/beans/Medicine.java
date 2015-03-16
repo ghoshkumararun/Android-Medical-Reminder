@@ -10,6 +10,15 @@ import android.os.Parcelable;
  * @author Mohamed
  */
 public class Medicine implements Parcelable {
+	
+	private int id;
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	private String name;
 	private long start_date;
@@ -21,6 +30,19 @@ public class Medicine implements Parcelable {
 	private List<TimeDto> times;
 	private String desc;
 	private String imageUrl;
+	private int medState;
+	
+	public int getMedState() {
+		return medState;
+	}
+
+	public void setMedState(int medState) {
+		this.medState = medState;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
 
 	public Medicine() {
 		// TODO Auto-generated constructor stub
