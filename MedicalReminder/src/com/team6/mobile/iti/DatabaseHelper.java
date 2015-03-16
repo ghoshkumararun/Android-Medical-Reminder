@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
+
 	private static final String DATABASE_NAME = "mydbSS";
 	private static final int DATABASE_VERSION = 1;
 	
@@ -20,6 +21,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String MEDECINE_TYPE_COL = "TYPE";
 	private static final String MEDECINE_REPETATION_COL = "REPETATION";
 	private static final String MEDECINE_INSTRUCTION_COL = "INSTRUCTION";
+	private static final String MEDECINE_New_COL = "NewMedecine";
+
 
 	
 	private static final String TABLE_DOSE_TIME = "DOSE_TIME";
@@ -40,13 +43,14 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
 	//	String [] args = {TABLE_NAME,USER_NAME_COL,PASSWORD_COL}; 
+
 		String s = "CREATE TABLE "+ TABLE_MEDICINE+
 				" ( "+MEDICINE_ID_COL+" INTEGER PRIMARY KEY AUTOINCREMENT, "
 				+MEDICINE_NAME_COL+" VARCHAR(50), "+
-				MEDICINE_IMAGE_URL_COL+" VARCHAR(50), "
+				MEDICINE_IMAGE_URL_COL+" VARCHAR(150), "
 				+MEDICINE_START_DATE_COL+" INTEGER, "+MEDICINE_END_DATE_COL+" INTEGER, "
 				+MEDECINE_DESC_COL+" VARCHAR(100), "+MEDECINE_TYPE_COL+" VARCHAR(50), "+
-				MEDECINE_REPETATION_COL+" VARCHAR(100),"+MEDECINE_INSTRUCTION_COL+" VARCHAR(50));";
+				MEDECINE_REPETATION_COL+" VARCHAR(100),"+MEDECINE_INSTRUCTION_COL+" VARCHAR(50),"+MEDECINE_New_COL+" INTEGER DEFAULT 0 );";
 		Log.i("print",s);
 		db.execSQL(s);
 		

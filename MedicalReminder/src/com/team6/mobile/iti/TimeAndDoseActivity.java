@@ -53,8 +53,12 @@ public class TimeAndDoseActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_time_and_dose);
 		
-		// init medicine times list
-		medicineTimes = new ArrayList<TimeDto>();
+		// get times from intent extras
+		medicineTimes  = getIntent().getParcelableArrayListExtra("timesList");
+		
+		// init medicine times list if there is no values returns from intent
+		if(medicineTimes == null || medicineTimes.size() == 0)
+			medicineTimes = new ArrayList<TimeDto>();
 
 		// add arraylist of medicine times on intent to go back to add medicine
 		// activity
@@ -111,14 +115,26 @@ public class TimeAndDoseActivity extends Activity {
 		@Override
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-			if (!timeSetted) {
+			Calendar c= Calendar.getInstance();
+			
+			if(medicineTimes.size() > 0)
+				c.setTimeInMillis(medicineTimes.get(medicineTimes.size()-1).getTake_time());
+			else
+				c.add(Calendar.MINUTE, -1);
+			
+			if (!timeSetted && minute > c.get(Calendar.MINUTE)) {
 				TimeDto time = new TimeDto();
 				Calendar cal = Calendar.getInstance();
-				cal.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH,
-						hourOfDay, minute);
+				
+				int year = cal.get(Calendar.YEAR);
+				int month = cal.get(Calendar.MONTH);
+				int day = cal.get(Calendar.DAY_OF_MONTH);
+				
+				cal.set(year, month, day, hourOfDay, minute);
+				cal.set(Calendar.SECOND, 00);
+				
 				time.setTake_time(cal.getTimeInMillis());
 				
-
 				time.setDose(0.25f);
 				medicineTimes.add(time);
 				adapter.notifyDataSetChanged();
@@ -186,10 +202,10 @@ public class TimeAndDoseActivity extends Activity {
 				public void onClick(View v) {
 
 					TimeDto time = medicineTimes.get(position);
-					if (time.getDose() > 0.25f) {
+				/*	if (time.getDose() > 0.25f) {
 						time.setDose(time.getDose() - 0.25f);
 						adapter.notifyDataSetChanged();
-					}
+					}*/
 				}
 			});
 

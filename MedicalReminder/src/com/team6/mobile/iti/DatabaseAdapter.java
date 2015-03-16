@@ -17,6 +17,7 @@ public class DatabaseAdapter {
 	SQLiteDatabase database;
 	private static final String TABLE_MEDICINE = "MEDICINE";
 	private static final String MEDICINE_ID_COL = "ID";
+
 	private static final String MEDICINE_NAME_COL = "NAME";// 1
 	private static final String MEDICINE_IMAGE_URL_COL = "IMAGE_URL";// 2
 	private static final String MEDICINE_START_DATE_COL = "START_DATE";// 3
@@ -178,5 +179,49 @@ public class DatabaseAdapter {
 
 			// return res;
 		return medReminder;
+
+	}
+	
+	public ArrayList<Medicine> selectToSync(){
+		ArrayList<Medicine> selectedList = new ArrayList<Medicine>();
+		database = databaseHelper.getReadableDatabase();
+try{
+			
+			Cursor cursor = database.rawQuery("SELECT * FROM "+TABLE_MEDICINE+" WHERE "+MEDICINE_NAME_COL
+					+" <> 3 ;", null);
+			
+			while(cursor.moveToNext() == true){
+			//	res = 0;
+				Medicine temp = new Medicine();
+				temp.setId(cursor.getInt(cursor.getColumnIndex(MEDICINE_ID_COL)));
+				temp.setName(cursor.getString(cursor.getColumnIndex(MEDICINE_NAME_COL)));
+				temp.setType(cursor.getString(cursor.getColumnIndex(MEDECINE_TYPE_COL)));
+				temp.setDesc(cursor.getString(cursor.getColumnIndex(MEDECINE_REPETATION_COL)));
+				temp.setImageURL(cursor.getString(cursor.getColumnIndex(MEDICINE_IMAGE_URL_COL)));
+				
+				Cursor timeCursor = database.rawQuery("SELECT * FROM "+TABLE_DOSE_TIME+" WHERE "+DOSE_MEDICINE_ID_COL
+						+" = "+temp.getId()+";", null);
+				ArrayList<TimeDto> times = new ArrayList<TimeDto>();
+				while(timeCursor.moveToNext()== true){
+					TimeDto timeDose = new TimeDto();
+					String doseStr = timeCursor.getString(timeCursor.getColumnIndex(DOSE_QUANTITY_COL));
+					timeDose.setDose(Float.parseFloat(doseStr));
+					timeDose.setTake_time(timeCursor.getColumnIndex(DOSE_TIME_COL));
+					timeDose.setMedicine_id(temp.getId());
+					times.add(timeDose);
+				}
+				
+				temp.setTimes(times);
+				selectedList.add(temp);
+			}
+			
+			
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		//	res = 1;
+			Log.i("error","error happened");
+		}
+		return selectedList;
 	}
 }

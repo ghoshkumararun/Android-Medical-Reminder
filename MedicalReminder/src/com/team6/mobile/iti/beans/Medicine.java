@@ -5,8 +5,20 @@ import java.util.*;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-
+/**
+ *
+ * @author Mohamed
+ */
 public class Medicine implements Parcelable {
+	
+	private int id;
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	private String name;
 	private long start_date;
@@ -18,15 +30,19 @@ public class Medicine implements Parcelable {
 	private List<TimeDto> times;
 	private String desc;
 	private String imageUrl;
+	private int medState;
 	private int isTaken;
-	private String doseQuantity;
-
-	public String getDoseQuantity() {
-		return doseQuantity;
+	
+	public int getMedState() {
+		return medState;
 	}
 
-	public void setDoseQuantity(String doseQuantity) {
-		this.doseQuantity = doseQuantity;
+	public void setMedState(int medState) {
+		this.medState = medState;
+	}
+
+	public String getDesc() {
+		return desc;
 	}
 
 	public Medicine() {
@@ -54,11 +70,15 @@ public class Medicine implements Parcelable {
 		times  = in.readArrayList(null);
 		desc = in.readString();
 		imageUrl = in.readString();
-		isTaken = in.readInt();		
+		medState = in.readInt();
+		id = in.readInt();
+		 isTaken = in.readInt();
+
 	}
 
 	public String getName() {
 		return name;
+
 	}
 
 	public void setName(String name) {
@@ -69,31 +89,24 @@ public class Medicine implements Parcelable {
 		return start_date;
 	}
 
-
-
 	public void setStart_date(long start_date) {
 		this.start_date = start_date;
-
 	}
-
 
 	public long getEnd_date() {
 		return end_date;
-
 	}
-
 
 	public void setEnd_date(long end_date) {
 		this.end_date = end_date;
 	}
 
-
 	public String getRepetition() {
 		return repetition;
 	}
 
-	public void setRepetition(String  intervalArr) {
-		this.repetition = intervalArr;
+	public void setRepetition(String repetition) {
+		this.repetition = repetition;
 	}
 
 	public String getInstruction() {
@@ -136,6 +149,7 @@ public class Medicine implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
+
 		dest.writeString(name);
 		dest.writeLong(start_date);
 		dest.writeLong(end_date);
@@ -146,7 +160,9 @@ public class Medicine implements Parcelable {
 		dest.writeList(times);
 		dest.writeString(desc);
 		dest.writeString(imageUrl);
-		dest.writeInt(isTaken);
+		dest.writeInt(medState);
+		dest.writeInt(id);
+		dest.writeInt( isTaken);
 
 	}
 
@@ -168,10 +184,6 @@ public class Medicine implements Parcelable {
 		this.imageUrl = imageUrl;
 	}
 
-	public String getDesc() {
-		return desc;
-	}
-
 	public int getIsTaken() {
 		return isTaken;
 	}
@@ -179,5 +191,7 @@ public class Medicine implements Parcelable {
 	public void setIsTaken(int isTaken) {
 		this.isTaken = isTaken;
 	}
-
+	
+	
+	
 }
