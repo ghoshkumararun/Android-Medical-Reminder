@@ -2,6 +2,7 @@ package com.team6.mobile.iti;
 
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -13,15 +14,12 @@ import MyUtility.AddMedicineUtility;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
-import android.app.AlarmManager;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.Touch;
 import android.os.Parcelable;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -41,7 +39,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SetScheduleActivity extends Activity {
+public class EditScheduleActivity extends Activity {
 
 	// interval linear layput
 	private LinearLayout llInterval;
@@ -74,13 +72,13 @@ public class SetScheduleActivity extends Activity {
 	private String[] instructionArray;
 
 	// interval choice position
-	private Integer intervalChoicePos = 0;
+	private Integer intervalChoicePos;
 
 	// duration choice position
-	private Integer durationChoicePos = 0;
+	private Integer durationChoicePos;
 
 	// instruction choice position
-	private Integer instructionChoicePos = 0;
+	private Integer instructionChoicePos;
 
 	// start date
 	private long startDate;
@@ -107,11 +105,6 @@ public class SetScheduleActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_set_schedule);
-		
-		// init positions
-		intervalChoicePos = new Integer(0);
-		durationChoicePos = new Integer(0);
-		instructionChoicePos = new Integer(0);
 
 		// find interval text view
 		tvInterval = (TextView) findViewById(R.id.tvInterval);
@@ -121,18 +114,18 @@ public class SetScheduleActivity extends Activity {
 
 		// find start day text view
 		tvStartDay = (TextView) findViewById(R.id.tvStartDay);
-		
+
 		// find duration text view
 		tvDuration = (TextView) findViewById(R.id.tvDuration);
 
 		// find instruction text view
 		tvInstruction = (TextView) findViewById(R.id.tvInstruction);
-		
-		// get medicine object from intent
-		medicine = getIntent().getParcelableExtra("medicine");
 
 		// get medicine object from intent
 		medicine = getIntent().getParcelableExtra("medicine");
+		List<TimeDto> times = getIntent().getParcelableArrayListExtra("times");
+		medicine.setTimes(times);
+		
 
 		// create myclick listener
 		listener = new MyClickListener();
@@ -172,14 +165,21 @@ public class SetScheduleActivity extends Activity {
 		layoutTimeAndDose = (LinearLayout) findViewById(R.id.layoutTimeAndDose);
 		layoutTimeAndDose.setOnClickListener(listener);
 
-		// set start date to date of today
-		startDate = Calendar.getInstance().getTimeInMillis();
-		
+		// set start date
+		startDate = medicine.getStart_date();
+
+		// init positions
+		intervalChoicePos = new Integer(Arrays.binarySearch(intervalArr,
+				medicine.getRepetition()));
+		durationChoicePos = new Integer(0);
+		instructionChoicePos = new Integer(Arrays.binarySearch(instructionArray,
+				medicine.getInstruction()));
+
 		// set textviews to default values
-		tvInterval.setText(intervalArr[instructionChoicePos]);
+		//tvInterval.setText(intervalArr[instructionChoicePos]);
 		tvStartDay.setText(DateFormat.format("yyyy-MM-dd", startDate));
-		tvDuration.setText(durationArray[durationChoicePos]);
-		tvInstruction.setText(instructionArray[instructionChoicePos]);
+		//tvDuration.setText(durationArray[durationChoicePos]);
+		//tvInstruction.setText(instructionArray[instructionChoicePos]);
 	}
 
 	@Override
@@ -192,14 +192,14 @@ public class SetScheduleActivity extends Activity {
 					.getParcelableArrayListExtra("times");
 
 			// put times in medicine bean
-			if (times != null){
+			if (times != null) {
 				medicine.setTimes(times);
-				
-				if(times.size() >0)
-					tvTimeAndDose.setText(times.size()+" times");
+
+				if (times.size() > 0)
+					tvTimeAndDose.setText(times.size() + " times");
 				else
 					tvTimeAndDose.setText("None");
-				
+
 			}
 		}
 
@@ -220,7 +220,7 @@ public class SetScheduleActivity extends Activity {
 
 			case R.id.llInterval:
 
-				dialog = new ChooseListDialog(SetScheduleActivity.this,
+				dialog = new ChooseListDialog(EditScheduleActivity.this,
 						intervalArr, intervalChoicePos);
 				dialog.show(manager, "dialog");
 
@@ -230,7 +230,7 @@ public class SetScheduleActivity extends Activity {
 
 				manager = getFragmentManager();
 
-				dialog = new ChooseListDialog(SetScheduleActivity.this,
+				dialog = new ChooseListDialog(EditScheduleActivity.this,
 						durationArray, durationChoicePos);
 				dialog.show(manager, "dialog");
 
@@ -240,12 +240,34 @@ public class SetScheduleActivity extends Activity {
 
 				manager = getFragmentManager();
 
-				dialog = new ChooseListDialog(SetScheduleActivity.this,
+				dialog = new ChooseListDialog(EditScheduleActivity.this,
 						instructionArray, instructionChoicePos);
 				dialog.show(manager, "dialog");
 
 				break;
 
+			case R.id.layoutStartDay:
+
+				DialogFragment newFragment = new DatePickerFragment();
+				newFragment.show(manager, "datePicker");
+
+				break;
+
+			case R.id.layoutTimeAndDose:
+
+				Intent intent = new Intent(EditScheduleActivity.this,
+						TimeAndDoseActivity.class);
+
+				// put times on intent if its size > 0
+				if (medicine.getTimes() != null
+						&& medicine.getTimes().size() > 0)
+					intent.putParcelableArrayListExtra("timesList",
+							(ArrayList<? extends Parcelable>) medicine
+									.getTimes());
+
+				startActivityForResult(intent, 1);
+
+				break;
 
 			case R.id.btnDone:
 
@@ -260,29 +282,7 @@ public class SetScheduleActivity extends Activity {
 				addMedicineInDb(medicine);
 
 				// finish Activity
-				finish();
-
-				break;
-
-
-
-			case R.id.layoutStartDay:
-
-				DialogFragment newFragment = new DatePickerFragment();
-				newFragment.show(manager, "datePicker");
-
-				break;
-
-			case R.id.layoutTimeAndDose:
-
-				Intent intent = new Intent(SetScheduleActivity.this,
-						TimeAndDoseActivity.class);
-				
-				// put times on intent if its size > 0
-				if(medicine.getTimes() != null && medicine.getTimes().size() > 0)
-					intent.putParcelableArrayListExtra("timesList", (ArrayList<? extends Parcelable>) medicine.getTimes());
-				
-				startActivityForResult(intent, 1);
+				// finish();
 
 				break;
 
@@ -398,15 +398,13 @@ public class SetScheduleActivity extends Activity {
 		public void onItemClick(AdapterView<?> arg0, View view, int position,
 				long arg3) {
 
-			if (choicePos == intervalChoicePos){
+			if (choicePos == intervalChoicePos) {
 				intervalChoicePos = position;
 				tvInterval.setText(intervalArr[position]);
-			}
-			else if (choicePos == durationChoicePos){
+			} else if (choicePos == durationChoicePos) {
 				durationChoicePos = position;
 				tvDuration.setText(durationArray[durationChoicePos]);
-			}
-			else if (choicePos == instructionChoicePos){
+			} else if (choicePos == instructionChoicePos) {
 				instructionChoicePos = position;
 				tvInstruction.setText(instructionArray[instructionChoicePos]);
 			}
@@ -440,7 +438,7 @@ public class SetScheduleActivity extends Activity {
 			cal.set(year, month, day);
 			startDate = cal.getTimeInMillis();
 			tvStartDay.setText(DateFormat.format("yyyy-MM-dd", cal.getTime()));
-			
+
 		}
 	}
 
@@ -467,8 +465,7 @@ public class SetScheduleActivity extends Activity {
 	private void addMedicineInDb(Medicine med) {
 
 		AddMedicineUtility obj = new AddMedicineUtility();
-		obj.setAlarm(med,SetScheduleActivity.this);
-		Toast.makeText(SetScheduleActivity.this, "Next Alarm is "+new Date(med.getTimes().get(0).getTake_time()), Toast.LENGTH_SHORT).show();
+		obj.setAlarm(med, EditScheduleActivity.this);
 
 	}
 

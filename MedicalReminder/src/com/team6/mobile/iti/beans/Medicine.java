@@ -2,6 +2,7 @@ package com.team6.mobile.iti.beans;
 
 import java.util.*;
 
+import android.content.ClipData.Item;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -31,6 +32,7 @@ public class Medicine implements Parcelable {
 	private String desc;
 	private String imageUrl;
 	private int medState;
+	private int isTaken;
 	
 	public int getMedState() {
 		return medState;
@@ -66,15 +68,18 @@ public class Medicine implements Parcelable {
 		instruction = in.readString();
 		type = in.readString();
 		user_email = in.readString();
-		times  = in.readArrayList(null);
+	    //in.readTypedList(times, TimeDto.CREATOR);
 		desc = in.readString();
 		imageUrl = in.readString();
 		medState = in.readInt();
 		id = in.readInt();
+		 isTaken = in.readInt();
+
 	}
 
 	public String getName() {
 		return name;
+
 	}
 
 	public void setName(String name) {
@@ -153,11 +158,12 @@ public class Medicine implements Parcelable {
 		dest.writeString(instruction);
 		dest.writeString(type);
 		dest.writeString(user_email);
-		dest.writeList(times);
+		dest.writeTypedList(times);
 		dest.writeString(desc);
 		dest.writeString(imageUrl);
 		dest.writeInt(medState);
 		dest.writeInt(id);
+		dest.writeInt( isTaken);
 
 	}
 
@@ -170,5 +176,23 @@ public class Medicine implements Parcelable {
 		
 		imageUrl = string;
 	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	public int getIsTaken() {
+		return isTaken;
+	}
+
+	public void setIsTaken(int isTaken) {
+		this.isTaken = isTaken;
+	}
+	
+	
 	
 }

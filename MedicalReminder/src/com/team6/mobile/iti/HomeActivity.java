@@ -6,10 +6,6 @@ import java.util.List;
 
 import com.team6.mobile.iti.beans.Medicine;
 
-
-
-
-
 import android.app.Activity;
 import android.app.Application;
 import android.app.ActionBar.OnNavigationListener;
@@ -68,9 +64,10 @@ public class HomeActivity extends Activity implements  OnItemClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         DatabaseHelper databaseHelper = new  DatabaseHelper(this);
         DatabaseAdapter databaseAdapter = new DatabaseAdapter(databaseHelper);
-        databaseAdapter.insertMedecine("katafklam", "good medecine", "medecine", "med");
+   //     databaseAdapter.insertMedecine("katafklam", "good medecine", "medecine", "med");
         ArrayList<Medicine> allMedecines = databaseAdapter.selectAllMedecines();
         rowItems = new ArrayList<RowItem>();
         for (int i = 0; i < allMedecines.size(); i++) {

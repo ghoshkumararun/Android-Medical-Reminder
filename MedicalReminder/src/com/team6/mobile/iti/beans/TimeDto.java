@@ -11,7 +11,7 @@ public class TimeDto implements Parcelable {
 
 	private int medicine_id;
 	private long take_time;
-	private String dose;
+	private float dose;
 
 	public static final Parcelable.Creator<TimeDto> CREATOR = new Parcelable.Creator<TimeDto>() {
 		public TimeDto createFromParcel(Parcel in) {
@@ -22,17 +22,17 @@ public class TimeDto implements Parcelable {
 			return new TimeDto[size];
 		}
 	};
-	
+
 	public TimeDto() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	private TimeDto(Parcel in) {
-        medicine_id = in.readInt();
-        take_time = in.readLong();
-        dose = in.readString();
-    }
 
+	private TimeDto(Parcel in) {
+		medicine_id = in.readInt();
+		take_time = in.readLong();
+		dose = in.readInt();
+
+	}
 
 	public long getTake_time() {
 		return take_time;
@@ -42,11 +42,11 @@ public class TimeDto implements Parcelable {
 		this.take_time = take_time;
 	}
 
-	public String getDose() {
+	public float getDose() {
 		return dose;
 	}
 
-	public void setDose(String dose) {
+	public void setDose(float dose) {
 		this.dose = dose;
 	}
 
@@ -69,7 +69,7 @@ public class TimeDto implements Parcelable {
 
 		dest.writeInt(medicine_id);
 		dest.writeLong(take_time);
-		dest.writeString(dose);
+		dest.writeFloat(dose);
 	}
 
 }
