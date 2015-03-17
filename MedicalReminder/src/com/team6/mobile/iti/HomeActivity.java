@@ -94,7 +94,7 @@ public class HomeActivity extends Activity implements  OnItemClickListener{
         registerForContextMenu(listView);
     }
     
- @Override
+/* @Override
 protected void onResume() {
 	// TODO Auto-generated method stub
 	super.onResume();
@@ -115,7 +115,7 @@ protected void onResume() {
    //  listView.setOnItemLongClickListener((OnItemLongClickListener)this);
      registerForContextMenu(listView);
 	
-}
+}*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

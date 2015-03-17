@@ -47,7 +47,7 @@ public class NewMedecines extends HttpServlet {
             med.add(addedMedecines[i]);
             System.out.println(addedMedecines[i].getName());
         }
-         medecineConn.insertMedicines(med,requestedEmail);
+     boolean insertMedicines = medecineConn.insertMedicines(med,requestedEmail);
          
         
     }

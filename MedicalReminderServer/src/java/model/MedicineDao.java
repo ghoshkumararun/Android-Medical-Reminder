@@ -56,8 +56,9 @@ public class MedicineDao {
             for (Medicine medicine : medicines) {
 
                 statement.setString(1, medicine.getName());
-                statement.setDate(2, Date.valueOf(medicine.getStart_date()));
-                statement.setDate(3, Date.valueOf(medicine.getEnd_date()));
+                String date = medicine.getStart_date()+"";
+          //      statement.setDate(2, Date.valueOf(date));
+          //      statement.setDate(3, Date.valueOf(medicine.getEnd_date()+""));
                 statement.setString(4, medicine.getRepetition());
                 statement.setString(5, medicine.getInstruction());
                 statement.setString(6, medicine.getType());
