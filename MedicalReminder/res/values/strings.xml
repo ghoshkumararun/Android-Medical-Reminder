@@ -29,6 +29,7 @@
     <string name="remember_me">Remember Me?</string>
     <string name="med_name">Medicine Name</string>
     <string name="med_photo">Medicine Photo</string>
+    <string name="editMedicine">Edit Medicine</string>
 
     <string-array name="medicines">
         <item>Panadol</item>
@@ -107,6 +108,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="time">Time</string>
     <string name="addTime">Add Time</string>
+    <string name="editSchedule">Edit Schedule</string>
 
     
     

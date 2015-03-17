@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -38,7 +39,7 @@ public class SignInActivity extends Activity {
 	private static final int LOGIN_FAILED = 3;
 	private int loginStatus;
 	private static final String LOGIN_URL = "http://10.145.239.44:8084/MedicalReminderServer/login";
-
+	SharedPreferences sharedPreferences;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,11 @@ public class SignInActivity extends Activity {
 		txtSignUp = (TextView) findViewById(R.id.txtNewSignUp);
 		txtEmail = (EditText) findViewById(R.id.editEmailSignIn);
 		txtPass = (EditText) findViewById(R.id.editPassSignIn);
+		sharedPreferences = getSharedPreferences("shared",MODE_PRIVATE);
+	    if(!sharedPreferences.getString("emailUser", "default").equals("default")){
+	    	Intent homeIntent = new Intent(this,HomeActivity.class);
+	    	startActivity(homeIntent);
+	    }
 		
 		txtSignUp.setOnClickListener(new View.OnClickListener() {
 
