@@ -125,7 +125,8 @@ public class EditScheduleActivity extends Activity {
 		medicine = getIntent().getParcelableExtra("medicine");
 		List<TimeDto> times = getIntent().getParcelableArrayListExtra("times");
 		medicine.setTimes(times);
-		
+
+		Log.i("xxxx", medicine.getRepetition());
 
 		// create myclick listener
 		listener = new MyClickListener();
@@ -169,17 +170,20 @@ public class EditScheduleActivity extends Activity {
 		startDate = medicine.getStart_date();
 
 		// init positions
-		intervalChoicePos = new Integer(Arrays.binarySearch(intervalArr,
-				medicine.getRepetition()));
-		durationChoicePos = new Integer(0);
-		instructionChoicePos = new Integer(Arrays.binarySearch(instructionArray,
-				medicine.getInstruction()));
+		intervalChoicePos = Arrays.binarySearch(intervalArr,
+				medicine.getRepetition());
+		//durationChoicePos = new Integer(Arrays.binarySearch(durationArray,
+			//	medicine.get));
+		instructionChoicePos = Arrays.binarySearch(
+				instructionArray, medicine.getInstruction());
 
+		Log.i("xxxx", ""+medicine.getInstruction());
+		
 		// set textviews to default values
-		//tvInterval.setText(intervalArr[instructionChoicePos]);
+		tvInterval.setText(intervalArr[intervalChoicePos]);
 		tvStartDay.setText(DateFormat.format("yyyy-MM-dd", startDate));
-		//tvDuration.setText(durationArray[durationChoicePos]);
-		//tvInstruction.setText(instructionArray[instructionChoicePos]);
+		// tvDuration.setText(durationArray[durationChoicePos]);
+		// tvInstruction.setText(instructionArray[instructionChoicePos]);
 	}
 
 	@Override

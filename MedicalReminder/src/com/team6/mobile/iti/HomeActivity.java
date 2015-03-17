@@ -60,7 +60,7 @@ public class HomeActivity extends Activity implements  OnItemClickListener{
  
     public void onItemClick(AdapterView<?> parent, View view, int position,
             long id) {
-    	int selectedMedId = rowItems.get(position).getImageId();
+    	int selectedMedId = rowItems.get(position).getMedId();
     	Intent i = new Intent(HomeActivity.this, EditMedicineActivity.class);
     	i.putExtra("medID", selectedMedId);
 		startActivity(i);
@@ -84,7 +84,9 @@ public class HomeActivity extends Activity implements  OnItemClickListener{
         rowItems = new ArrayList<RowItem>();
         for (int i = 0; i < allMedecines.size(); i++) {
         	 RowItem item = new RowItem(R.drawable.antivirus, allMedecines.get(i).getName(), allMedecines.get(i).getType());
-            rowItems.add(item);
+
+        //	 item.setMedId(allMedecines.get();
+             rowItems.add(item);
         }
  
         listView = (ListView) findViewById(R.id.listView1);
@@ -193,6 +195,10 @@ public void function1(int id){
 }
 public void function2(int id){
 	Toast.makeText(this, "function 2 called", 1000).show();
+	DatabaseHelper helper = new DatabaseHelper(getApplicationContext());
+	DatabaseAdapter adapter = new  DatabaseAdapter(helper);
+	adapter.deleteMedecine(rowItems.get(id).getMedId());
+	rowItems.remove(id);
 	//delete code and reload the list
 }
 
@@ -200,7 +206,13 @@ public void function2(int id){
 @Override
 public void onBackPressed() {
 	// TODO Auto-generated method stub
-	super.onBackPressed();
+//	super.onBackPressed();
+	try {
+		this.finalize();
+	} catch (Throwable e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	
 }
 public class SyncWithServer extends AsyncTask<Medicine, Void, Integer> {
@@ -209,7 +221,7 @@ public class SyncWithServer extends AsyncTask<Medicine, Void, Integer> {
 	private static final int SYNC_FAILED = 3;
 	private int syncStatus;
 	//write the url of the back end servlet
-	private static final String SYNC_URL = "http://192.168.1.5:8084/MedicalReminderServer/newmedecines";
+	private static final String SYNC_URL = "http://10.145.238.152:8084/MedicalReminderServer/newmedecines";
 	
 	JSONParser jsonObj ;
 

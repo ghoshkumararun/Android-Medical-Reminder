@@ -31,7 +31,7 @@ public class SignUpActivity extends Activity {
 	private static final int INVALIED_EMAIL_OR_PASSWORD = 2;
 	private static final int LOGIN_FAILED = 3;
 	private int loginStatus;
-	private static final String SIGNUP_URL = "http://192.168.1.5:8084/MedicalReminderServer/signup";
+	private static final String SIGNUP_URL = "http://10.145.238.152:8084/MedicalReminderServer/signup";
 	
 	SharedPreferences sharedPreferences;
 	SharedPreferences.Editor editor;
@@ -76,6 +76,17 @@ public class SignUpActivity extends Activity {
 				}
 			}
 		});
+	}
+	@Override
+	protected void onRestart() {
+		// TODO Auto-generated method stub
+	//	super.onRestart();
+		try {
+			finalize();
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	class SignUpTask extends AsyncTask<String, Void, Integer> {
