@@ -58,7 +58,7 @@ public class DatabaseAdapter {
 			res = 2;
 		}
 
-		database.close();
+	//	database.close();
 		return res;
 	}
 
@@ -99,7 +99,7 @@ public class DatabaseAdapter {
 
 			res = 2;
 		}
-		database.close();
+	//	database.close();
 
 		return res;
 	}
@@ -127,7 +127,7 @@ public class DatabaseAdapter {
 				allMedecine.add(medObj);
 			}
 			
-			cursor.close();// close cursor
+		//	cursor.close();// close cursor
 			
 		} catch (Exception e) {
 			// TODO: handle exception

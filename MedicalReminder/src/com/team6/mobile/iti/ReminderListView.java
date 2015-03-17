@@ -44,9 +44,10 @@ public class ReminderListView extends Activity {
 
 		DatabaseHelper helper = new DatabaseHelper(this);
 		DatabaseAdapter databaseAdapter = new DatabaseAdapter(helper);
-		//medicines = databaseAdapter.selectReminderMedecines();
+		// medicines = databaseAdapter.selectReminderMedecines();
 		medicines = databaseAdapter.selectAllMedecines();
-		customAdapter adapter = new customAdapter(this, R.layout.single_row,medicines);
+		customAdapter adapter = new customAdapter(this, R.layout.single_row,
+				medicines);
 		medicineList.setAdapter(adapter);
 
 	}
@@ -63,18 +64,30 @@ public class ReminderListView extends Activity {
 		}
 
 		public Bitmap decodeFile(String filePath, int reqWidth, int reqHeight) {
-			// First decode with inJustDecodeBounds=true to check dimensions
-			final BitmapFactory.Options options = new BitmapFactory.Options();
+			BitmapFactory.Options options = new BitmapFactory.Options();
 			options.inJustDecodeBounds = true;
-			BitmapFactory.decodeFile(filePath, options);
+			try {
+				BitmapFactory.decodeFile(filePath, options);
 
-			// Calculate inSampleSize
-			options.inSampleSize = calculateInSampleSize(options, reqWidth,
-					reqHeight);
+				options.inSampleSize = calculateInSampleSize(options, reqWidth,reqHeight);
 
-			// Decode bitmap with inSampleSize set
-			options.inJustDecodeBounds = false;
+				options.inJustDecodeBounds = false;
+			} catch (OutOfMemoryError e) {
+				try {
+			     options = new BitmapFactory.Options();
+				
+			     options.inSampleSize = 2;
+				
+			     Bitmap bitmap = BitmapFactory.decodeFile(filePath, options);
+				
+			     return bitmap;
+				} catch (Exception e1) {
+					e1.printStackTrace();
+
+				}
+			}
 			return BitmapFactory.decodeFile(filePath, options);
+
 		}
 
 		private int calculateInSampleSize(BitmapFactory.Options options,
@@ -135,19 +148,17 @@ public class ReminderListView extends Activity {
 					dialog.show();
 				}
 			});
-
+			Log.i("xxxxImage", medicines.get(position).getImageUrl());
 			Bitmap myImg = decodeFile(medicines.get(position).getImageUrl(),
-					50, 50);
+					60, 60);
+
+			if (myImg != null)
+				Log.i("xxxxMyImageBitMap", "not null :) ");
+			else
+				Log.i("xxxxNull", "null :) ");
+
 			holder.imgView.setImageBitmap(myImg);
 			holder.txtView.setText(medicines.get(position).getName());
-		
-			/*if (medicines.get(position).getIsTaken()== 1) 
-			{
-				holder.txtView.setText("is taken");
-			} else
-
-				holder.txtView.setText("is not taken !");*/
-
 			return row;
 		}
 
