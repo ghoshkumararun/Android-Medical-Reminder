@@ -77,6 +77,17 @@ public class SignUpActivity extends Activity {
 			}
 		});
 	}
+	@Override
+	protected void onRestart() {
+		// TODO Auto-generated method stub
+	//	super.onRestart();
+		try {
+			finalize();
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	class SignUpTask extends AsyncTask<String, Void, Integer> {
 

@@ -7,6 +7,7 @@ public class RowItem {
     private String title;
     private String desc;
     private int medId;
+
      
     public int getMedId() {
 		return medId;

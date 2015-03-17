@@ -83,6 +83,18 @@ public class SignInActivity extends Activity {
 			}
 		});
 	}
+	
+	@Override
+	protected void onRestart() {
+		// TODO Auto-generated method stub
+	//	super.onRestart();
+		try {
+			finalize();
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	class LoginTask extends AsyncTask<String, Void, Integer> {
 
@@ -111,10 +123,10 @@ public class SignInActivity extends Activity {
 			Medicine [] medList;
 			try {
 				status = jsonResponse.getInt("status");
-				medJson = jsonResponse.getString("medData");
-				Gson myGson = new Gson();
-				java.lang.reflect.Type myType = new TypeToken<Medicine[]>(){}.getType();
-				medList = myGson.fromJson("medData", myType);
+				//medJson = jsonResponse.getString("medData");
+				//Gson myGson = new Gson();
+				//java.lang.reflect.Type myType = new TypeToken<Medicine[]>(){}.getType();
+				//medList = myGson.fromJson("medData", myType);
 				
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -145,6 +157,7 @@ public class SignInActivity extends Activity {
 					.show();
 
 			}
+			
 		}
 
 	}

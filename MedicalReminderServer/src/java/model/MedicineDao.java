@@ -49,8 +49,8 @@ public class MedicineDao {
                Medicine temp = new Medicine();
                temp.setId(result.getInt("id"));
                temp.setName(result.getString("name"));
-               temp.setStart_date(result.getLong("start_date"));
-               temp.setEnd_date(result.getLong("end_date"));
+               temp.setStart_date(Long.parseLong(result.getString("start_date")));
+               temp.setEnd_date(Long.parseLong(result.getString("end_date")));
                temp.setRepetition(result.getString("repetition"));
                temp.setInstruction(result.getString("instruction"));
                temp.setType(result.getString("type"));
@@ -85,9 +85,8 @@ public class MedicineDao {
             for (Medicine medicine : medicines) {
 
                 statement.setString(1, medicine.getName());
-                String date = medicine.getStart_date()+"";
-          //      statement.setDate(2, Date.valueOf(date));
-          //      statement.setDate(3, Date.valueOf(medicine.getEnd_date()+""));
+                statement.setString(2, ""+medicine.getStart_date());
+                statement.setString(3,  ""+medicine.getEnd_date());
                 statement.setString(4, medicine.getRepetition());
                 statement.setString(5, medicine.getInstruction());
                 statement.setString(6, medicine.getType());

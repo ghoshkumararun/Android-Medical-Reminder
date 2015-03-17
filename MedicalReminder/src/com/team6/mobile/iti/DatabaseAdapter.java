@@ -35,6 +35,8 @@ public class DatabaseAdapter {
 	public DatabaseAdapter(DatabaseHelper h) {
 		databaseHelper = h;
 	}
+	
+	
 
 	public long insertMedecine(String medName, String desc, String type,
 			String urlImage, long startDate, Long endDate, String repeation) {
@@ -199,6 +201,10 @@ try{
 				temp.setType(cursor.getString(cursor.getColumnIndex(MEDECINE_TYPE_COL)));
 				temp.setDesc(cursor.getString(cursor.getColumnIndex(MEDECINE_REPETATION_COL)));
 				temp.setImageURL(cursor.getString(cursor.getColumnIndex(MEDICINE_IMAGE_URL_COL)));
+				temp.setStart_date(cursor.getColumnIndex(MEDICINE_START_DATE_COL));
+				temp.setEnd_date(cursor.getColumnIndex(MEDICINE_END_DATE_COL));
+				temp.setRepetition(MEDECINE_REPETATION_COL);
+				//temp.setInstruction(cursor.getColumnIndex(Me));
 				
 				Cursor timeCursor = database.rawQuery("SELECT * FROM "+TABLE_DOSE_TIME+" WHERE "+DOSE_MEDICINE_ID_COL
 						+" = "+temp.getId()+";", null);
@@ -224,5 +230,13 @@ try{
 			Log.i("error","error happened");
 		}
 		return selectedList;
+	}
+	
+	public int deleteMedecine(int id){
+		database = databaseHelper.getWritableDatabase();
+		String query = "DELETE FROM "+TABLE_MEDICINE+" WHERE "+MEDICINE_ID_COL+" = "+id;
+		database.delete(TABLE_MEDICINE, MEDICINE_ID_COL+" = "+id, null);
+		return 0;
+		
 	}
 }

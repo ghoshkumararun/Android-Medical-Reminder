@@ -60,7 +60,7 @@ public class HomeActivity extends Activity implements  OnItemClickListener{
  
     public void onItemClick(AdapterView<?> parent, View view, int position,
             long id) {
-    	int selectedMedId = position;
+    	int selectedMedId = rowItems.get(position).getMedId();
     	Intent i = new Intent(HomeActivity.this, EditMedicineActivity.class);
     	i.putExtra("medID", selectedMedId);
 		startActivity(i);
@@ -194,6 +194,10 @@ public void function1(int id){
 }
 public void function2(int id){
 	Toast.makeText(this, "function 2 called", 1000).show();
+	DatabaseHelper helper = new DatabaseHelper(getApplicationContext());
+	DatabaseAdapter adapter = new  DatabaseAdapter(helper);
+	adapter.deleteMedecine(rowItems.get(id).getMedId());
+	rowItems.remove(id);
 	//delete code and reload the list
 }
 
@@ -201,7 +205,13 @@ public void function2(int id){
 @Override
 public void onBackPressed() {
 	// TODO Auto-generated method stub
-	super.onBackPressed();
+//	super.onBackPressed();
+	try {
+		this.finalize();
+	} catch (Throwable e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	
 }
 public class SyncWithServer extends AsyncTask<Medicine, Void, Integer> {
