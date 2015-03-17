@@ -35,17 +35,36 @@ import android.widget.Toast;
 public class ReminderListView extends Activity {
 	ListView medicineList;
 	ArrayList<Medicine> medicines;
+	Bundle bundle;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_reminder_list_view);
 		medicineList = (ListView) findViewById(R.id.medicineList);
+		//adding new code to merge with radwa hassan
+		bundle=getIntent().getExtras();
+		String imageUri=bundle.getString("image");
+		Log.i("XXXXBundle",imageUri);
+		
+		String medName=bundle.getString("name");
+		Log.i("XXXXBundle",medName);
 
-		DatabaseHelper helper = new DatabaseHelper(this);
-		DatabaseAdapter databaseAdapter = new DatabaseAdapter(helper);
+		Long medTime=bundle.getLong("time");
+		Log.i("XXXXBundle",""+medTime);
+
+		Medicine med=new Medicine();
+		med.setName(medName);
+		med.setImageURL(imageUri);
+		med.setStart_date(medTime);
+
+		medicines.add(med);
+		
+		
+		//DatabaseHelper helper = new DatabaseHelper(this);
+		//DatabaseAdapter databaseAdapter = new DatabaseAdapter(helper);
 		// medicines = databaseAdapter.selectReminderMedecines();
-		medicines = databaseAdapter.selectAllMedecines();
+		//medicines = databaseAdapter.selectAllMedecines();
 		customAdapter adapter = new customAdapter(this, R.layout.single_row,
 				medicines);
 		medicineList.setAdapter(adapter);

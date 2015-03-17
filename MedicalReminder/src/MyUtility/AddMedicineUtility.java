@@ -97,10 +97,15 @@ public class AddMedicineUtility {
 
 		DatabaseHelper dbHelper = new DatabaseHelper(con);
 		DatabaseAdapter dbAdapter = new DatabaseAdapter(dbHelper);
-		Log.i("xxxxUtility", med.getImageUrl());
+		//Log.i("xxxxUtility", med.getImageUrl());
+		
+		
 		dbAdapter.insertMedecine(med.getName(), med.getDesc(), med.getType(),
 				med.getImageUrl(), med.getStart_date(), med.getEnd_date(),
 				med.getRepetition());
+		
+		
+		
 		dbAdapter.insertMedecineIntoDoseTable(med.getIsTaken(), med.getTimes());
 
 		List<Medicine> meds = dbAdapter.selectAllMedecines();
