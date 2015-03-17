@@ -36,7 +36,7 @@ public class NewMedecines extends HttpServlet {
         Gson myGson = new Gson();
        
         String requestedJson = request.getParameter("data");
-                String requestedEmail = request.getParameter("email");
+        String requestedEmail = request.getParameter("email");
 
         java.lang.reflect.Type myType = new TypeToken<Medicine[]>(){}.getType();
          ArrayList<Medicine> addedMedecines = myGson.fromJson(requestedJson, myType);

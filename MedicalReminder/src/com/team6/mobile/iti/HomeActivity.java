@@ -4,13 +4,24 @@ package com.team6.mobile.iti;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.team6.mobile.iti.beans.Medicine;
+import com.team6.mobile.iti.connection.JSONParser;
 
 import android.app.Activity;
 import android.app.Application;
 import android.app.ActionBar.OnNavigationListener;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.Menu;
@@ -169,6 +180,70 @@ public void onBackPressed() {
 	// TODO Auto-generated method stub
 	super.onBackPressed();
 	
+}
+public class SyncWithServer extends AsyncTask<Medicine, Void, Integer> {
+	private static final int SYNC_SUCESS = 1;
+	//private static final int INVALIED_EMAIL_OR_PASSWORD = 2;
+	private static final int SYNC_FAILED = 3;
+	private int syncStatus;
+	//write the url of the back end servlet
+	private static final String SYNC_URL = "http://192.168.1.5:8084/MedicalReminderServer/newmedecines";
+	
+	JSONParser jsonObj ;
+
+	
+
+	@Override
+	protected Integer doInBackground(Medicine... params) {
+		// TODO Auto-generated method stub
+		
+		
+		Gson myGson = new Gson();
+		java.lang.reflect.Type myType = new TypeToken<Medicine[]>(){}.getType();
+		String jsonString = myGson.toJson(params,myType);
+		Log.i("json",jsonString);
+		
+		JSONParser parser = new JSONParser();
+		BasicNameValuePair requestParam = new BasicNameValuePair("data", jsonString);
+		SharedPreferences sharedPreferences = getSharedPreferences("shared", MODE_PRIVATE);
+		String userEmail = sharedPreferences.getString("emailUser", "default");
+		BasicNameValuePair emailParam = new BasicNameValuePair("email", userEmail);
+		ArrayList<NameValuePair> parameters = new ArrayList<NameValuePair>();
+		parameters.add(requestParam);
+		parameters.add(emailParam);
+		JSONObject jsonResponse = parser.makeHttpRequest(SYNC_URL, "POST",
+				parameters);
+		int status = 0;
+		try {
+			status = jsonResponse.getInt("status");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return status;
+	}
+	@Override
+	protected void onPostExecute(Integer result) {
+		// TODO Auto-generated method stub
+		super.onPostExecute(result);
+		
+		String message = null;
+
+		if (result == 1){//login successfull
+			Intent intent1 = new Intent(HomeActivity.this, HomeActivity.class);
+			startActivity(intent1);
+			message = "Synced successfully";
+		}
+			
+		
+		else
+			message = "Login Failed";
+
+		Toast.makeText(HomeActivity.this, message, Toast.LENGTH_LONG)
+				.show();
+
+	}
 }
 
 }
