@@ -36,6 +36,18 @@ public class SignUpActivity extends Activity {
 	SharedPreferences sharedPreferences;
 	SharedPreferences.Editor editor;
 	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		 sharedPreferences = getSharedPreferences("shared",MODE_PRIVATE);
+		    if(!sharedPreferences.getString("emailUser", "default").equals("default")){
+		    	Intent homeIntent = new Intent(this,HomeActivity.class);
+		    	startActivity(homeIntent);
+		    	SignUpActivity.this.finish();
+		    }
+		
+	}
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sign_up);
@@ -78,17 +90,7 @@ public class SignUpActivity extends Activity {
 			}
 		});
 	}
-	@Override
-	protected void onRestart() {
-		// TODO Auto-generated method stub
-	//	super.onRestart();
-		try {
-			finalize();
-		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
 
 	class SignUpTask extends AsyncTask<String, Void, Integer> {
 

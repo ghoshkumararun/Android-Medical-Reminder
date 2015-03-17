@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,16 +44,10 @@ public class SignInActivity extends Activity {
 	private int loginStatus;
 	private static final String LOGIN_URL = "http://10.145.238.152:8084/MedicalReminderServer/login";
 	SharedPreferences sharedPreferences;
-
+	SharedPreferences.Editor editor;
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_sign_in);
-
-		btnSignIn = (Button) findViewById(R.id.btnSignIn);
-		txtSignUp = (TextView) findViewById(R.id.txtNewSignUp);
-		txtEmail = (EditText) findViewById(R.id.editEmailSignIn);
-		txtPass = (EditText) findViewById(R.id.editPassSignIn);
+	protected void onStart() {
+		super.onStart();
 		sharedPreferences = getSharedPreferences("shared",MODE_PRIVATE);
 	    if(!sharedPreferences.getString("emailUser", "default").equals("default")){
 	    	Intent homeIntent = new Intent(this,HomeActivity.class);
@@ -60,10 +55,30 @@ public class SignInActivity extends Activity {
 	    	SignInActivity.this.finish();
 	    }
 		
+		
+	}
+	
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+		sharedPreferences = getSharedPreferences("shared",MODE_PRIVATE);
+	    if(!sharedPreferences.getString("emailUser", "default").equals("default")){
+	    	Intent homeIntent = new Intent(this,HomeActivity.class);
+	    	startActivity(homeIntent);
+	    	SignInActivity.this.finish();
+	    }
+	    setContentView(R.layout.activity_sign_in);
+		btnSignIn = (Button) findViewById(R.id.btnSignIn);
+		txtSignUp = (TextView) findViewById(R.id.txtNewSignUp);
+		txtEmail = (EditText) findViewById(R.id.editEmailSignIn);
+		txtPass = (EditText) findViewById(R.id.editPassSignIn);
+		
+		
 		txtSignUp.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
+				
 				i = new Intent(SignInActivity.this, SignUpActivity.class);
 				startActivity(i);
 				
@@ -78,6 +93,14 @@ public class SignInActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+editor = sharedPreferences.edit();
+				
+				editor.putString("nameUser", txtEmail.getText().toString());
+				String user = txtEmail.getText().toString();
+				Log.i("user",user);
+				editor.putString("emailUser",user );
+				editor.putString("passwordUser", txtPass.getText().toString());
+				editor.commit();
 				LoginTask loginTask = new LoginTask();
 				loginTask.execute(txtEmail.getText().toString(), txtPass.getText().toString());
 				//"m@yahoo.com", "123456"
@@ -85,17 +108,7 @@ public class SignInActivity extends Activity {
 		});
 	}
 	
-	@Override
-	protected void onRestart() {
-		// TODO Auto-generated method stub
-	//	super.onRestart();
-		try {
-			finalize();
-		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
 
 	class LoginTask extends AsyncTask<String, Void, Integer> {
 
