@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import com.team6.mobile.iti.R;
 import com.team6.mobile.iti.beans.Medicine;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -167,6 +166,10 @@ private boolean isDeviceSupportCamera() {
 private void captureImage() {
     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
     fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+    Log.i("xxxxpath", ""+fileUri);
+    Log.i("xxxxpath2", ""+fileUri.toString());
+
+    medicine.setImageURL(fileUri.getPath());                        //try1
     intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
     // start the image capture Intent
     startActivityForResult(intent, CAMERA_CAPTURE_IMAGE_REQUEST_CODE);
@@ -251,7 +254,7 @@ private  File getOutputMediaFile(int type) {
   //  directory=Environment.getExternalStorageDirectory().getName()+""+IMAGE_DIRECTORY_NAME;
     directory=Environment.getExternalStorageDirectory().getAbsolutePath()+""+IMAGE_DIRECTORY_NAME;
 
-    Log.i("enviroment.external.Name+imgDirect", directory);
+             Log.i("IIIIEnv", directory);
 
     // Create the storage directory if it does not exist
     if (!mediaStorageDir.exists()) {
@@ -274,20 +277,21 @@ private  File getOutputMediaFile(int type) {
     }
 
     imageName="IMG_" + timeStamp + ".jpg";
-    String imageUrl = returnImageFullPath( directory ,  imageName);
-    medicine.setImageURL(imageUrl);
+   // String imageUrl = returnImageFullPath( directory ,  imageName);
+    
+    //medicine.setImageURL(imageUrl);               ////////////////////////gaber
     
     return mediaFile;
 }
 
 
-String returnImageFullPath(String directory , String imageName){
+/*String returnImageFullPath(String directory , String imageName){
 	
-	String imagePath=directory+"/"+imageName;
-	Log.i("IIIIIIIIIIIIIIIIIIIIIIII",imagePath);
+	String imagePath=directory+"/Pictures/"+imageName;
+	Log.i("IIIIIIIIIIIIIIIIIIIIIIII",imagePath); //false
 	return imagePath;
 	
-}
+}*/
 	
 	
 
