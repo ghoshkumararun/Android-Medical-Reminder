@@ -467,12 +467,13 @@ public class SetScheduleActivity extends Activity {
 	private void addMedicineInDb(Medicine med) {
 
 		AddMedicineUtility obj = new AddMedicineUtility();
-		Log.i("xxxxAdd",med.getName());
-		Log.i("xxxxAdd",med.getImageUrl());
-		DatabaseHelper helpObj=new DatabaseHelper(this);
-		DatabaseAdapter adptObj=new DatabaseAdapter(helpObj);
-		adptObj.insertMedecine(med.getName(), med.getDesc(), med.getType(),
-				med.getImageUrl(), med.getStart_date(), med.getEnd_date(), med.getRepetition());
+		//Log.i("xxxxAdd",med.getName());
+		//Log.i("xxxxAdd",med.getImageUrl());
+	//	DatabaseHelper helpObj=new DatabaseHelper(this);
+		//DatabaseAdapter adptObj=new DatabaseAdapter(helpObj);
+		//adptObj.insertMedecine(med.getName(), med.getDesc(), med.getType(),
+			//	med.getImageUrl(), med.getStart_date(), med.getEnd_date(), med.getRepetition());
+		obj.addMedicine(med, this);
 		obj.setAlarm(med,SetScheduleActivity.this);
 		Toast.makeText(SetScheduleActivity.this, "Next Alarm is "+new Date(med.getTimes().get(0).getTake_time()), Toast.LENGTH_SHORT).show();
 
