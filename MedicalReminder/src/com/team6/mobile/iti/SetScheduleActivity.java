@@ -255,10 +255,12 @@ public class SetScheduleActivity extends Activity {
 				medicine.setInstruction(instructionArray[instructionChoicePos]);
 				String duration = durationArray[durationChoicePos];
 				medicine.setEnd_date(convertDurationToLong(duration));
-
+				
+				Log.i("testTime", ""+medicine.getTimes().get(0).getTake_time());
+				
 				// add medicine in db
 				addMedicineInDb(medicine);
-
+				
 				// go to home actiivty
 				Intent in =new Intent(SetScheduleActivity.this, HomeActivity.class);
 				startActivity(in);

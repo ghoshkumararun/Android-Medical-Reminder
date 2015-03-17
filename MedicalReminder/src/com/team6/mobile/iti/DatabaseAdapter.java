@@ -38,7 +38,7 @@ public class DatabaseAdapter {
 
 	public long insertMedecine(String medName, String desc, String type,
 			String urlImage, long startDate, Long endDate, String repeation) {
-		
+
 		database = databaseHelper.getWritableDatabase();
 		long res = 0;
 		String tableName = TABLE_MEDICINE;
@@ -58,7 +58,7 @@ public class DatabaseAdapter {
 			res = 2;
 		}
 
-	//	database.close();
+		// database.close();
 		return res;
 	}
 
@@ -77,29 +77,31 @@ public class DatabaseAdapter {
 		return id;
 	}
 
-	public long insertMedecineIntoDoseTable(int isTaken, List<TimeDto> list) {
+	public long insertMedecineIntoDoseTable(int isTaken, List<TimeDto> list,
+			int id) {
 		database = databaseHelper.getWritableDatabase();
 		long res = 0;
 		String tableName = TABLE_DOSE_TIME;
-		int maxId = getMaxId();
+		int maxId = id;
 		ContentValues medValues = new ContentValues();
 		for (int i = 0; i < list.size(); i++) {
 			medValues.put(DOSE_MEDICINE_ID_COL, maxId);
 			medValues.put(DOSE_QUANTITY_COL, list.get(i).getDose());
 			medValues.put(DOSE_TIME_COL, list.get(i).getTake_time());
 			medValues.put(DOSE_TAKEN_COL, isTaken);
+			try {
 
+				database.insert(tableName, null, medValues);
+				res = 0;
+				Log.i("XXXXInertDose", "inserted succeffully");
+			} catch (Exception ex) {
+				// TODO: handle exception
+
+				res = 2;
+			}
 		}
-		try {
 
-			database.insert(tableName, null, medValues);
-			res = 0;
-		} catch (Exception ex) {
-			// TODO: handle exception
-
-			res = 2;
-		}
-	//	database.close();
+		// database.close();
 
 		return res;
 	}
@@ -107,121 +109,167 @@ public class DatabaseAdapter {
 	public ArrayList<Medicine> selectAllMedecines() {
 		database = databaseHelper.getReadableDatabase();
 		ArrayList<Medicine> allMedecine = new ArrayList<Medicine>();
+
+		Cursor cursor = database.rawQuery("SELECT * FROM " + TABLE_MEDICINE
+				+ ";", null);
+		Medicine medObj = null;
+		while (cursor.moveToNext() == true) {
+			// res = 0;
+			medObj = new Medicine();
+			medObj.setId(cursor.getInt(cursor.getColumnIndex(MEDICINE_ID_COL)));
+			medObj.setName(cursor.getString(cursor
+					.getColumnIndex(MEDICINE_NAME_COL)));
+			medObj.setType(cursor.getString(cursor
+					.getColumnIndex(MEDECINE_TYPE_COL)));
+			medObj.setDesc(cursor.getString(cursor
+					.getColumnIndex(MEDECINE_REPETATION_COL)));
+			medObj.setImageURL(cursor.getString(cursor
+					.getColumnIndex(MEDICINE_IMAGE_URL_COL)));
+			ArrayList<TimeDto> timeDtos = new ArrayList<TimeDto>();
+			for (Long t : selectAllTimes(medObj.getId())) {
+				TimeDto temp = new TimeDto();
+				temp.setTake_time(t);
+				timeDtos.add(temp);
+
+			}
+			medObj.setTimes(timeDtos);
+			if (medObj != null)
+				allMedecine.add(medObj);
+		}
+
+		return allMedecine;
+	}
+
+	public ArrayList<Long> selectAllTimes(int tempId) {
+		database = databaseHelper.getReadableDatabase();
+		ArrayList<Long> allTimes = new ArrayList<Long>();
 		try {
 
-			Cursor cursor = database.rawQuery("SELECT * FROM " + TABLE_MEDICINE
-					+ ";", null);
+			Cursor cursor = database.rawQuery("SELECT * FROM "
+					+ TABLE_DOSE_TIME + ";", null);
 
 			while (cursor.moveToNext() == true) {
 				// res = 0;
-				Medicine medObj = new Medicine();
-				medObj.setId(cursor.getInt(cursor.getColumnIndex(MEDICINE_ID_COL)));
-				medObj.setName(cursor.getString(cursor
-						.getColumnIndex(MEDICINE_NAME_COL)));
-				medObj.setType(cursor.getString(cursor
-						.getColumnIndex(MEDECINE_TYPE_COL)));
-				medObj.setDesc(cursor.getString(cursor
-						.getColumnIndex(MEDECINE_REPETATION_COL)));
-				medObj.setImageURL(cursor.getString(cursor
-						.getColumnIndex(MEDICINE_IMAGE_URL_COL)));
-				
-				allMedecine.add(medObj);
+				allTimes.add(cursor.getLong(cursor
+						.getColumnIndex(DOSE_TIME_COL)));
 			}
-			
-		//	cursor.close();// close cursor
-			
+
+			// cursor.close();// close cursor
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			// res = 1;
 		}
-		
-		
-		
-		return allMedecine;
+
+		return allTimes;
 	}
 
 	// sarah
-	public ArrayList<Medicine> selectReminderMedecines() {
+	public ArrayList<Medicine> selectReminderMedecines(long currentTime) {
 		database = databaseHelper.getReadableDatabase();
-		ArrayList<Medicine> medReminder = new ArrayList<Medicine>();    // to add 
-		ArrayList<Medicine> allMedecine = selectAllMedecines();   // to add 
+		ArrayList<Medicine> medReminder = new ArrayList<Medicine>(); // to add
+		ArrayList<Medicine> allMedecine = selectAllMedecines(); // to add
 
-			long seconds=System.currentTimeMillis();		        //current time 
-		Log.i("SEconds timmmmmm", "" + seconds);
 		Medicine medObj = new Medicine();
-
-		for(int i=0;i<allMedecine.size();i++){
-			for(int j=0;j<allMedecine.get(i).getTimes().size();j++)
-			{
-				if(seconds==allMedecine.get(i).getTimes().get(i).getTake_time())
-				{
-					try {
-
-						Cursor cursor = database.rawQuery("SELECT * FROM MEDICINE ;",null);
-
-						while (cursor.moveToNext() == true) {
-							medObj.setName(cursor.getString(cursor.getColumnIndex(MEDICINE_NAME_COL)));
-						//	medObj.setType(cursor.getString(cursor.getColumnIndex(MEDECINE_TYPE_COL)));
-							medObj.setDesc(cursor.getString(cursor.getColumnIndex(MEDECINE_REPETATION_COL)));
-							medObj.setImageURL(cursor.getString(cursor.getColumnIndex(MEDICINE_IMAGE_URL_COL)));
-							medReminder.add(medObj);                                                   
-						}
-
-					} catch (Exception e) {
-						// TODO: handle exception
-						// res = 1;
-					}
-					
-
-				}
-				
-			}
+		Log.i("testTime", ""+currentTime);
+		long beginT = currentTime - 20*60*1000;
+		long endT = currentTime + 20*60*1000;
+		
+		for(Medicine med : allMedecine ){
+			
+			Log.i("testTime", ""+med.getTimes().get(0).getTake_time());
+			
+			if(med.getTimes().get(0).getTake_time() > beginT && med.getTimes().get(0).getTake_time() < endT)
+				medReminder.add(med);
+			
 		}
-
-			// return res;
+		
+		
+//		for (int i = 0; i < allMedecine.size(); i++) {
+//			Log.i("XXXXSizeDose", "" + allMedecine.size());
+//			if (allMedecine.get(i).getTimes() != null)
+//				for (int j = 0; j < allMedecine.get(i).getTimes().size(); j++) // /////exception
+//				{
+//					long takenFromDataBase = allMedecine.get(i).getTimes()
+//							.get(j).getTake_time();
+//					
+//					if (currentTime == takenFromDataBase) {
+//						try {
+//
+//							Cursor cursor = database.rawQuery(
+//									"SELECT * FROM MEDICINE WHERE  START_DATE BETWEEN "
+//											+ beginT +" AND "+endT + " ;", null);
+//
+//							while (cursor.moveToNext() == true) {
+//								medObj.setName(cursor.getString(cursor
+//										.getColumnIndex(MEDICINE_NAME_COL)));
+//								// medObj.setType(cursor.getString(cursor.getColumnIndex(MEDECINE_TYPE_COL)));
+//								medObj.setDesc(cursor.getString(cursor
+//										.getColumnIndex(MEDECINE_REPETATION_COL)));
+//								medObj.setImageURL(cursor.getString(cursor
+//										.getColumnIndex(MEDICINE_IMAGE_URL_COL)));
+//								medReminder.add(medObj);
+//							}
+//
+//						} catch (Exception e) {
+//							// TODO: handle exception
+//							// res = 1;
+//						}
+//
+//					}
+//
+//				}
+//		}
+//
+		// return res;
 		return medReminder;
 
 	}
-	
-	public ArrayList<Medicine> selectToSync(){
+
+	public ArrayList<Medicine> selectToSync() {
 		ArrayList<Medicine> selectedList = new ArrayList<Medicine>();
 		database = databaseHelper.getReadableDatabase();
-try{
-			
-			Cursor cursor = database.rawQuery("SELECT * FROM "+TABLE_MEDICINE+" WHERE "+MEDICINE_NAME_COL
-					+" <> 3 ;", null);
-			
-			while(cursor.moveToNext() == true){
-			//	res = 0;
+		try {
+
+			Cursor cursor = database.rawQuery("SELECT * FROM " + TABLE_MEDICINE
+					+ " WHERE " + MEDICINE_NAME_COL + " <> 3 ;", null);
+
+			while (cursor.moveToNext() == true) {
+				// res = 0;
 				Medicine temp = new Medicine();
 				temp.setId(cursor.getInt(cursor.getColumnIndex(MEDICINE_ID_COL)));
-				temp.setName(cursor.getString(cursor.getColumnIndex(MEDICINE_NAME_COL)));
-				temp.setType(cursor.getString(cursor.getColumnIndex(MEDECINE_TYPE_COL)));
-				temp.setDesc(cursor.getString(cursor.getColumnIndex(MEDECINE_REPETATION_COL)));
-				temp.setImageURL(cursor.getString(cursor.getColumnIndex(MEDICINE_IMAGE_URL_COL)));
-				
-				Cursor timeCursor = database.rawQuery("SELECT * FROM "+TABLE_DOSE_TIME+" WHERE "+DOSE_MEDICINE_ID_COL
-						+" = "+temp.getId()+";", null);
+				temp.setName(cursor.getString(cursor
+						.getColumnIndex(MEDICINE_NAME_COL)));
+				temp.setType(cursor.getString(cursor
+						.getColumnIndex(MEDECINE_TYPE_COL)));
+				temp.setDesc(cursor.getString(cursor
+						.getColumnIndex(MEDECINE_REPETATION_COL)));
+				temp.setImageURL(cursor.getString(cursor
+						.getColumnIndex(MEDICINE_IMAGE_URL_COL)));
+
+				Cursor timeCursor = database.rawQuery("SELECT * FROM "
+						+ TABLE_DOSE_TIME + " WHERE " + DOSE_MEDICINE_ID_COL
+						+ " = " + temp.getId() + ";", null);
 				ArrayList<TimeDto> times = new ArrayList<TimeDto>();
-				while(timeCursor.moveToNext()== true){
+				while (timeCursor.moveToNext() == true) {
 					TimeDto timeDose = new TimeDto();
-					String doseStr = timeCursor.getString(timeCursor.getColumnIndex(DOSE_QUANTITY_COL));
+					String doseStr = timeCursor.getString(timeCursor
+							.getColumnIndex(DOSE_QUANTITY_COL));
 					timeDose.setDose(Float.parseFloat(doseStr));
-					timeDose.setTake_time(timeCursor.getColumnIndex(DOSE_TIME_COL));
+					timeDose.setTake_time(timeCursor
+							.getColumnIndex(DOSE_TIME_COL));
 					timeDose.setMedicine_id(temp.getId());
 					times.add(timeDose);
 				}
-				
+
 				temp.setTimes(times);
 				selectedList.add(temp);
 			}
-			
-			
-		}
-		catch (Exception e) {
+
+		} catch (Exception e) {
 			// TODO: handle exception
-		//	res = 1;
-			Log.i("error","error happened");
+			// res = 1;
+			Log.i("error", "error happened");
 		}
 		return selectedList;
 	}

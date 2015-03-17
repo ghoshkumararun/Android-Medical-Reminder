@@ -84,7 +84,7 @@ public class HomeActivity extends Activity implements  OnItemClickListener{
         rowItems = new ArrayList<RowItem>();
         for (int i = 0; i < allMedecines.size(); i++) {
         	 RowItem item = new RowItem(R.drawable.antivirus, allMedecines.get(i).getName(), allMedecines.get(i).getType());
-             rowItems.add(item);
+            rowItems.add(item);
         }
  
         listView = (ListView) findViewById(R.id.listView1);
