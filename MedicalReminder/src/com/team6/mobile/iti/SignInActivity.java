@@ -23,6 +23,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.team6.mobile.iti.beans.Medicine;
 import com.team6.mobile.iti.connection.JSONParser;
 
 
@@ -105,9 +108,13 @@ public class SignInActivity extends Activity {
 			// get login status
 			int status = 0;
 			String medJson;
+			Medicine [] medList;
 			try {
 				status = jsonResponse.getInt("status");
 				medJson = jsonResponse.getString("medData");
+				Gson myGson = new Gson();
+				java.lang.reflect.Type myType = new TypeToken<Medicine[]>(){}.getType();
+				medList = myGson.fromJson("medData", myType);
 				
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block

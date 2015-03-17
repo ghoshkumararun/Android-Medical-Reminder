@@ -60,7 +60,7 @@ public class HomeActivity extends Activity implements  OnItemClickListener{
  
     public void onItemClick(AdapterView<?> parent, View view, int position,
             long id) {
-    	int selectedMedId = rowItems.get(position).getImageId();
+    	int selectedMedId = position;
     	Intent i = new Intent(HomeActivity.this, EditMedicineActivity.class);
     	i.putExtra("medID", selectedMedId);
 		startActivity(i);
@@ -84,6 +84,7 @@ public class HomeActivity extends Activity implements  OnItemClickListener{
         rowItems = new ArrayList<RowItem>();
         for (int i = 0; i < allMedecines.size(); i++) {
         	 RowItem item = new RowItem(R.drawable.antivirus, allMedecines.get(i).getName(), allMedecines.get(i).getType());
+        //	 item.setMedId(allMedecines.get();
              rowItems.add(item);
         }
  
