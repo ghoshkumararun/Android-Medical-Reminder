@@ -39,9 +39,15 @@ public class NewMedecines extends HttpServlet {
         String requestedEmail = request.getParameter("email");
 
         java.lang.reflect.Type myType = new TypeToken<Medicine[]>(){}.getType();
-         ArrayList<Medicine> addedMedecines = myGson.fromJson(requestedJson, myType);
+        
+         Medicine [] addedMedecines = myGson.fromJson(requestedJson, myType);
          MedicineDao medecineConn = MedicineDao.getInstance();
-         medecineConn.insertMedicines(addedMedecines,requestedEmail);
+        ArrayList <Medicine> med = new ArrayList<>();
+        for(int i=0;i<addedMedecines.length;i++){
+            med.add(addedMedecines[i]);
+            System.out.println(addedMedecines[i].getName());
+        }
+         medecineConn.insertMedicines(med,requestedEmail);
          
         
     }

@@ -94,7 +94,28 @@ public class HomeActivity extends Activity implements  OnItemClickListener{
         registerForContextMenu(listView);
     }
     
- 
+ @Override
+protected void onResume() {
+	// TODO Auto-generated method stub
+	super.onResume();
+	 DatabaseHelper databaseHelper = new  DatabaseHelper(this);
+     DatabaseAdapter databaseAdapter = new DatabaseAdapter(databaseHelper);
+     databaseAdapter.insertMedecine("katafklam", "good medecine", "medecine", "med", 0, null, null);
+     ArrayList<Medicine> allMedecines = databaseAdapter.selectAllMedecines();
+     rowItems = new ArrayList<RowItem>();
+     for (int i = 0; i < allMedecines.size(); i++) {
+     	 RowItem item = new RowItem(R.drawable.antivirus, allMedecines.get(i).getName(), allMedecines.get(i).getType());
+          rowItems.add(item);
+     }
+
+     listView = (ListView) findViewById(R.id.listView1);
+     CustomBaseAdapter adapter = new CustomBaseAdapter(this, rowItems);
+     listView.setAdapter(adapter);
+     listView.setOnItemClickListener((OnItemClickListener) this);
+   //  listView.setOnItemLongClickListener((OnItemLongClickListener)this);
+     registerForContextMenu(listView);
+	
+}
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -214,13 +235,13 @@ public class SyncWithServer extends AsyncTask<Medicine, Void, Integer> {
 		JSONObject jsonResponse = parser.makeHttpRequest(SYNC_URL, "POST",
 				parameters);
 		int status = 0;
-		try {
+	/*	try {
 			status = jsonResponse.getInt("status");
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+*/
 		return status;
 	}
 	@Override
@@ -230,7 +251,7 @@ public class SyncWithServer extends AsyncTask<Medicine, Void, Integer> {
 		
 		String message = null;
 
-		if (result == 1){//login successfull
+		if (result == 0){//login successfull
 			Intent intent1 = new Intent(HomeActivity.this, HomeActivity.class);
 			startActivity(intent1);
 			message = "Synced successfully";
