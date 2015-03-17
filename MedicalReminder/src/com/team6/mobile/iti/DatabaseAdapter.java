@@ -115,6 +115,7 @@ public class DatabaseAdapter {
 			while (cursor.moveToNext() == true) {
 				// res = 0;
 				Medicine medObj = new Medicine();
+				medObj.setId(cursor.getInt(cursor.getColumnIndex(MEDICINE_ID_COL)));
 				medObj.setName(cursor.getString(cursor
 						.getColumnIndex(MEDICINE_NAME_COL)));
 				medObj.setType(cursor.getString(cursor

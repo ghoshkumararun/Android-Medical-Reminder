@@ -60,8 +60,9 @@ public class HomeActivity extends Activity implements  OnItemClickListener{
  
     public void onItemClick(AdapterView<?> parent, View view, int position,
             long id) {
-    	
-    	Intent i = new Intent(HomeActivity.this, ViewMedActivity.class);
+    	int selectedMedId = rowItems.get(position).getImageId();
+    	Intent i = new Intent(HomeActivity.this, EditMedicineActivity.class);
+    	i.putExtra("medID", selectedMedId);
 		startActivity(i);
        // Toast toast = Toast.makeText(getApplicationContext(),
               //  "Item " + (position + 1) + ": " + rowItems.get(position),
