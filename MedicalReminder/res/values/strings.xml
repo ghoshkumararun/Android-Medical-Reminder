@@ -7,7 +7,7 @@
     <string name="image">Image</string>
     <string name="dose">Dose</string>
     <string name="schedule">Schedule</string>
-    <string name="setSchedule">Set Schedule</string>
+    <string name="setSchedule">Schedule</string>
     <string name="interval">Repetition</string>
     <string name="sheduleAndDose">Time And Dose</string>
     <string name="startDay">Start Day</string>
@@ -109,6 +109,10 @@
     <string name="time">Time</string>
     <string name="addTime">Add Time</string>
     <string name="editSchedule">Edit Schedule</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="please_take">Please take</string>
+    <string name="med">Med</string>
+    <string name="space"></string>
 
     
     

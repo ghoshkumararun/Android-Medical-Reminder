@@ -79,7 +79,6 @@ public class Medicine implements Parcelable {
 
 	public String getName() {
 		return name;
-
 	}
 
 	public void setName(String name) {
@@ -177,6 +176,10 @@ public class Medicine implements Parcelable {
 		imageUrl = string;
 	}
 
+	public String getImageURL( ) {
+		
+		return imageUrl;
+	}
 	public String getImageUrl() {
 		return imageUrl;
 	}
