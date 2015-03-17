@@ -31,7 +31,7 @@ public class SignUpActivity extends Activity {
 	private static final int INVALIED_EMAIL_OR_PASSWORD = 2;
 	private static final int LOGIN_FAILED = 3;
 	private int loginStatus;
-	private static final String SIGNUP_URL = "http://198.168.1.8:8084/MedicalReminderServer/signup";
+	private static final String SIGNUP_URL = "http://192.168.1.5:8084/MedicalReminderServer/signup";
 	
 	SharedPreferences sharedPreferences;
 	SharedPreferences.Editor editor;
@@ -64,10 +64,10 @@ public class SignUpActivity extends Activity {
 					editor.putString("emailUser",user );
 					editor.putString("passwordUser", txtPassword.getText().toString());
 					editor.commit();
-					Intent intent = new Intent(SignUpActivity.this,HomeActivity.class);
-					startActivity(intent);
-					//SignUpTask signup = new SignUpTask();
-					//signup.execute(txtName.getText().toString(),txtEmail.getText().toString(),txtPassword.getText().toString());
+					//Intent intent = new Intent(SignUpActivity.this,HomeActivity.class);
+					//startActivity(intent);
+					SignUpTask signup = new SignUpTask();
+					signup.execute(txtName.getText().toString(),txtEmail.getText().toString(),txtPassword.getText().toString());
 				}
 				else{
 					Toast.makeText(getApplicationContext(), "Please Enter the password and cofirmation correctly", 1000);
