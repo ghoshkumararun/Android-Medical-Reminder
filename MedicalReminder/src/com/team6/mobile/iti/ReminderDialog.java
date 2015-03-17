@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -77,22 +78,25 @@ public class ReminderDialog extends Dialog implements
 	        ReminderDialogSupport r = (ReminderDialogSupport) activity; 
 	        String image = r.getImageUrl();
 	        String medName = r.getMedecineName();
+	       
+	        Log.i("namey", medName);
 	        long time = r.getTakenTime();
 	        
 	        Intent myIntent = new Intent(activity, ReminderListView.class);
 	        myIntent.putExtra("image", image);
 	        myIntent.putExtra("name", medName);
+	        myIntent.putExtra("currentTime", time);
 	      
 	        
 	        // This pending intent will open after notification click
-	        PendingIntent i=PendingIntent.getActivity(activity, 0,myIntent,0);
+	        PendingIntent i=PendingIntent.getActivity(activity, 0,myIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 	        	       
 	        note.setLatestEventInfo(activity, "Capsulty Reminder","Please take "+medName, i);
 	         
 	        note.flags |= Notification.FLAG_AUTO_CANCEL;
 	        
 	        //After uncomment this line you will see number of notification arrive
-	        mgr.notify(num, note);
+	        mgr.notify(0, note);
 	        num++;
 				
 				break;

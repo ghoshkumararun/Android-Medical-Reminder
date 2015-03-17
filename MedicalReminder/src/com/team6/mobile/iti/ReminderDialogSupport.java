@@ -1,6 +1,7 @@
 package com.team6.mobile.iti;
 
 import java.nio.channels.AlreadyConnectedException;
+import java.sql.Date;
 
 import com.team6.mobile.iti.beans.Medicine;
 import com.team6.mobile.iti.beans.TimeDto;
@@ -34,17 +35,23 @@ public class ReminderDialogSupport extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Bundle bundle = getIntent().getExtras();
-		 //medecine =  (Medicine) bundle.getParcelable("medecine");
-		//long endDay = medecine.getEnd_date();
-		//long startDay = medecine.getStart_date();
-		 index = (Integer) bundle.get("index");
-		 medName =(String) bundle.get("name");
+		
+		medName = (String) bundle.get("name");
+		Log.i("name in dialog", medName);
+		
+		//index = (Integer) bundle.get("index");
+	     takeTime = (Long)bundle.get("take time");
 		 startDay = (Long) bundle.get("start");
 		 endDay = (Long) bundle.get("end");
-		 ImageUrl = (String) bundle.get("image");
+		// ImageUrl = (String) bundle.get("image");
+		 
+		//String[] nameArray = getIntent().getStringArrayExtra("name");
+		//medName = nameArray[index];	
+		//Log.i("med name", medName);
 		
-		//String medName = medecine.getName();
-		
+
+	    // Log.i("take time dialog", new Date(takeTime).toString());
+		 
 		//checking if take time is between start day and end day
 		if((System.currentTimeMillis()<endDay)&&(System.currentTimeMillis()>startDay)){
 			
@@ -70,7 +77,7 @@ public class ReminderDialogSupport extends Activity {
 		}else{
 			//if not then cancel alarm
 			Intent intent = new Intent(this, ReminderDialogSupport.class);
-			PendingIntent pendingIntent = PendingIntent.getActivity(this, index,intent, 0);
+			PendingIntent pendingIntent = PendingIntent.getActivity(this, index ,intent, 0);
 			
 			AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 			alarmManager.cancel(pendingIntent);
