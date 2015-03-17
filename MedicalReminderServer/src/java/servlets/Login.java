@@ -1,12 +1,16 @@
 package servlets;
 
+import beans.Medicine;
 import beans.User;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.MedicineDao;
 import model.UserDao;
 import org.json.simple.JSONObject;
 
@@ -36,11 +40,17 @@ public class Login extends HttpServlet {
 
         // find user by Email
         User user = userDao.findUserByEmail(email);
+        String jsonString = null;
 
         // check email existance && password equality
         if (user != null && user.getPassword().equals(password)) {
-
+            MedicineDao medDao = MedicineDao.getInstance();
             loginStatus = 1;
+            Medicine [] medList = medDao.selectAllMedecines(email);
+            Gson myGson = new Gson();
+		java.lang.reflect.Type myType = new TypeToken<Medicine[]>(){}.getType();
+		jsonString = myGson.toJson(medList,myType);
+                
 
         } else {
             loginStatus = 2;
@@ -51,7 +61,7 @@ public class Login extends HttpServlet {
 
         // add login status to json object
         jsonObj.put("status", loginStatus);
-
+        jsonObj.put("medData",jsonString);
         // get response writer
         PrintWriter out = response.getWriter();
 

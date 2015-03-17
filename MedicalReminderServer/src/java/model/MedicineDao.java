@@ -38,6 +38,35 @@ public class MedicineDao {
     public static MedicineDao getInstance() {
         return INSTANCE;
     }
+    public Medicine[] selectAllMedecines(String email){
+        ArrayList<Medicine> medecineList = new ArrayList<>();
+        try {
+            String query =  "SELECT * FROM medicine WHERE user_email = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, email);
+           ResultSet result = statement.executeQuery();
+           while(result.next()){
+               Medicine temp = new Medicine();
+               temp.setId(result.getInt("id"));
+               temp.setName(result.getString("name"));
+               temp.setStart_date(result.getLong("start_date"));
+               temp.setEnd_date(result.getLong("end_date"));
+               temp.setRepetition(result.getString("repetition"));
+               temp.setInstruction(result.getString("instruction"));
+               temp.setType(result.getString("type"));
+               temp.setUser_email(email);
+               medecineList.add(temp);
+           }
+
+        } catch (SQLException ex) {
+            
+            Logger.getLogger(MedicineDao.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        Medicine [] medArray = medecineList.toArray(new Medicine[medecineList.size()]);
+        return medArray;
+        
+    }
 
     public boolean insertMedicines(List<Medicine> medicines,String email) {
 

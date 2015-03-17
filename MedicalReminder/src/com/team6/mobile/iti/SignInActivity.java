@@ -104,8 +104,10 @@ public class SignInActivity extends Activity {
 
 			// get login status
 			int status = 0;
+			String medJson;
 			try {
 				status = jsonResponse.getInt("status");
+				
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
