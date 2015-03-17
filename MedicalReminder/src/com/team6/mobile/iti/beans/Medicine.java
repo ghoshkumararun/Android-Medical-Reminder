@@ -145,4 +145,8 @@ public class Medicine implements Parcelable {
 		imageUrl = string;
 	}
 
+	public String getImageURL( ) {
+		
+		return imageUrl;
+	}
 }

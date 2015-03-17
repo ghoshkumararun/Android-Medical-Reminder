@@ -107,6 +107,10 @@
     <string name="hello_world">Hello world!</string>
     <string name="time">Time</string>
     <string name="addTime">Add Time</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="please_take">Please take</string>
+    <string name="med">Med</string>
+    <string name="space"></string>
 
     
     
