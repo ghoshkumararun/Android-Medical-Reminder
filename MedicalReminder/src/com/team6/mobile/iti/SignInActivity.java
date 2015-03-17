@@ -23,6 +23,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.team6.mobile.iti.beans.Medicine;
 import com.team6.mobile.iti.connection.JSONParser;
 
 
@@ -38,7 +41,7 @@ public class SignInActivity extends Activity {
 	private static final int INVALIED_EMAIL_OR_PASSWORD = 2;
 	private static final int LOGIN_FAILED = 3;
 	private int loginStatus;
-	private static final String LOGIN_URL = "http://10.145.239.44:8084/MedicalReminderServer/login";
+	private static final String LOGIN_URL = "http://10.145.238.152:8084/MedicalReminderServer/login";
 	SharedPreferences sharedPreferences;
 
 	@Override
@@ -54,6 +57,7 @@ public class SignInActivity extends Activity {
 	    if(!sharedPreferences.getString("emailUser", "default").equals("default")){
 	    	Intent homeIntent = new Intent(this,HomeActivity.class);
 	    	startActivity(homeIntent);
+	    	SignInActivity.this.finish();
 	    }
 		
 		txtSignUp.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +84,18 @@ public class SignInActivity extends Activity {
 			}
 		});
 	}
+	
+	@Override
+	protected void onRestart() {
+		// TODO Auto-generated method stub
+	//	super.onRestart();
+		try {
+			finalize();
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	class LoginTask extends AsyncTask<String, Void, Integer> {
 
@@ -104,8 +120,15 @@ public class SignInActivity extends Activity {
 
 			// get login status
 			int status = 0;
+			String medJson;
+			Medicine [] medList;
 			try {
 				status = jsonResponse.getInt("status");
+				//medJson = jsonResponse.getString("medData");
+				//Gson myGson = new Gson();
+				//java.lang.reflect.Type myType = new TypeToken<Medicine[]>(){}.getType();
+				//medList = myGson.fromJson("medData", myType);
+				
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -124,6 +147,7 @@ public class SignInActivity extends Activity {
 				//login successfull
 				Intent intent1 = new Intent(SignInActivity.this, HomeActivity.class);
 				startActivity(intent1);
+				SignInActivity.this.finish();
 			}
 				
 			else { if (result == 2)
@@ -135,6 +159,7 @@ public class SignInActivity extends Activity {
 					.show();
 
 			}
+			
 		}
 
 	}

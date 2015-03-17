@@ -60,7 +60,7 @@ public class HomeActivity extends Activity implements  OnItemClickListener{
  
     public void onItemClick(AdapterView<?> parent, View view, int position,
             long id) {
-    	int selectedMedId = rowItems.get(position).getImageId();
+    	int selectedMedId = rowItems.get(position).getMedId();
     	Intent i = new Intent(HomeActivity.this, EditMedicineActivity.class);
     	i.putExtra("medID", selectedMedId);
 		startActivity(i);
@@ -84,6 +84,8 @@ public class HomeActivity extends Activity implements  OnItemClickListener{
         rowItems = new ArrayList<RowItem>();
         for (int i = 0; i < allMedecines.size(); i++) {
         	 RowItem item = new RowItem(R.drawable.antivirus, allMedecines.get(i).getName(), allMedecines.get(i).getType());
+
+        //	 item.setMedId(allMedecines.get();
              rowItems.add(item);
         }
  
@@ -193,23 +195,20 @@ public void function1(int id){
 }
 public void function2(int id){
 	Toast.makeText(this, "function 2 called", 1000).show();
+	DatabaseHelper helper = new DatabaseHelper(getApplicationContext());
+	DatabaseAdapter adapter = new  DatabaseAdapter(helper);
+	adapter.deleteMedecine(rowItems.get(id).getMedId());
+	rowItems.remove(id);
 	//delete code and reload the list
 }
 
-// override on back pessed
-@Override
-public void onBackPressed() {
-	// TODO Auto-generated method stub
-	super.onBackPressed();
-	
-}
 public class SyncWithServer extends AsyncTask<Medicine, Void, Integer> {
 	private static final int SYNC_SUCESS = 1;
 	//private static final int INVALIED_EMAIL_OR_PASSWORD = 2;
 	private static final int SYNC_FAILED = 3;
 	private int syncStatus;
 	//write the url of the back end servlet
-	private static final String SYNC_URL = "http://192.168.1.5:8084/MedicalReminderServer/newmedecines";
+	private static final String SYNC_URL = "http://10.145.238.152:8084/MedicalReminderServer/newmedecines";
 	
 	JSONParser jsonObj ;
 

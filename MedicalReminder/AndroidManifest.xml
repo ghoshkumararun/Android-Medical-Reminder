@@ -11,14 +11,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
-    
-    
-    
-    
-    
-    
-    
-    
     <!-- Accessing camera hardware -->
     <uses-feature android:name="android.hardware.camera" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -35,11 +27,6 @@
             android:parentActivityName=".HomeActivity"
             android:theme="@style/addMedicineStyle"
             android:screenOrientation="portrait"  >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".SetScheduleActivity"
@@ -47,10 +34,15 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".SignInActivity"
-            android:label="@string/signin"
+            android:name="com.team6.mobile.iti.SignInActivity"
+            android:label="@string/app_name"
             android:theme="@style/addMedicineStyle"
             android:screenOrientation="portrait"  >
+             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".SignUpActivity"
@@ -93,11 +85,6 @@
         <activity
             android:name=".EditMedicineActivity"
             android:label="@string/editMedicine" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".EditScheduleActivity"

@@ -2,6 +2,7 @@ package com.team6.mobile.iti;
 
 
 import java.lang.reflect.TypeVariable;
+import java.util.Calendar;
 
 import com.team6.mobile.iti.beans.Medicine;
 
@@ -30,6 +31,7 @@ public class ReminderDialog extends Dialog implements
 	 ImageView imgView;
 	 TextView txtView;
 	 int num =0;
+	 private long currentTime;
 	
 	public ReminderDialog(Activity a) {
 		super(a);
@@ -57,6 +59,15 @@ public class ReminderDialog extends Dialog implements
 		btnCancel.setOnClickListener(this);
 
 	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.SECOND, 0);
+		currentTime = c.getTimeInMillis();
+	}
 
 
 	@Override
@@ -65,6 +76,7 @@ public class ReminderDialog extends Dialog implements
 			case R.id.btnOk:
 				activity.finish();
 				Intent intent = new Intent(activity, ReminderListView.class);
+				intent.putExtra("currentTime", currentTime);
 				activity.startActivity(intent);
 				break;
 			case R.id.btnCancel:
@@ -85,8 +97,7 @@ public class ReminderDialog extends Dialog implements
 	        Intent myIntent = new Intent(activity, ReminderListView.class);
 	        myIntent.putExtra("image", image);
 	        myIntent.putExtra("name", medName);
-	        myIntent.putExtra("currentTime", time);
-	      
+	        myIntent.putExtra("currentTime", currentTime);
 	        
 	        // This pending intent will open after notification click
 	        PendingIntent i=PendingIntent.getActivity(activity, 0,myIntent,PendingIntent.FLAG_UPDATE_CURRENT);

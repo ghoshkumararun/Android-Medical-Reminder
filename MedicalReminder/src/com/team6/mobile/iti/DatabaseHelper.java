@@ -58,6 +58,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				" ( "+DOSE_MEDICINE_ID_COL+" INTEGER, "
 		+DOSE_QUANTITY_COL+" VARCHAR(5), "+
 				DOSE_TIME_COL+" INTEGER,"+DOSE_TAKEN_COL+" INTEGER);");
+		String ss="CREATE TABLE "+TABLE_DOSE_TIME+
+				" ( "+DOSE_MEDICINE_ID_COL+" INTEGER, "
+		+DOSE_QUANTITY_COL+" VARCHAR(5), "+
+				DOSE_TIME_COL+" INTEGER,"+DOSE_TAKEN_COL+" INTEGER);";
+		Log.i("xxxxDose",s);
+		Log.i("xxxxDose", "Dose is created ");
 		
 	}
 

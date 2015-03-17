@@ -38,6 +38,35 @@ public class MedicineDao {
     public static MedicineDao getInstance() {
         return INSTANCE;
     }
+    public Medicine[] selectAllMedecines(String email){
+        ArrayList<Medicine> medecineList = new ArrayList<>();
+        try {
+            String query =  "SELECT * FROM medicine WHERE user_email = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, email);
+           ResultSet result = statement.executeQuery();
+           while(result.next()){
+               Medicine temp = new Medicine();
+               temp.setId(result.getInt("id"));
+               temp.setName(result.getString("name"));
+               temp.setStart_date(Long.parseLong(result.getString("start_date")));
+               temp.setEnd_date(Long.parseLong(result.getString("end_date")));
+               temp.setRepetition(result.getString("repetition"));
+               temp.setInstruction(result.getString("instruction"));
+               temp.setType(result.getString("type"));
+               temp.setUser_email(email);
+               medecineList.add(temp);
+           }
+
+        } catch (SQLException ex) {
+            
+            Logger.getLogger(MedicineDao.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        Medicine [] medArray = medecineList.toArray(new Medicine[medecineList.size()]);
+        return medArray;
+        
+    }
 
     public boolean insertMedicines(List<Medicine> medicines,String email) {
 
@@ -56,9 +85,8 @@ public class MedicineDao {
             for (Medicine medicine : medicines) {
 
                 statement.setString(1, medicine.getName());
-                String date = medicine.getStart_date()+"";
-          //      statement.setDate(2, Date.valueOf(date));
-          //      statement.setDate(3, Date.valueOf(medicine.getEnd_date()+""));
+                statement.setString(2, ""+medicine.getStart_date());
+                statement.setString(3,  ""+medicine.getEnd_date());
                 statement.setString(4, medicine.getRepetition());
                 statement.setString(5, medicine.getInstruction());
                 statement.setString(6, medicine.getType());

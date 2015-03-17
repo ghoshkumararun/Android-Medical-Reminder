@@ -12,7 +12,7 @@ create table `medical_reminder`.user (email VARCHAR(30) PRIMARY KEY, name VARCHA
 
 /* create medicine table */
 
-create table `medical_reminder`.medicine ( id INT AUTO_INCREMENT, name VARCHAR(20), start_date DATE, end_date DATE, repetition VARCHAR(10), 
+create table `medical_reminder`.medicine ( id INT AUTO_INCREMENT, name VARCHAR(20), start_date INT, end_date INT, repetition VARCHAR(10), 
 instruction VARCHAR(15), type VARCHAR(20), user_email VARCHAR(30), FOREIGN KEY (user_email) references `medical_reminder`.user(email), PRIMARY KEY(id));
 
 

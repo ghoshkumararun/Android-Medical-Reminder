@@ -255,10 +255,12 @@ public class SetScheduleActivity extends Activity {
 				medicine.setInstruction(instructionArray[instructionChoicePos]);
 				String duration = durationArray[durationChoicePos];
 				medicine.setEnd_date(convertDurationToLong(duration));
-
+				
+				Log.i("testTime", ""+medicine.getTimes().get(0).getTake_time());
+				
 				// add medicine in db
 				addMedicineInDb(medicine);
-
+				
 				// go to home actiivty
 				Intent in =new Intent(SetScheduleActivity.this, HomeActivity.class);
 				startActivity(in);
@@ -471,10 +473,10 @@ public class SetScheduleActivity extends Activity {
 		
 		//Log.i("xxxxAdd",med.getName());
 		//Log.i("xxxxAdd",med.getImageUrl());
-	//	DatabaseHelper helpObj=new DatabaseHelper(this);
+	    //	DatabaseHelper helpObj=new DatabaseHelper(this);
 		//DatabaseAdapter adptObj=new DatabaseAdapter(helpObj);
 		//adptObj.insertMedecine(med.getName(), med.getDesc(), med.getType(),
-			//	med.getImageUrl(), med.getStart_date(), med.getEnd_date(), med.getRepetition());
+		//	med.getImageUrl(), med.getStart_date(), med.getEnd_date(), med.getRepetition());
 		obj.addMedicine(med, this);
 		obj.setAlarm(med,SetScheduleActivity.this);
 		Toast.makeText(SetScheduleActivity.this, "Alram Set", Toast.LENGTH_SHORT).show();

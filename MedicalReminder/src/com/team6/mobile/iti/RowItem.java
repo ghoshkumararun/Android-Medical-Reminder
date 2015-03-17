@@ -6,8 +6,16 @@ public class RowItem {
     private int imageId;
     private String title;
     private String desc;
+    private int medId;
+
      
-    public RowItem(int imageId, String title, String desc) {
+    public int getMedId() {
+		return medId;
+	}
+	public void setMedId(int medId) {
+		this.medId = medId;
+	}
+	public RowItem(int imageId, String title, String desc) {
         this.imageId = imageId;
         this.title = title;
         this.desc = desc;

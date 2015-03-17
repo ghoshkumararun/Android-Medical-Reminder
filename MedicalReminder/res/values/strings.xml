@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Medical Reminder</string>
+    <string name="app_name">Capsulty</string>
     <string name="medicineName">Medicine Name</string>
     <string name="medicineType">Medicine Type</string>
     <string name="image">Image</string>
@@ -23,7 +23,7 @@
     <string name="signuppass">Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="sign_up">Sign Up</string>
-    <string name="new_to">New to MedApp? Sign Up !</string>
+    <string name="new_to">New to Capsulty? Sign Up !</string>
     <string name="title_activity_view_med">ViewMedActivity</string>
     <string name="view_med">View Medicine</string>
     <string name="remember_me">Remember Me?</string>

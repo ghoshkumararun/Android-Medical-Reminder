@@ -44,29 +44,30 @@ public class ReminderListView extends Activity {
 		medicineList = (ListView) findViewById(R.id.medicineList);
 		//adding new code to merge with radwa hassan
 		bundle=getIntent().getExtras();
-		String imageUri=bundle.getString("image");
-		Log.i("XXXXBundle",imageUri);
 		
-		String medName=bundle.getString("name");
-		Log.i("XXXXBundle",medName);
+	//	String imageUri=bundle.getString("image");
+		//Log.i("XXXXBundle",imageUri);
+		
+		//String medName=bundle.getString("name");
+		//Log.i("XXXXBundle",medName);
 
-		Long medTime=bundle.getLong("time");
-		Log.i("XXXXBundle",""+medTime);
+		Long currentTime= getIntent().getLongExtra("currentTime", 0);
+		Log.i("tag", ""+currentTime);
+		///Log.i("XXXXBundle",""+medTime);
 
-		Medicine med=new Medicine();
+	/*	Medicine med=new Medicine();
 		med.setName(medName);
 		med.setImageURL(imageUri);
 		med.setStart_date(medTime);
 
-		medicines.add(med);
+		medicines.add(med); */
 		
 		
-		//DatabaseHelper helper = new DatabaseHelper(this);
-		//DatabaseAdapter databaseAdapter = new DatabaseAdapter(helper);
-		// medicines = databaseAdapter.selectReminderMedecines();
-		//medicines = databaseAdapter.selectAllMedecines();
-		customAdapter adapter = new customAdapter(this, R.layout.single_row,
-				medicines);
+		DatabaseHelper helper = new DatabaseHelper(this);
+		DatabaseAdapter databaseAdapter = new DatabaseAdapter(helper);
+		// medicines = databaseAdapter.selectReminderMedecines(currentTime);
+		medicines = databaseAdapter.selectAllMedecines();
+		customAdapter adapter = new customAdapter(this, R.layout.single_row,medicines);
 		medicineList.setAdapter(adapter);
 
 	}
@@ -167,7 +168,7 @@ public class ReminderListView extends Activity {
 					dialog.show();
 				}
 			});
-			Log.i("xxxxImage", medicines.get(position).getImageUrl());
+			//Log.i("xxxxImage", medicines.get(position).getImageUrl());
 			Bitmap myImg = decodeFile(medicines.get(position).getImageUrl(),
 					60, 60);
 
