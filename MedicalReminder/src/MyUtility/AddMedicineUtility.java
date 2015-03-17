@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -16,8 +17,12 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.EditText;
 
+
+import com.team6.mobile.iti.DatabaseAdapter;
+import com.team6.mobile.iti.DatabaseHelper;
 import com.team6.mobile.iti.ReminderDialogSupport;
 import com.team6.mobile.iti.beans.Medicine;
 import com.team6.mobile.iti.beans.TimeDto;
@@ -34,6 +39,7 @@ public class AddMedicineUtility {
 		//extract info from bean
 		String name = med.getName();
 		String repeat = med.getRepetition();
+		Log.i("repeat time", repeat);
 		long startDay = med.getStart_date();		
 		long endDay = med.getEnd_date();
 		String imageUrl = med.getImageURL();
@@ -48,21 +54,21 @@ public class AddMedicineUtility {
 		}
 
 		//setting repetition interval
-			if (repeat.equals("daily")) {
+			if (repeat.equals("Daily")) {
 
 				repeatInterval = 24 * 60 * 60 * 1000;
 				if(flag==1){
 					time = time + repeatInterval;
 				}
 
-			} else if (repeat.equals("weekly")) {
+			} else if (repeat.equals("Weekly")) {
 
 				repeatInterval = 7 * 24 * 60 * 60 * 1000;
 				if(flag==1){
 					time = time + repeatInterval;
 				}
 
-			} else if (repeat.equals("monthly")) {
+			} else if (repeat.equals("Monthly")) {
 
 				repeatInterval = 30 * 7 * 24 * 60 * 60 * 1000;
 				if(flag==1){
@@ -79,18 +85,30 @@ public class AddMedicineUtility {
 		intent.putExtra("image", imageUrl);
 		intent.putExtra("take time", time);
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, index,intent, 0);
-		
+		Log.i("time of alram", new Date(time).toString());
 		//setting alarm manager
 		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,time,repeatInterval,pendingIntent);
-
-	    
-
 		}
 	}
 
-	//method to insert medicine in SQLite database
-	public void addMedicine(Medicine med) {
+	// method to insert medicine in SQLite database
+	public void addMedicine(Medicine med, Context con) {
+
+		DatabaseHelper dbHelper = new DatabaseHelper(con);
+		DatabaseAdapter dbAdapter = new DatabaseAdapter(dbHelper);
+		Log.i("xxxxUtility", med.getImageUrl());
+		dbAdapter.insertMedecine(med.getName(), med.getDesc(), med.getType(),
+				med.getImageUrl(), med.getStart_date(), med.getEnd_date(),
+				med.getRepetition());
+		dbAdapter.insertMedecineIntoDoseTable(med.getIsTaken(), med.getTimes());
+
+		List<Medicine> meds = dbAdapter.selectAllMedecines();
+
+		Log.i("newTag", "" + meds.size());
+
+		for (Medicine m : meds)
+			Log.i("newTag", m.getName());
 
 	}
 

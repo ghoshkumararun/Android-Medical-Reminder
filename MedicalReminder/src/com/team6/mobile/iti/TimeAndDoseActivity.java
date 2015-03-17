@@ -115,14 +115,8 @@ public class TimeAndDoseActivity extends Activity {
 		@Override
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-			Calendar c= Calendar.getInstance();
 			
-			if(medicineTimes.size() > 0)
-				c.setTimeInMillis(medicineTimes.get(medicineTimes.size()-1).getTake_time());
-			else
-				c.add(Calendar.MINUTE, -1);
-			
-			if (!timeSetted && minute > c.get(Calendar.MINUTE)) {
+			if (!timeSetted) {
 				TimeDto time = new TimeDto();
 				Calendar cal = Calendar.getInstance();
 				
@@ -202,10 +196,10 @@ public class TimeAndDoseActivity extends Activity {
 				public void onClick(View v) {
 
 					TimeDto time = medicineTimes.get(position);
-					if (time.getDose() > 0.25f) {
+				/*	if (time.getDose() > 0.25f) {
 						time.setDose(time.getDose() - 0.25f);
 						adapter.notifyDataSetChanged();
-					}
+					}*/
 				}
 			});
 

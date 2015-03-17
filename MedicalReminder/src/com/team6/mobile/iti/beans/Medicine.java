@@ -2,6 +2,7 @@ package com.team6.mobile.iti.beans;
 
 import java.util.*;
 
+import android.content.ClipData.Item;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -10,6 +11,15 @@ import android.os.Parcelable;
  * @author Mohamed
  */
 public class Medicine implements Parcelable {
+	
+	private int id;
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	private String name;
 	private long start_date;
@@ -21,6 +31,20 @@ public class Medicine implements Parcelable {
 	private List<TimeDto> times;
 	private String desc;
 	private String imageUrl;
+	private int medState;
+	private int isTaken;
+	
+	public int getMedState() {
+		return medState;
+	}
+
+	public void setMedState(int medState) {
+		this.medState = medState;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
 
 	public Medicine() {
 		// TODO Auto-generated constructor stub
@@ -44,9 +68,13 @@ public class Medicine implements Parcelable {
 		instruction = in.readString();
 		type = in.readString();
 		user_email = in.readString();
-		times  = in.readArrayList(null);
+	    //in.readTypedList(times, TimeDto.CREATOR);
 		desc = in.readString();
 		imageUrl = in.readString();
+		medState = in.readInt();
+		id = in.readInt();
+		 isTaken = in.readInt();
+
 	}
 
 	public String getName() {
@@ -129,9 +157,12 @@ public class Medicine implements Parcelable {
 		dest.writeString(instruction);
 		dest.writeString(type);
 		dest.writeString(user_email);
-		dest.writeList(times);
+		dest.writeTypedList(times);
 		dest.writeString(desc);
 		dest.writeString(imageUrl);
+		dest.writeInt(medState);
+		dest.writeInt(id);
+		dest.writeInt( isTaken);
 
 	}
 
@@ -149,4 +180,22 @@ public class Medicine implements Parcelable {
 		
 		return imageUrl;
 	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	public int getIsTaken() {
+		return isTaken;
+	}
+
+	public void setIsTaken(int isTaken) {
+		this.isTaken = isTaken;
+	}
+	
+	
+	
 }

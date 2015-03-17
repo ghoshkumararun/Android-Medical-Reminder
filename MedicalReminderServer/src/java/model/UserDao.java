@@ -51,8 +51,8 @@ public class UserDao {
             
             
             // execute insert
-            if(statement.executeUpdate() == 1)
-                inserted = true;
+            statement.executeUpdate();
+            inserted = true;
             
         } catch (SQLException ex) {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);

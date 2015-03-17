@@ -13,8 +13,8 @@ import java.util.*;
 public class Medicine {
     
     private String name;
-    private String start_date;
-    private String end_date;
+    private long start_date;
+    private long end_date;
     private String repetition;
     private String instruction;
     private String type;
@@ -29,19 +29,19 @@ public class Medicine {
         this.name = name;
     }
 
-    public String getStart_date() {
+    public long getStart_date() {
         return start_date;
     }
 
-    public void setStart_date(String start_date) {
+    public void setStart_date(long start_date) {
         this.start_date = start_date;
     }
 
-    public String getEnd_date() {
+    public long getEnd_date() {
         return end_date;
     }
 
-    public void setEnd_date(String end_date) {
+    public void setEnd_date(long end_date) {
         this.end_date = end_date;
     }
 

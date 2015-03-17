@@ -23,7 +23,6 @@ import android.widget.TextView;
 
 public class ReminderDialog extends Dialog implements
 		android.view.View.OnClickListener {
-
      Activity activity;
 	 Dialog dialog;
 	 Button btnOk, btnCancel;
@@ -31,7 +30,6 @@ public class ReminderDialog extends Dialog implements
 	 TextView txtView;
 	 int num =0;
 	
-
 	public ReminderDialog(Activity a) {
 		super(a);
 		this.activity = a;
@@ -84,7 +82,7 @@ public class ReminderDialog extends Dialog implements
 	        Intent myIntent = new Intent(activity, ReminderListView.class);
 	        myIntent.putExtra("image", image);
 	        myIntent.putExtra("name", medName);
-	        myIntent.putExtra("time", time);
+	      
 	        
 	        // This pending intent will open after notification click
 	        PendingIntent i=PendingIntent.getActivity(activity, 0,myIntent,0);
@@ -102,5 +100,6 @@ public class ReminderDialog extends Dialog implements
 				break;
 			}
 			dismiss();
+
 		}
 	}
