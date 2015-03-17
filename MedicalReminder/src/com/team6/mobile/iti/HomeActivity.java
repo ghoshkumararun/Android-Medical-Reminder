@@ -209,7 +209,7 @@ public class SyncWithServer extends AsyncTask<Medicine, Void, Integer> {
 	private static final int SYNC_FAILED = 3;
 	private int syncStatus;
 	//write the url of the back end servlet
-	private static final String SYNC_URL = "http://192.168.1.5:8084/MedicalReminderServer/newmedecines";
+	private static final String SYNC_URL = "http://10.145.238.152:8084/MedicalReminderServer/newmedecines";
 	
 	JSONParser jsonObj ;
 
