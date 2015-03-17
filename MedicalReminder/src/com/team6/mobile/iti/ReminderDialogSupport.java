@@ -28,6 +28,7 @@ public class ReminderDialogSupport extends Activity {
 	long startDay;
 	long endDay;
 	int index;
+	long takeTime;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class ReminderDialogSupport extends Activity {
 		 startDay = (Long) bundle.get("start");
 		 endDay = (Long) bundle.get("end");
 		 ImageUrl = (String) bundle.get("image");
+		 takeTime = (Long) bundle.get("time");
 		//String medName = medecine.getName();
 		
 		//checking if take time is between start day and end day
@@ -84,5 +86,11 @@ public String getMedecineName(){
 public String getImageUrl(){
 	return ImageUrl;
 }
+
+public long getTakenTime(){
+	return takeTime;
+}
+
+
 
 }

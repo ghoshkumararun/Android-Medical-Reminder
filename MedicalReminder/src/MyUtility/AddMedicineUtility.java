@@ -77,6 +77,7 @@ public class AddMedicineUtility {
 		intent.putExtra("start", startDay);
 		intent.putExtra("index", index);
 		intent.putExtra("image", imageUrl);
+		intent.putExtra("take time", time);
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, index,intent, 0);
 		
 		//setting alarm manager

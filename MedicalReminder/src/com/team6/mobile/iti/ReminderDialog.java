@@ -1,6 +1,8 @@
 package com.team6.mobile.iti;
 
 
+import java.lang.reflect.TypeVariable;
+
 import com.team6.mobile.iti.beans.Medicine;
 
 import android.app.Activity;
@@ -77,13 +79,15 @@ public class ReminderDialog extends Dialog implements
 	        ReminderDialogSupport r = (ReminderDialogSupport) activity; 
 	        String image = r.getImageUrl();
 	        String medName = r.getMedecineName();
+	        long time = r.getTakenTime();
 	        
-	        //SharedPreferences.Editor editor = getSharedPreferences("MedecineNow").edit();
-	        	  
-	        //editor.commit();
+	        Intent myIntent = new Intent(activity, ReminderListView.class);
+	        myIntent.putExtra("image", image);
+	        myIntent.putExtra("name", medName);
+	        myIntent.putExtra("time", time);
 	        
 	        // This pending intent will open after notification click
-	        PendingIntent i=PendingIntent.getActivity(activity, 0,new Intent(activity, ReminderListView.class),0);
+	        PendingIntent i=PendingIntent.getActivity(activity, 0,myIntent,0);
 	        	       
 	        note.setLatestEventInfo(activity, "Capsulty Reminder","Please take "+medName, i);
 	         
