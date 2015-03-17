@@ -18,7 +18,10 @@ public class TestModel {
     
     public static void main(String[] args) {
         
-        System.out.println(TestModel.class.getName());
+        String [] arr = {"one", "two    ", "three"};
+        
+        int pos = Arrays.binarySearch(arr, "two    ");
+        System.out.println(""+pos);
     }
     
 }
