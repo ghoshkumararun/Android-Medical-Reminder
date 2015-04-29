@@ -172,16 +172,16 @@ public class DatabaseAdapter {
 		ArrayList<Medicine> medReminder = new ArrayList<Medicine>(); // to add
 		ArrayList<Medicine> allMedecine = selectAllMedecines(); // to add
 
-		Medicine medObj = new Medicine();
+		 Medicine medObj = new Medicine();
 		Log.i("testTime", ""+currentTime);
-		long beginT = currentTime - 20*60*1000;
-		long endT = currentTime + 20*60*1000;
+		long beginT = currentTime - (20*60*10000);
+		long endT = currentTime + (20*60*1000);
 		
 		for(Medicine med : allMedecine ){
 			
 			Log.i("testTime", ""+med.getTimes().get(0).getTake_time());
 			
-			if(med.getTimes().get(0).getTake_time() > beginT && med.getTimes().get(0).getTake_time() < endT)
+			if( med.getTimes().get(0).getTake_time() < endT)
 				medReminder.add(med);
 			
 		}

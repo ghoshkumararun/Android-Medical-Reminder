@@ -43,30 +43,12 @@ public class ReminderListView extends Activity {
 		setContentView(R.layout.activity_reminder_list_view);
 		medicineList = (ListView) findViewById(R.id.medicineList);
 		//adding new code to merge with radwa hassan
-		bundle=getIntent().getExtras();
-		
-	//	String imageUri=bundle.getString("image");
-		//Log.i("XXXXBundle",imageUri);
-		
-		//String medName=bundle.getString("name");
-		//Log.i("XXXXBundle",medName);
-
 		Long currentTime= getIntent().getLongExtra("currentTime", 0);
 		Log.i("tag", ""+currentTime);
-		///Log.i("XXXXBundle",""+medTime);
-
-	/*	Medicine med=new Medicine();
-		med.setName(medName);
-		med.setImageURL(imageUri);
-		med.setStart_date(medTime);
-
-		medicines.add(med); */
-		
-		
 		DatabaseHelper helper = new DatabaseHelper(this);
 		DatabaseAdapter databaseAdapter = new DatabaseAdapter(helper);
-		// medicines = databaseAdapter.selectReminderMedecines(currentTime);
-		medicines = databaseAdapter.selectAllMedecines();
+		 medicines = databaseAdapter.selectReminderMedecines(currentTime);
+		//medicines = databaseAdapter.selectAllMedecines();
 		customAdapter adapter = new customAdapter(this, R.layout.single_row,medicines);
 		medicineList.setAdapter(adapter);
 
@@ -77,7 +59,7 @@ public class ReminderListView extends Activity {
 			OnClickListener {
 		Context context;
 		View row;
-
+                                                                                         
 		customAdapter(Context c, int layout, ArrayList<Medicine> medName) {
 			super(c, layout, medName);
 			this.context = c;

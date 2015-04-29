@@ -74,6 +74,13 @@ public class ReminderDialog extends Dialog implements
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.btnOk:
+				;
+				/*i add time here to test it more accurate 
+				Calendar c = Calendar.getInstance();
+				c.set(Calendar.SECOND, 0);
+				currentTime = c.getTimeInMillis();
+				
+				*/
 				activity.finish();
 				Intent intent = new Intent(activity, ReminderListView.class);
 				intent.putExtra("currentTime", currentTime);
@@ -93,7 +100,12 @@ public class ReminderDialog extends Dialog implements
 	       
 	        Log.i("namey", medName);
 	        long time = r.getTakenTime();
-	        
+/*/i add time here to test it more accurate 
+			Calendar c2 = Calendar.getInstance();
+			c2.set(Calendar.SECOND, 0);
+			currentTime = c2.getTimeInMillis();
+			*/
+			
 	        Intent myIntent = new Intent(activity, ReminderListView.class);
 	        myIntent.putExtra("image", image);
 	        myIntent.putExtra("name", medName);
